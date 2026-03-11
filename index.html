@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Baltic Ventures Map</title>
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.19.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.19.1/mapbox-gl.js"></script>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+#map{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:100%;
+}
+
+/* FILTER PANEL */
+#filterPanel{
+  position:absolute;
+  top:20px;
+  left:20px;
+  width:280px;
+  background:rgba(255,255,255,0.95);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.18);
+  border:1px solid #e6e6e6;
+  z-index:2;
+  max-height:82vh;
+  overflow:auto;
+  backdrop-filter:blur(8px);
+}
+
+.filterTitle{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:12px;
+  color:#17324d;
+}
+
+.filterChip{
+  display:block;
+  width:100%;
+  padding:9px 10px;
+  border-radius:10px;
+  margin-bottom:8px;
+  background:#f3f5f8;
+  cursor:pointer;
+  transition:0.2s ease;
+  font-size:13px;
+  border:1px solid transparent;
+  box-sizing:border-box;
+}
+
+.filterChip:hover{
+  background:#e9eef5;
+  transform:translateY(-1px);
+}
+
+.activeChip{
+  background:#3a6ea5;
+  color:white;
+  border-color:#2f5f91;
+}
+
+.entryCounter{
+  margin-top:12px;
+  font-size:12px;
+  color:#666;
+  font-weight:600;
+}
+
+/* POPUP */
+.mapboxgl-popup-content{
+  padding:0 !important;
+  border-radius:16px !important;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,0.20);
+}
+
+.mapboxgl-popup-close-button{
+  font-size:18px;
+  padding:8px 10px;
+  color:#375a7f;
+}
+
+.popupCard{
+  width:320px;
+  background:#ffffff;
+}
+
+.popupTop{
+  padding:14px 14px 10px 14px;
+  background:linear-gradient(135deg,#eef6fc,#ffffff);
+  border-bottom:1px solid #edf1f5;
+}
+
+.popupHeader{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.popupLogoWrap{
+  width:54px;
+  height:54px;
+  border-radius:12px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #e7edf4;
+  flex-shrink:0;
+}
+
+.popupLogo{
+  max-width:42px;
+  max-height:42px;
+  object-fit:contain;
+}
+
+.popupFallbackLogo{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  background:#dce9f7;
+  color:#2f6fed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:16px;
+}
+
+.popupTitle{
+  font-size:16px;
+  font-weight:700;
+  color:#17324d;
+  line-height:1.25;
+  margin-bottom:3px;
+}
+
+.popupTypes{
+  font-size:12px;
+  color:#5f7388;
+  line-height:1.4;
+}
+
+.popupBody{
+  padding:12px 14px 14px 14px;
+}
+
+.popupDescription{
+  font-size:13px;
+  color:#334a60;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+
+.popupMeta{
+  font-size:12px;
+  color:#5f7388;
+  margin-bottom:10px;
+}
+
+.popupGalleryTitle{
+  font-size:12px;
+  font-weight:700;
+  color:#17324d;
+  margin-bottom:6px;
+}
+
+.popupGallery{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.popupGallery img{
+  width:100%;
+  height:92px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#f2f4f8;
+}
+
+.popupNoPhotos{
+  font-size:12px;
+  color:#7a8b9b;
+  background:#f6f8fb;
+  border:1px dashed #d6e0ea;
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.popupBtn{
+  display:inline-block;
+  background:#2f6fed;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.popupBtn:hover{
+  background:#285fd0;
+}
+</style>
+</head>
+
+<body>
+
+<div id="filterPanel">
+  <div class="filterTitle">Test Field Type</div>
+
+  <div class="filterChip activeChip" data-type="all">All Facilities</div>
+
+  <div class="filterChip" data-type="Ship engine room simulator">Ship engine room simulator</div>
+  <div class="filterChip" data-type="Ship bridge simulator">Ship bridge simulator</div>
+  <div class="filterChip" data-type="Shock and/or vibration test facility">Shock / vibration test</div>
+  <div class="filterChip" data-type="Sea-based maritime test area">Sea-based maritime test area</div>
+  <div class="filterChip" data-type="Safety training center">Safety training center</div>
+  <div class="filterChip" data-type="Land based autonomous systems test area">Land autonomous test area</div>
+  <div class="filterChip" data-type="Research vessel / test ship">Research vessel</div>
+  <div class="filterChip" data-type="Sea based autonomous systems test area">Sea autonomous test area</div>
+  <div class="filterChip" data-type="Multi-industry facility">Multi-industry facility</div>
+  <div class="filterChip" data-type="Fire resistance / fire fighting test facility">Fire testing</div>
+  <div class="filterChip" data-type="EMC test facility">EMC test facility</div>
+  <div class="filterChip" data-type="PLC test facility">PLC test facility</div>
+  <div class="filterChip" data-type="Ambient condition / thermodynamic test facility">Thermodynamic test</div>
+  <div class="filterChip" data-type="Internal combustion engines test facility">Engine testing</div>
+  <div class="filterChip" data-type="Maritime plants and aggregates test facility">Plants & aggregates</div>
+  <div class="filterChip" data-type="Other">Other</div>
+
+  <div class="entryCounter" id="entryCount"></div>
+</div>
+
+<div id="map"></div>
+
+<script>
+mapboxgl.accessToken =
+'pk.eyJ1IjoiaG9zc2Ftb3N0YWZhYSIsImEiOiJjbW0wbWNvd2owMDZlMm9zZDFuMTBjY28zIn0.-TMItfSlw1kTs0T_BL6v0g';
+
+const map = new mapboxgl.Map({
+  container:'map',
+  style:'mapbox://styles/mapbox/light-v11',
+  center:[9.6,55],
+  zoom:6.5
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+/* --------- HELPERS --------- */
+const FILTER_OPTIONS = [
+  "Ship engine room simulator",
+  "Ship bridge simulator",
+  "Shock and/or vibration test facility",
+  "Sea-based maritime test area",
+  "Safety training center",
+  "Land based autonomous systems test area",
+  "Research vessel / test ship",
+  "Sea based autonomous systems test area",
+  "Multi-industry facility",
+  "Fire resistance / fire fighting test facility",
+  "EMC test facility",
+  "PLC test facility",
+  "Ambient condition / thermodynamic test facility",
+  "Internal combustion engines test facility",
+  "Maritime plants and aggregates test facility",
+  "Other"
+];
+
+function slugifyFilterName(name){
+  return "f_" + name
+    .toLowerCase()
+    .replace(/&/g,"and")
+    .replace(/\//g," ")
+    .replace(/[^a-z0-9]+/g,"_")
+    .replace(/^_+|_+$/g,"");
+}
+
+const FILTER_KEY_MAP = {};
+FILTER_OPTIONS.forEach(name => {
+  FILTER_KEY_MAP[name] = slugifyFilterName(name);
+});
+
+function escapeHtml(str){
+  return String(str ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function getInitials(name){
+  const cleaned = String(name || "").trim();
+  if(!cleaned) return "BV";
+  const words = cleaned.split(/\s+/).slice(0,2);
+  return words.map(w => w[0].toUpperCase()).join("");
+}
+
+function buildPopupHTML(p){
+  const name = escapeHtml(p.name || "");
+  const description = escapeHtml(p.description || "No description available yet.");
+  const website = p.website ? escapeHtml(p.website) : "";
+  const typesText = escapeHtml(p.typesText || "");
+  const institution = p.institution ? `<div class="popupMeta"><strong>Institution:</strong> ${escapeHtml(p.institution)}</div>` : "";
+  const logoHtml = p.logo
+    ? `<img class="popupLogo" src="${escapeHtml(p.logo)}" alt="${name} logo">`
+    : `<div class="popupFallbackLogo">${escapeHtml(getInitials(p.name))}</div>`;
+
+  const photos = [p.photo1, p.photo2, p.photo3].filter(Boolean);
+  const galleryHtml = photos.length
+    ? `
+      <div class="popupGalleryTitle">Facility Photos</div>
+      <div class="popupGallery">
+        ${photos.map(url => `<img src="${escapeHtml(url)}" alt="${name} photo">`).join("")}
+      </div>
+    `
+    : `
+      <div class="popupNoPhotos">Photos can be added later for this facility.</div>
+    `;
+
+  return `
+    <div class="popupCard">
+      <div class="popupTop">
+        <div class="popupHeader">
+          <div class="popupLogoWrap">${logoHtml}</div>
+          <div>
+            <div class="popupTitle">${name}</div>
+            <div class="popupTypes">${typesText}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popupBody">
+        ${institution}
+        <div class="popupDescription">${description}</div>
+        ${galleryHtml}
+        ${website ? `<a class="popupBtn" href="${website}" target="_blank" rel="noopener noreferrer">Visit Website</a>` : ""}
+      </div>
+    </div>
+  `;
+}
+
+map.on('load', async () => {
+
+  /* MAP COLORS */
+  try{
+    map.setPaintProperty('water','fill-color','#9ecae1');
+    map.setPaintProperty('road','line-color','#d6dce5');
+    map.setPaintProperty('building','fill-color','#e3e8ef');
+  }catch(err){
+    console.log("Base style color customization skipped for some layers.", err);
+  }
+
+  /* REGION DATA */
+  const DATA_URL =
+  'https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_01M_2021_4326_LEVL_2.geojson';
+
+  const response = await fetch(DATA_URL);
+  const data = await response.json();
+
+  const regions = data.features.filter(f =>
+    f.properties.NUTS_ID === 'DEF0' ||
+    f.properties.NUTS_ID === 'DK03'
+  );
+
+  const mergedRegion = {
+    type:"Feature",
+    geometry:{
+      type:"MultiPolygon",
+      coordinates:[]
+    }
+  };
+
+  regions.forEach(f => {
+    if(f.geometry.type === "Polygon"){
+      mergedRegion.geometry.coordinates.push(f.geometry.coordinates);
+    }
+    if(f.geometry.type === "MultiPolygon"){
+      mergedRegion.geometry.coordinates.push(...f.geometry.coordinates);
+    }
+  });
+
+  /* MASK FIRST */
+  const holes = [];
+  mergedRegion.geometry.coordinates.forEach(poly => {
+    holes.push(poly[0]);
+  });
+
+  const mask = {
+    type:'FeatureCollection',
+    features:[
+      {
+        type:'Feature',
+        geometry:{
+          type:'Polygon',
+          coordinates:[
+            [
+              [-180,-90],
+              [-180,90],
+              [180,90],
+              [180,-90],
+              [-180,-90]
+            ],
+            ...holes
+          ]
+        }
+      }
+    ]
+  };
+
+  map.addSource('mask',{
+    type:'geojson',
+    data:mask
+  });
+
+  map.addLayer({
+    id:'outside-mask',
+    type:'fill',
+    source:'mask',
+    paint:{
+      'fill-color':'#000',
+      'fill-opacity':0.20
+    }
+  });
+
+  /* REGION SOURCE */
+  map.addSource('region',{
+    type:'geojson',
+    data:mergedRegion
+  });
+
+  map.addLayer({
+    id:'region-fill',
+    type:'fill',
+    source:'region',
+    paint:{
+      'fill-color':'#4f9bd6',
+      'fill-opacity':0.18
+    }
+  });
+
+  map.addLayer({
+    id:'region-border',
+    type:'line',
+    source:'region',
+    paint:{
+      'line-color':'#3f7fb5',
+      'line-width':2,
+      'line-opacity':0.58,
+      'line-blur':1.1
+    }
+  });
+
+  map.addLayer({
+    id:'region-glow',
+    type:'line',
+    source:'region',
+    paint:{
+      'line-color':'#7fb0d6',
+      'line-width':8,
+      'line-opacity':0.18,
+      'line-blur':6
+    }
+  });
+
+  /* FACILITIES */
+  const facilities = [
+    {
+      name:"Maritimes Zentrum Hochschule Flensburg",
+      institution:"Hochschule Flensburg",
+      types:[
+        "Ship bridge simulator",
+        "Ship engine room simulator",
+        "Safety training center"
+      ],
+      description:"Bridge and engine room simulators for maritime research and training within the Baltic Ventures region.",
+      logo:"https://upload.wikimedia.org/wikipedia/en/2/2e/Hochschule_Flensburg_logo.svg",
+      photo1:"https://upload.wikimedia.org/wikipedia/commons/0/02/Ship_bridge_simulator.jpg",
+      photo2:"https://upload.wikimedia.org/wikipedia/commons/3/30/Ship_simulator_room.jpg",
+      website:"https://www.maritimes-zentrum.de",
+      coordinates:[9.433,54.783]
+    },
+    {
+      name:"North Sea Flume Tank",
+      institution:"North Sea Science Park",
+      types:[
+        "Multi-industry facility",
+        "Sea-based maritime test area",
+        "Maritime plants and aggregates test facility"
+      ],
+      description:"Europe’s largest flume tank used for maritime, fisheries, and equipment testing.",
+      logo:"https://upload.wikimedia.org/wikipedia/commons/8/8e/Nordsøen_Oceanarium_logo.svg",
+      photo1:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Flume_tank.jpg",
+      photo2:"https://upload.wikimedia.org/wikipedia/commons/6/61/Fishing_net_testing.jpg",
+      website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",
+      coordinates:[9.959,57.588]
+    },
+    {
+      name:"CAPTN Initiative Test Field",
+      institution:"University of Kiel",
+      types:[
+        "Sea-based maritime test area",
+        "Sea based autonomous systems test area"
+      ],
+      description:"Autonomous shipping and maritime innovation test field in Kiel.",
+      logo:"",
+      photo1:"",
+      photo2:"",
+      website:"https://captn.sh",
+      coordinates:[10.1228,54.3233]
+    },
+    {
+      name:"Underwater Technology Lab",
+      institution:"Aalborg University",
+      types:[
+        "Sea based autonomous systems test area"
+      ],
+      description:"Testing infrastructure for underwater robotics and maritime autonomy.",
+      logo:"",
+      photo1:"",
+      photo2:"",
+      website:"https://www.energy.aau.dk",
+      coordinates:[8.439,55.476]
+    },
+    {
+      name:"Ocean and Coastal Engineering Laboratory",
+      institution:"Aalborg University",
+      types:[
+        "Other"
+      ],
+      description:"Hydrodynamic testing basin and research infrastructure for maritime engineering.",
+      logo:"",
+      photo1:"",
+      photo2:"",
+      website:"https://www.en.build.aau.dk",
+      coordinates:[9.9217,57.013]
+    },
+    {
+      name:"Maritime Exploration Hall",
+      institution:"DFKI Robotics Innovation Center",
+      types:[
+        "Land based autonomous systems test area"
+      ],
+      description:"Robotic testing hall for maritime autonomy and exploration systems.",
+      logo:"",
+      photo1:"",
+      photo2:"",
+      website:"https://robotik.dfki-bremen.de",
+      coordinates:[8.8017,53.1067]
+    }
+  ];
+
+  /* GEOJSON WITH BOOLEAN FILTER KEYS */
+  const features = facilities.map(f => {
+    const properties = {
+      name: f.name || "",
+      institution: f.institution || "",
+      description: f.description || "",
+      logo: f.logo || "",
+      photo1: f.photo1 || "",
+      photo2: f.photo2 || "",
+      photo3: f.photo3 || "",
+      website: f.website || "",
+      typesText: (f.types || []).join(", ")
+    };
+
+    FILTER_OPTIONS.forEach(option => {
+      properties[FILTER_KEY_MAP[option]] = (f.types || []).includes(option);
+    });
+
+    return {
+      type:"Feature",
+      properties,
+      geometry:{
+        type:"Point",
+        coordinates:f.coordinates
+      }
+    };
+  });
+
+  map.addSource('facilities',{
+    type:'geojson',
+    data:{
+      type:"FeatureCollection",
+      features:features
+    }
+  });
+
+  map.addLayer({
+    id:'facility-layer',
+    type:'circle',
+    source:'facilities',
+    paint:{
+      'circle-radius':8,
+      'circle-stroke-width':1.5,
+      'circle-stroke-color':'#ffffff',
+      'circle-color':'#2f6fed'
+    }
+  });
+
+  /* HOVER */
+  map.on('mouseenter','facility-layer',()=>{
+    map.getCanvas().style.cursor='pointer';
+  });
+
+  map.on('mouseleave','facility-layer',()=>{
+    map.getCanvas().style.cursor='';
+  });
+
+  /* POPUP */
+  map.on('click','facility-layer',(e)=>{
+    if(!e.features || !e.features.length) return;
+
+    const feature = e.features[0];
+    const p = feature.properties || {};
+
+    new mapboxgl.Popup({maxWidth:"340px"})
+      .setLngLat(feature.geometry.coordinates)
+      .setHTML(buildPopupHTML(p))
+      .addTo(map);
+  });
+
+  /* COUNTER */
+  document.getElementById("entryCount").innerText =
+    facilities.length + " facilities";
+
+  /* FILTER */
+  const chips = document.querySelectorAll(".filterChip");
+
+  chips.forEach(chip => {
+    chip.addEventListener("click",()=>{
+      chips.forEach(c => c.classList.remove("activeChip"));
+      chip.classList.add("activeChip");
+
+      const type = chip.dataset.type;
+
+      if(type === "all"){
+        map.setFilter("facility-layer", null);
+      }else{
+        const key = FILTER_KEY_MAP[type];
+        map.setFilter("facility-layer", ["==", ["get", key], true]);
+      }
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
