@@ -21,11 +21,9 @@ body{font-family:'DM Sans',sans-serif;}
 
 /* ─── SHIP PIN ─── */
 .bv-pin{
-  width:46px;height:52px;
-  cursor:pointer;
+  width:46px;height:52px;cursor:pointer;
   transition:transform .22s cubic-bezier(.34,1.56,.64,1), filter .2s ease;
   transform-origin:50% 100%;
-  /* critical: allow pointer events on the wrapper */
 }
 .bv-pin:hover{ transform:translateY(-6px) scale(1.12); }
 .bv-pin.de{ filter:drop-shadow(0 4px 8px rgba(26,90,255,.45)); }
@@ -39,8 +37,7 @@ body{font-family:'DM Sans',sans-serif;}
   position:absolute;top:20px;left:20px;width:268px;
   background:rgba(255,255,255,.97);border-radius:var(--rp);
   padding:0;box-shadow:var(--shadow);border:1px solid var(--border);
-  z-index:10;max-height:88vh;overflow:hidden;
-  display:flex;flex-direction:column;
+  z-index:10;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;
 }
 .panelHeader{padding:16px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(160deg,#f7faff 0%,#fff 100%);flex-shrink:0;}
 .panelBrand{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
@@ -85,7 +82,7 @@ body{font-family:'DM Sans',sans-serif;}
 .pTop{padding:16px 16px 12px;background:linear-gradient(160deg,#f5f9ff,#fff);border-bottom:1px solid #edf1f5;}
 .pHeader{display:flex;align-items:flex-start;gap:12px;}
 .pLogoBox{width:52px;height:52px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid #e0e8f4;flex-shrink:0;box-shadow:0 2px 8px rgba(15,34,54,.07);}
-.pLogo{max-width:38px;max-height:38px;object-fit:contain;}
+.pLogo{max-width:46px;max-height:46px;object-fit:contain;border-radius:8px;}
 .pFallback{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#dce9ff,#b8d0ff);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;font-family:'DM Mono',monospace;}
 .pFallback.dk{background:linear-gradient(135deg,#ffdde0,#ffb8bc);color:var(--red);}
 .pTG{flex:1;}
@@ -163,205 +160,236 @@ mapboxgl.accessToken='pk.eyJ1IjoiaG9zc2Ftb3N0YWZhYSIsImEiOiJjbW0wbWNvd2owMDZlMm9
 const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-v11',center:[9.6,55],zoom:6.5});
 map.addControl(new mapboxgl.NavigationControl());
 
-/* ── DATA ── */
+/* ─────────────────────────────────────────────────
+   FACILITIES DATA
+   How to add images:
+   1. Upload file to GitHub repo under images/FolderName/filename.jpg
+   2. Use this URL pattern (spaces → %20):
+      https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/FolderName/filename.jpg
+   3. Paste into logo, photo1, photo2, or photo3 below
+───────────────────────────────────────────────── */
 const facilities=[
   {
     name:"Maritimes Zentrum Hochschule Flensburg",
-    country:"Germany",institution:"Hochschule Flensburg",
+    country:"Germany",
+    institution:"Hochschule Flensburg",
     types:["Ship bridge simulator","Ship engine room simulator","Safety training center"],
     description:"Bridge and engine room simulators for maritime research and training within the Baltic Ventures region.",
-    logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",
-    photo1:"https://upload.wikimedia.org/wikipedia/commons/0/02/Ship_bridge_simulator.jpg",
-    photo2:"https://upload.wikimedia.org/wikipedia/commons/3/30/Ship_simulator_room.jpg",
-    photo3:"",website:"https://www.maritimes-zentrum.de",coordinates:[9.447375,54.774750]
+    // ↓ ADD YOUR IMAGES HERE — paste raw GitHub URLs
+    logo:   "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",
+    photo1: "",   // e.g. "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/photo1.jpg"
+    photo2: "",
+    photo3: "",
+    website:"https://www.maritimes-zentrum.de",
+    coordinates:[9.447375,54.774750]
   },
   {
     name:"North Sea Flume Tank",
-    country:"Denmark",institution:"North Sea Science Park",
+    country:"Denmark",
+    institution:"North Sea Science Park",
     types:["Multi-industry facility","Sea-based maritime test area","Maritime plants and aggregates test facility"],
     description:"Europe's largest flume tank used for maritime, fisheries, and equipment testing.",
-    logo:"https://upload.wikimedia.org/wikipedia/commons/8/8e/Nordsøen_Oceanarium_logo.svg",
-    photo1:"",photo2:"",photo3:"",
-    website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",coordinates:[9.979883,57.586626]
+    logo:   "",   // paste logo URL here
+    photo1: "",   // paste photo URL here
+    photo2: "",
+    photo3: "",
+    website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",
+    coordinates:[9.979883,57.586626]
   },
   {
     name:"CAPTN Initiative Test Field",
-    country:"Germany",institution:"University of Kiel",
+    country:"Germany",
+    institution:"University of Kiel",
     types:["Sea-based maritime test area","Sea based autonomous systems test area"],
     description:"Autonomous shipping and maritime innovation test field in Kiel.",
-    logo:"",photo1:"",photo2:"",photo3:"",
-    website:"https://captn.sh",coordinates:[10.163939,54.322518]
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://captn.sh",
+    coordinates:[10.163939,54.322518]
   },
   {
     name:"Underwater Technology Lab",
-    country:"Denmark",institution:"Aalborg University",
+    country:"Denmark",
+    institution:"Aalborg University",
     types:["Sea based autonomous systems test area"],
     description:"Testing infrastructure for underwater robotics and maritime autonomy.",
-    logo:"",photo1:"",photo2:"",photo3:"",
-    website:"https://www.energy.aau.dk",coordinates:[8.446019,55.491252]
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://www.energy.aau.dk",
+    coordinates:[8.446019,55.491252]
   },
   {
     name:"Ocean and Coastal Engineering Laboratory",
-    country:"Denmark",institution:"Aalborg University",
+    country:"Denmark",
+    institution:"Aalborg University",
     types:["Other"],
     description:"Hydrodynamic testing basin and research infrastructure for maritime engineering.",
-    logo:"",photo1:"",photo2:"",photo3:"",
-    website:"https://www.en.build.aau.dk",coordinates:[9.973106,57.014682]
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://www.en.build.aau.dk",
+    coordinates:[9.973106,57.014682]
   },
   {
     name:"Maritime Exploration Hall",
-    country:"Germany",institution:"DFKI Robotics Innovation Center",
+    country:"Germany",
+    institution:"DFKI Robotics Innovation Center",
     types:["Land based autonomous systems test area"],
     description:"Robotic testing hall for maritime autonomy and exploration systems.",
-    logo:"",photo1:"",photo2:"",photo3:"",
-    website:"https://robotik.dfki-bremen.de",coordinates:[8.858109,53.112070]
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://robotik.dfki-bremen.de",
+    coordinates:[8.858109,53.112070]
   }
 ];
 
 /* ── HELPERS ── */
-function esc(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+
+// escHtml: only escapes HTML special chars — does NOT touch % so URLs stay intact
+function escHtml(s){
+  return String(s??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+// safeUrl: decodes any accidental double-encoding (%2520 → %20), then re-encodes safely
+function safeUrl(url){
+  if(!url) return "";
+  try {
+    // Decode first to fix double-encoded URLs (e.g. %2520 back to %20)
+    const decoded = decodeURIComponent(url);
+    // Re-encode only unsafe chars (spaces etc.) but leave / : . # % intact
+    return decoded.replace(/ /g, "%20");
+  } catch(e) {
+    return url; // if already valid, return as-is
+  }
+}
+
 function ini(n){return String(n||"").trim().split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||"").join("")||"BV";}
 
 /* ── POPUP HTML ── */
 function popupHTML(f){
-  const dk=f.country==="Denmark", cls=dk?" dk":"";
-  const logo=f.logo
-    ?`<img class="pLogo" src="${esc(f.logo)}" alt="${esc(f.name)}">`
-    :`<div class="pFallback${cls}">${ini(f.name)}</div>`;
-  const pills=(f.types||[]).map(t=>`<span class="pPill${cls}">${esc(t)}</span>`).join("");
-  const photos=[f.photo1,f.photo2,f.photo3].filter(Boolean);
-  const gallery=photos.length
-    ?`<div class="pGLabel">Facility Photos</div><div class="pGallery">${photos.map(u=>`<img src="${esc(u)}" alt="${esc(f.name)}">`).join("")}</div>`
-    :`<div class="pNoPhoto">No photos available yet for this facility.</div>`;
-  const btn=f.website
-    ?`<div class="pFooter"><a class="pBtn${cls}" href="${esc(f.website)}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a></div>`
-    :"";
-  return`<div class="pCard">
+  const dk  = f.country==="Denmark";
+  const cls = dk ? " dk" : "";
+
+  // Use safeUrl() for all image sources so %20 spaces never get double-encoded
+  const logoSrc  = safeUrl(f.logo);
+  const p1       = safeUrl(f.photo1);
+  const p2       = safeUrl(f.photo2);
+  const p3       = safeUrl(f.photo3);
+
+  const logoHTML = logoSrc
+    ? `<img class="pLogo" src="${logoSrc}" alt="${escHtml(f.name)}">`
+    : `<div class="pFallback${cls}">${ini(f.name)}</div>`;
+
+  const pills = (f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(t)}</span>`).join("");
+
+  const photos = [p1, p2, p3].filter(Boolean);
+  const gallery = photos.length
+    ? `<div class="pGLabel">Facility Photos</div>
+       <div class="pGallery">
+         ${photos.map(u=>`<img src="${u}" alt="${escHtml(f.name)}">`).join("")}
+       </div>`
+    : `<div class="pNoPhoto">No photos available yet for this facility.</div>`;
+
+  const btn = f.website
+    ? `<div class="pFooter">
+         <a class="pBtn${cls}" href="${escHtml(f.website)}" target="_blank" rel="noopener noreferrer">
+           Visit Website ↗
+         </a>
+       </div>`
+    : "";
+
+  return `<div class="pCard">
 <div class="pStrip${dk?" dk":" de"}"></div>
 <div class="pTop">
   <div class="pHeader">
-    <div class="pLogoBox">${logo}</div>
+    <div class="pLogoBox">${logoHTML}</div>
     <div class="pTG">
-      <div class="pTitle">${esc(f.name)}</div>
+      <div class="pTitle">${escHtml(f.name)}</div>
       <div class="pPills">${pills}</div>
     </div>
   </div>
 </div>
 <div class="pBody">
-  ${f.institution?`<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M8 2L14 7H2L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="pMetaTxt">${esc(f.institution)}</span></div>`:""}
-  ${f.country?`<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.1"/></svg><span class="pMetaTxt">${esc(f.country)}</span></div>`:""}
+  ${f.institution?`<div class="pMeta">
+    <svg viewBox="0 0 16 16" fill="none">
+      <rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M8 2L14 7H2L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+    </svg>
+    <span class="pMetaTxt">${escHtml(f.institution)}</span>
+  </div>`:""}
+  ${f.country?`<div class="pMeta">
+    <svg viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.1"/>
+    </svg>
+    <span class="pMetaTxt">${escHtml(f.country)}</span>
+  </div>`:""}
   <hr class="pHr">
-  <div class="pDesc">${esc(f.description)}</div>
+  <div class="pDesc">${escHtml(f.description)}</div>
   ${gallery}
   ${btn}
 </div>
 </div>`;
 }
 
-/* ── SHIP-THEMED PIN SVG ──
-   Design: a circular badge showing a side-view ship silhouette,
-   sitting on a short stem with a ground anchor dot.
-   Blue = Germany, Red = Denmark.
-*/
-function shipPinSVG(f, idx){
+/* ── SHIP PIN SVG ── */
+function shipPinSVG(f,idx){
   const dk  = f.country==="Denmark";
-  const acc = dk ? "#c0232d" : "#1a5aff";
-  const mid = dk ? "#e8404e" : "#4d87ff";
+  const acc = dk?"#c0232d":"#1a5aff";
+  const mid = dk?"#e8404e":"#4d87ff";
   const uid = "sp"+idx;
-
-  /* ship silhouette path — centred around 0,0 scaled to fit ~28×14 box */
-  /* hull: flat bottom, curved bow right, angled stern left            */
-  /* superstructure: small bridge block on top                        */
-  /* all relative to circle centre (23,22)                            */
-  const sx=23, sy=22;   /* circle centre */
-
+  const sx=23, sy=22;
   return `<svg width="46" height="52" viewBox="0 0 46 52" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="bg${uid}" cx="40%" cy="30%" r="70%">
-      <stop offset="0%"   stop-color="${mid}"/>
+      <stop offset="0%" stop-color="${mid}"/>
       <stop offset="100%" stop-color="${acc}"/>
     </radialGradient>
     <filter id="sh${uid}" x="-40%" y="-40%" width="180%" height="180%">
       <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="${acc}" flood-opacity=".35"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="1"   flood-color="#000"   flood-opacity=".12"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".12"/>
     </filter>
     <clipPath id="cc${uid}"><circle cx="${sx}" cy="${sy}" r="19"/></clipPath>
   </defs>
-
-  <!-- stem -->
-  <line x1="${sx}" y1="${sy+19}" x2="${sx}" y2="49"
-        stroke="${acc}" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- ground dot -->
+  <line x1="${sx}" y1="${sy+19}" x2="${sx}" y2="49" stroke="${acc}" stroke-width="2.5" stroke-linecap="round"/>
   <circle cx="${sx}" cy="50.5" r="2.5" fill="${acc}" opacity=".55"/>
-
-  <!-- circle badge with drop shadow -->
   <g filter="url(#sh${uid})">
     <circle cx="${sx}" cy="${sy}" r="19" fill="url(#bg${uid})"/>
   </g>
-
-  <!-- white rim -->
   <circle cx="${sx}" cy="${sy}" r="19" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/>
-
-  <!-- ship illustration clipped to circle -->
   <g clip-path="url(#cc${uid})">
-
-    <!-- water line -->
     <rect x="${sx-19}" y="${sy+8}" width="38" height="12" fill="rgba(255,255,255,.12)"/>
-    <line x1="${sx-19}" y1="${sy+8}" x2="${sx+19}" y2="${sy+8}"
-          stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-dasharray="3 2"/>
-
-    <!-- hull body: trapezoid wider at top -->
-    <polygon
-      points="${sx-13},${sy+8} ${sx+14},${sy+8} ${sx+12},${sy+15} ${sx-11},${sy+15}"
-      fill="rgba(255,255,255,.9)"/>
-
-    <!-- bow curve (right) -->
-    <path d="M${sx+14} ${sy+8} Q${sx+19} ${sy+8} ${sx+18} ${sy+14} L${sx+12} ${sy+15}Z"
-          fill="rgba(255,255,255,.75)"/>
-
-    <!-- stern (left flat) -->
-    <polygon
-      points="${sx-13},${sy+8} ${sx-11},${sy+15} ${sx-15},${sy+15} ${sx-16},${sy+10}"
-      fill="rgba(255,255,255,.7)"/>
-
-    <!-- superstructure / bridge -->
-    <rect x="${sx-4}" y="${sy+1}" width="10" height="7" rx="1.5"
-          fill="rgba(255,255,255,.95)"/>
-
-    <!-- bridge window -->
-    <rect x="${sx-2}" y="${sy+2.5}" width="2.5" height="3" rx=".6"
-          fill="${acc}" opacity=".8"/>
-    <rect x="${sx+1.5}" y="${sy+2.5}" width="2.5" height="3" rx=".6"
-          fill="${acc}" opacity=".8"/>
-
-    <!-- funnel / chimney -->
-    <rect x="${sx-8}" y="${sy+2}" width="4" height="6" rx="1"
-          fill="rgba(255,255,255,.85)"/>
-    <!-- funnel top stripe -->
-    <rect x="${sx-8}" y="${sy+2}" width="4" height="2" rx="1"
-          fill="${acc}" opacity=".7"/>
-
-    <!-- mast line -->
-    <line x1="${sx+7}" y1="${sy+1}" x2="${sx+7}" y2="${sy-7}"
-          stroke="rgba(255,255,255,.9)" stroke-width="1.2"/>
-    <!-- flag on mast -->
-    <polygon points="${sx+7},${sy-7} ${sx+12},${sy-5} ${sx+7},${sy-3}"
-             fill="rgba(255,255,255,.9)"/>
-
-    <!-- anchor icon bottom-left of circle (subtle) -->
+    <line x1="${sx-19}" y1="${sy+8}" x2="${sx+19}" y2="${sy+8}" stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-dasharray="3 2"/>
+    <polygon points="${sx-13},${sy+8} ${sx+14},${sy+8} ${sx+12},${sy+15} ${sx-11},${sy+15}" fill="rgba(255,255,255,.9)"/>
+    <path d="M${sx+14} ${sy+8} Q${sx+19} ${sy+8} ${sx+18} ${sy+14} L${sx+12} ${sy+15}Z" fill="rgba(255,255,255,.75)"/>
+    <polygon points="${sx-13},${sy+8} ${sx-11},${sy+15} ${sx-15},${sy+15} ${sx-16},${sy+10}" fill="rgba(255,255,255,.7)"/>
+    <rect x="${sx-4}" y="${sy+1}" width="10" height="7" rx="1.5" fill="rgba(255,255,255,.95)"/>
+    <rect x="${sx-2}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/>
+    <rect x="${sx+1.5}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/>
+    <rect x="${sx-8}" y="${sy+2}" width="4" height="6" rx="1" fill="rgba(255,255,255,.85)"/>
+    <rect x="${sx-8}" y="${sy+2}" width="4" height="2" rx="1" fill="${acc}" opacity=".7"/>
+    <line x1="${sx+7}" y1="${sy+1}" x2="${sx+7}" y2="${sy-7}" stroke="rgba(255,255,255,.9)" stroke-width="1.2"/>
+    <polygon points="${sx+7},${sy-7} ${sx+12},${sy-5} ${sx+7},${sy-3}" fill="rgba(255,255,255,.9)"/>
     <g opacity=".55" transform="translate(${sx-16},${sy+10}) scale(.55)">
       <circle cx="5" cy="3" r="2.2" fill="none" stroke="white" stroke-width="1.4"/>
       <line x1="5" y1="5.2" x2="5" y2="12" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
       <path d="M1 12 Q5 14 9 12" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
       <line x1="1" y1="7.5" x2="9" y2="7.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
     </g>
-
-  </g><!-- end clip -->
-
-  <!-- shine overlay top-left -->
-  <ellipse cx="${sx-7}" cy="${sy-9}" rx="7" ry="4.5"
-           fill="rgba(255,255,255,.22)" clip-path="url(#cc${uid})"/>
-
+  </g>
+  <ellipse cx="${sx-7}" cy="${sy-9}" rx="7" ry="4.5" fill="rgba(255,255,255,.22)" clip-path="url(#cc${uid})"/>
 </svg>`;
 }
 
@@ -372,14 +400,11 @@ let selCountry="all", selType="all";
 function spawnMarkers(){
   facilities.forEach((f,idx)=>{
     const dk=f.country==="Denmark";
-
-    /* Wrapper div */
     const el=document.createElement("div");
     el.className=`bv-pin ${dk?"dk":"de"}`;
     el.style.cssText="width:46px;height:52px;cursor:pointer;";
     el.innerHTML=shipPinSVG(f,idx);
 
-    /* Build popup object — attach to marker so Mapbox handles the click */
     const popup=new mapboxgl.Popup({
       maxWidth:"345px",
       offset:[0,-54],
@@ -387,8 +412,7 @@ function spawnMarkers(){
       closeOnClick:true
     }).setHTML(popupHTML(f));
 
-    /* Use setPopup() — this is the RELIABLE way; Mapbox wires the click itself */
-    const marker=new mapboxgl.Marker({element:el, anchor:"bottom"})
+    const marker=new mapboxgl.Marker({element:el,anchor:"bottom"})
       .setLngLat(f.coordinates)
       .setPopup(popup)
       .addTo(map);
@@ -416,7 +440,7 @@ map.on("load",async()=>{
   const regions=data.features.filter(f=>f.properties.NUTS_ID==="DEF0"||f.properties.NUTS_ID==="DK03");
   const merged={type:"Feature",geometry:{type:"MultiPolygon",coordinates:[]}};
   regions.forEach(f=>{
-    if(f.geometry.type==="Polygon")      merged.geometry.coordinates.push(f.geometry.coordinates);
+    if(f.geometry.type==="Polygon") merged.geometry.coordinates.push(f.geometry.coordinates);
     if(f.geometry.type==="MultiPolygon") merged.geometry.coordinates.push(...f.geometry.coordinates);
   });
   const holes=[];
