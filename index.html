@@ -53,11 +53,21 @@ body{font-family:'DM Sans',sans-serif;}
 .cChip:hover{background:var(--chip-hover);border-color:#c5d4ef;transform:translateY(-1px);}
 .cChip.on{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 3px 10px rgba(26,90,255,.3);}
 .divider{border:none;border-top:1px solid var(--border);margin:0 0 14px;}
-.tChip{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border-radius:var(--rc);background:var(--chip-bg);border:1.5px solid transparent;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text);transition:all .16s ease;margin-bottom:5px;text-align:left;}
+
+/* ─── TYPE CHIPS – allow text to wrap ─── */
+.tChip{
+  display:flex;align-items:flex-start;gap:8px;width:100%;
+  padding:8px 10px;border-radius:var(--rc);
+  background:var(--chip-bg);border:1.5px solid transparent;
+  cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text);
+  transition:all .16s ease;margin-bottom:5px;text-align:left;
+  /* allow long labels to wrap instead of overflow */
+  white-space:normal;word-break:break-word;line-height:1.45;
+}
 .tChip:hover{background:var(--chip-hover);border-color:#c5d4ef;transform:translateX(2px);}
 .tChip.on{background:var(--blue-soft);color:var(--blue);border-color:#a8c0ff;font-weight:600;}
 .tChip.on .dot{background:var(--blue);}
-.dot{width:6px;height:6px;border-radius:50%;background:#c5d0de;flex-shrink:0;transition:background .16s;}
+.dot{width:6px;height:6px;border-radius:50%;background:#c5d0de;flex-shrink:0;transition:background .16s;margin-top:5px;}/* margin-top aligns dot with first line */
 .tChip.allT.on{background:var(--navy);color:#fff;border-color:var(--navy);}
 .tChip.allT.on .dot{background:#fff;}
 .panelFooter{padding:10px 14px 12px;border-top:1px solid var(--border);background:#f9fbfd;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
@@ -116,12 +126,10 @@ body{font-family:'DM Sans',sans-serif;}
 .mdFlag.de{background:#dce9ff;}
 .mdFlag.dk{background:#ffdde0;}
 .mdFlagInner{width:18px;height:12px;border-radius:2px;overflow:hidden;}
-/* German flag stripes */
 .mdFlagDe{display:flex;flex-direction:column;}
 .mdFlagDe span:nth-child(1){flex:1;background:#000;}
 .mdFlagDe span:nth-child(2){flex:1;background:#D00;}
 .mdFlagDe span:nth-child(3){flex:1;background:#FFCE00;}
-/* Danish flag */
 .mdFlagDk{background:#C60C30;position:relative;}
 .mdFlagDk::before{content:'';position:absolute;top:0;bottom:0;left:4px;width:3px;background:white;}
 .mdFlagDk::after{content:'';position:absolute;left:0;right:0;top:4px;height:3px;background:white;}
@@ -144,10 +152,16 @@ body{font-family:'DM Sans',sans-serif;}
 .pLogo{max-width:46px;max-height:46px;object-fit:contain;border-radius:8px;}
 .pFallback{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#dce9ff,#b8d0ff);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;font-family:'DM Mono',monospace;}
 .pFallback.dk{background:linear-gradient(135deg,#ffdde0,#ffb8bc);color:var(--red);}
-.pTG{flex:1;}
+.pTG{flex:1;min-width:0;}
 .pTitle{font-size:15px;font-weight:700;color:#0f2236;line-height:1.3;margin-bottom:5px;}
 .pPills{display:flex;flex-wrap:wrap;gap:4px;}
-.pPill{font-size:10px;font-weight:600;letter-spacing:.04em;background:#f0f5ff;color:var(--blue);border:1px solid #ccdaff;padding:2px 7px;border-radius:20px;white-space:nowrap;}
+/* Pills wrap and allow long text */
+.pPill{
+  font-size:10px;font-weight:600;letter-spacing:.04em;
+  background:#f0f5ff;color:var(--blue);border:1px solid #ccdaff;
+  padding:2px 7px;border-radius:20px;
+  white-space:normal;word-break:break-word;line-height:1.5;
+}
 .pPill.dk{background:#fff0f1;color:var(--red);border-color:#ffc5c8;}
 .pBody{padding:14px 16px 16px;}
 .pMeta{display:flex;align-items:center;gap:6px;font-size:12px;color:#5f7388;margin-bottom:6px;}
@@ -164,38 +178,6 @@ body{font-family:'DM Sans',sans-serif;}
 .pBtn:hover{background:#1348d6;transform:translateY(-1px);}
 .pBtn.dk{background:var(--red);}
 .pBtn.dk:hover{background:#a01e26;}
-
-/* ─── MORE DATA CARD ─── */
-#moreData{
-  position:absolute;bottom:28px;right:20px;width:230px;
-  background:rgba(255,255,255,.97);border:1px solid var(--border);
-  border-radius:14px;box-shadow:0 6px 28px rgba(15,34,54,.13);
-  z-index:10;overflow:hidden;
-}
-.mdHeader{padding:11px 14px 9px;border-bottom:1px solid #f0f4f8;background:linear-gradient(160deg,#f7faff,#fff);}
-.mdHeaderTop{display:flex;align-items:center;gap:7px;}
-.mdHeaderTop svg{flex-shrink:0;}
-.mdHeaderTitle{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.03em;}
-.mdHeaderSub{font-size:10.5px;color:var(--muted);margin-top:2px;padding-left:20px;}
-.mdRow{display:flex;align-items:center;gap:10px;padding:10px 14px;text-decoration:none;border-bottom:1px solid #f0f4f8;transition:background .15s;cursor:pointer;}
-.mdRow:last-child{border-bottom:none;}
-.mdRow.de:hover{background:#f7faff;}
-.mdRow.dk:hover{background:#fff7f7;}
-.mdFlag{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
-.mdFlag.de{background:#dce9ff;}
-.mdFlag.dk{background:#ffdde0;}
-.mdFlagInner{width:18px;height:12px;border-radius:2px;overflow:hidden;}
-.mdFlagDe{display:flex;flex-direction:column;}
-.mdFlagDe span:nth-child(1){flex:1;background:#000;}
-.mdFlagDe span:nth-child(2){flex:1;background:#D00;}
-.mdFlagDe span:nth-child(3){flex:1;background:#FFCE00;}
-.mdFlagDk{background:#C60C30;position:relative;display:flex;align-items:center;justify-content:center;}
-.mdFlagDk::before{content:'';position:absolute;width:100%;height:3px;background:white;}
-.mdFlagDk::after{content:'';position:absolute;width:4px;height:100%;background:white;left:4px;}
-.mdText{flex:1;}
-.mdLabel{font-size:11.5px;font-weight:700;color:var(--navy);}
-.mdSub{font-size:10px;color:var(--muted);margin-top:1px;}
-.mdArrow{flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -241,7 +223,8 @@ body{font-family:'DM Sans',sans-serif;}
     <div class="tChip" data-type="Ambient condition / thermodynamic test facility"><span class="dot"></span>Thermodynamic test</div>
     <div class="tChip" data-type="Internal combustion engines test facility"><span class="dot"></span>Engine testing</div>
     <div class="tChip" data-type="Maritime plants and aggregates test facility"><span class="dot"></span>Plants &amp; aggregates</div>
-    <div class="tChip" data-type="Other"><span class="dot"></span>Other</div>
+    <!-- "Other" catches anything not in the KNOWN_TYPES list -->
+    <div class="tChip" data-type="other"><span class="dot"></span>Other</div>
   </div>
   <div class="panelFooter">
     <span class="fCount" id="entryCount">— facilities</span>
@@ -303,19 +286,36 @@ const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-
 map.addControl(new mapboxgl.NavigationControl());
 
 /* ─────────────────────────────────────────────────
+   KNOWN TYPES — exactly matching the filter chips above.
+   Any facility type NOT in this list is treated as "Other".
+───────────────────────────────────────────────── */
+const KNOWN_TYPES = new Set([
+  "Ship engine room simulator",
+  "Ship bridge simulator",
+  "Shock and/or vibration test facility",
+  "Sea-based maritime test area",
+  "Safety training center",
+  "Land based autonomous systems test area",
+  "Research vessel / test ship",
+  "Sea based autonomous systems test area",
+  "Multi-industry facility",
+  "Fire resistance / fire fighting test facility",
+  "EMC test facility",
+  "PLC test facility",
+  "Ambient condition / thermodynamic test facility",
+  "Internal combustion engines test facility",
+  "Maritime plants and aggregates test facility"
+]);
+
+/* ─────────────────────────────────────────────────
    FACILITIES DATA
-   How to add images:
-   1. Upload file to GitHub repo under images/FolderName/filename.jpg
-   2. Use this URL pattern (spaces → %20):
-      https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/FolderName/filename.jpg
-   3. Paste into logo, photo1, photo2, or photo3 below
 ───────────────────────────────────────────────── */
 const facilities=[
   {
     name:"Maritimes Zentrum Hochschule Flensburg",
     country:"Germany",
     institution:"Hochschule Flensburg",
-    types:["Ship bridge simulator","Ship engine room simulator","Safety training center"],
+    types:["Ship bridge simulator","Ship engine room simulator","Research vessel / test ship"],
     description:"Bridge and engine room simulators for maritime research and training within the Baltic Ventures region.",
     logo:   "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",
     photo1: "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/csm_Maritime_Centre_Flensburg_University_of_Applied_Sciences_dfe9e15c50.jpg",
@@ -328,7 +328,7 @@ const facilities=[
     name:"North Sea Flume Tank",
     country:"Denmark",
     institution:"North Sea Science Park",
-    types:["Multi-industry facility","Sea-based maritime test area","Maritime plants and aggregates test facility"],
+    types:["Multi-industry facility","Maritime plants and aggregates test facility","Land based autonomous systems test area","Tests, Measurements and Demonstrations of equipment for fishing, aquaculture, and underwater technology"],
     description:"Europe's largest flume tank used for maritime, fisheries, and equipment testing.",
     logo:   "",
     photo1: "",
@@ -341,7 +341,7 @@ const facilities=[
     name:"CAPTN Initiative Test Field",
     country:"Germany",
     institution:"University of Kiel",
-    types:["Sea-based maritime test area","Sea based autonomous systems test area"],
+    types:["Sea-based maritime test area","Sea based autonomous systems test area","Land based autonomous systems test area","Research vessel / test ship"],
     description:"Autonomous shipping and maritime innovation test field in Kiel.",
     logo:   "",
     photo1: "",
@@ -354,7 +354,7 @@ const facilities=[
     name:"Underwater Technology Lab",
     country:"Denmark",
     institution:"Aalborg University",
-    types:["Sea based autonomous systems test area"],
+    types:["Sea based autonomous systems test area","Sea-based maritime test area"],
     description:"Testing infrastructure for underwater robotics and maritime autonomy.",
     logo:   "",
     photo1: "",
@@ -367,7 +367,7 @@ const facilities=[
     name:"Ocean and Coastal Engineering Laboratory",
     country:"Denmark",
     institution:"Aalborg University",
-    types:["Other"],
+    types:["Wave and current basin and flume"],
     description:"Hydrodynamic testing basin and research infrastructure for maritime engineering.",
     logo:   "",
     photo1: "",
@@ -380,7 +380,7 @@ const facilities=[
     name:"Maritime Exploration Hall",
     country:"Germany",
     institution:"DFKI Robotics Innovation Center",
-    types:["Land based autonomous systems test area"],
+    types:["Land based autonomous systems test area","Pressure Chamber"],
     description:"Robotic testing hall for maritime autonomy and exploration systems.",
     logo:   "",
     photo1: "",
@@ -388,6 +388,71 @@ const facilities=[
     photo3: "",
     website:"https://robotik.dfki-bremen.de",
     coordinates:[8.858109,53.112070]
+  },
+  {
+    name:"Schiffbau-Versuchsanstalt Potsdam GmbH",
+    country:"Germany",
+    institution:"Hydrodynamics in Naval Architecture, model testing",
+    types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],
+    description:"Ship model basin, model testing, towing tank, cavitation tunnel.",
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://www.sva-potsdam.de/en/",
+    coordinates:[12.983939,52.4487358]
+  },
+  {
+    name:"HS Emden/Leer, FB Seefahrt und Maritime Wissenschaften",
+    country:"Germany",
+    institution:"Maritimes Technikum",
+    types:["Internal combustion engines test facility","Schlepptank, Manöverbecken, Schallraum, WIndkanal"],
+    description:"The Maritime Technology Centre has a laboratory for marine technology with high-performance CFD resources for examination of the flow fields of ships and hydraulic structures at close range..",
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://www.hs-emden-leer.de/en/current-students/faculties/maritime-sciences/research-laboratories-projects",
+    coordinates:[7.4569501,53.2324806]
+  },
+  {
+    name:"Port Esbjerg",
+    country:"Denmark",
+    institution:"Transitioning Industrial Cluster - Port Esbjerg",
+    types:["Green Fuels, Onboard Carbon Capture"],
+    description:"",
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://portesbjerg.dk/",
+    coordinates:[8.447325,55.464083] 
+  },
+  {
+    name:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",
+    country:"Germany",
+    institution:"Maritime Simulation - Deck/Engine/ Traffic Service",
+    types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],
+    description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. All simulators can be linked and act together.",
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",
+    coordinates:[12.081934,54.170983] 
+  },
+  {
+    name:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",
+    country:"Germany",
+    institution:"MarGate Helgoland",
+    types:["Sea-based maritime test area","Sea based autonomous systems test area ","Underwater experimental area and test facility"],
+    description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures like breakwaters. It also provides real-time environmental data and supports long-term research through advanced underwater infrastructure.",
+    logo:   "",
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    website:"https://www.awi.de/en/science/special-groups/scientific-diving/margate.html",
+    coordinates:[7.883334,54.180004] 
   }
 ];
 
@@ -561,11 +626,25 @@ function updateCount(){
   document.getElementById("entryCount").innerText=visible+" facilit"+(visible===1?"y":"ies");
 }
 
+/* ── FILTER LOGIC ──
+   selType === "other"  → show facilities that have at least one type NOT in KNOWN_TYPES
+   selType === "all"    → show everything
+   selType === <exact>  → show facilities whose types array includes that exact string
+*/
+function facilityMatchesType(bv, selType){
+  if(selType === "all") return true;
+  if(selType === "other"){
+    // Has at least one type not in the known list
+    return bv.types.some(t => !KNOWN_TYPES.has(t));
+  }
+  return bv.types.includes(selType);
+}
+
 function applyFilters(){
   markers.forEach(m=>{
     const d=m._bv;
     const ok=(selCountry==="all"||d.country===selCountry)
-           &&(selType==="all"||d.types.includes(selType));
+           && facilityMatchesType(d, selType);
     m.getElement().style.display=ok?"block":"none";
   });
   updateCount();
