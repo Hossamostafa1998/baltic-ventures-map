@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Baltic Ventures Map</title>
+<title>Baltic Ventures Program Map</title>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.19.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.19.1/mapbox-gl.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,7 +19,6 @@
 body{font-family:'DM Sans',sans-serif;}
 #map{position:absolute;top:0;bottom:0;width:100%;}
 
-/* ─── SHIP PIN ─── */
 .bv-pin{
   width:46px;height:52px;cursor:pointer;
   transition:transform .22s cubic-bezier(.34,1.56,.64,1), filter .2s ease;
@@ -32,113 +31,222 @@ body{font-family:'DM Sans',sans-serif;}
 .bv-pin.dk:hover{ filter:drop-shadow(0 8px 18px rgba(192,35,45,.6)); }
 .bv-pin svg{ display:block; pointer-events:none; }
 
-/* ─── PANEL ─── */
 #filterPanel{
-  position:absolute;top:20px;left:20px;width:268px;
-  background:rgba(255,255,255,.97);border-radius:var(--rp);
-  padding:0;box-shadow:var(--shadow);border:1px solid var(--border);
-  z-index:10;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;
+  position:absolute;top:20px;left:20px;width:232px;
+  background:#fff;border-radius:20px;
+  padding:0;
+  box-shadow:0 12px 48px rgba(15,34,54,.18),0 2px 6px rgba(15,34,54,.08);
+  border:1px solid rgba(226,232,240,.8);
+  z-index:10;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;
 }
-.panelHeader{padding:16px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(160deg,#f7faff 0%,#fff 100%);flex-shrink:0;}
-.panelBrand{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
-.panelDot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);}
-.panelTitle{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);}
-.panelSubtitle{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;padding-left:16px;}
-.panelBody{overflow-y:auto;padding:14px 14px 16px;flex:1;scrollbar-width:thin;scrollbar-color:#d0d9e8 transparent;}
-.panelBody::-webkit-scrollbar{width:4px;}
-.panelBody::-webkit-scrollbar-thumb{background:#d0d9e8;border-radius:4px;}
-.secLabel{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-top:4px;padding-left:2px;}
-.countryRow{display:flex;gap:6px;margin-bottom:16px;}
-.cChip{flex:1;text-align:center;padding:7px 6px;border-radius:var(--rc);background:var(--chip-bg);border:1.5px solid transparent;cursor:pointer;font-size:12px;font-weight:600;color:var(--text);transition:all .18s ease;white-space:nowrap;}
-.cChip:hover{background:var(--chip-hover);border-color:#c5d4ef;transform:translateY(-1px);}
-.cChip.on{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 3px 10px rgba(26,90,255,.3);}
-.divider{border:none;border-top:1px solid var(--border);margin:0 0 14px;}
 
-/* ─── TYPE CHIPS – allow text to wrap ─── */
-.tChip{
-  display:flex;align-items:flex-start;gap:8px;width:100%;
-  padding:8px 10px;border-radius:var(--rc);
+.panelHeader{
+  flex-shrink:0;background:linear-gradient(135deg,#0a1f38 0%,#0f2236 55%,#1a3a5c 100%);
+  position:relative;overflow:hidden;padding:14px 14px 28px;
+}
+.panelHeaderStars{
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 18% 22%,rgba(255,255,255,.55) 0%,transparent 100%),
+    radial-gradient(1px 1px at 72% 15%,rgba(255,255,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 40% 60%,rgba(255,255,255,.3) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 70%,rgba(255,255,255,.45) 0%,transparent 100%),
+    radial-gradient(1px 1px at 55% 40%,rgba(255,255,255,.25) 0%,transparent 100%),
+    radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,.35) 0%,transparent 100%);
+}
+.panelWave{position:absolute;bottom:0;left:0;right:0;height:18px;}
+.panelHeaderInner{position:relative;display:flex;align-items:flex-start;gap:10px;}
+.panelShipIcon{
+  width:34px;height:34px;flex-shrink:0;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+}
+.panelShipIcon svg{width:20px;height:20px;}
+.panelTitles{flex:1;min-width:0;padding-top:1px;}
+.panelTitle{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;line-height:1.25;margin-bottom:2px;}
+.panelSubtitle{font-size:9px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;letter-spacing:.04em;}
+
+.panelBody{overflow-y:auto;padding:12px 11px 13px;flex:1;scrollbar-width:thin;scrollbar-color:#d0d9e8 transparent;}
+.panelBody::-webkit-scrollbar{width:3px;}
+.panelBody::-webkit-scrollbar-thumb{background:#d0d9e8;border-radius:3px;}
+
+.secLabel{
+  font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:7px;margin-top:1px;
+  display:flex;align-items:center;gap:5px;
+}
+.secLabel::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* INTERREG Area chip */
+.interregChip{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 10px;border-radius:10px;
   background:var(--chip-bg);border:1.5px solid transparent;
-  cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text);
-  transition:all .16s ease;margin-bottom:5px;text-align:left;
-  /* allow long labels to wrap instead of overflow */
-  white-space:normal;word-break:break-word;line-height:1.45;
+  cursor:pointer;font-size:10.5px;font-weight:600;color:var(--muted);
+  transition:all .17s ease;margin-bottom:12px;
+  position:relative;
 }
-.tChip:hover{background:var(--chip-hover);border-color:#c5d4ef;transform:translateX(2px);}
-.tChip.on{background:var(--blue-soft);color:var(--blue);border-color:#a8c0ff;font-weight:600;}
-.tChip.on .dot{background:var(--blue);}
-.dot{width:6px;height:6px;border-radius:50%;background:#c5d0de;flex-shrink:0;transition:background .16s;margin-top:5px;}/* margin-top aligns dot with first line */
-.tChip.allT.on{background:var(--navy);color:#fff;border-color:var(--navy);}
-.tChip.allT.on .dot{background:#fff;}
-.panelFooter{padding:10px 14px 12px;border-top:1px solid var(--border);background:#f9fbfd;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
-.fCount{font-size:11.5px;font-weight:600;color:var(--muted);font-family:'DM Mono',monospace;}
-.fBadge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--blue-soft);color:var(--blue);padding:3px 8px;border-radius:20px;}
-
-/* ─── LEGEND ─── */
-#legend{
-  position:absolute;bottom:28px;left:20px;
-  background:rgba(255,255,255,.96);border:1px solid var(--border);
-  border-radius:12px;padding:9px 14px;
-  box-shadow:0 4px 16px rgba(15,34,54,.1);
-  z-index:10;display:flex;gap:14px;align-items:center;
+.interregChip:hover{background:var(--chip-hover);border-color:#c5d4ef;color:var(--navy);}
+.interregChip.on{
+  background:linear-gradient(135deg,#e8f0ff,#f0e8ff);
+  border-color:#8a6fff;color:#5c3fd6;
+  box-shadow:0 2px 10px rgba(92,63,214,.18);
 }
-.li{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--muted);}
-.lswatch{width:11px;height:11px;border-radius:3px;}
-.lswatch.de{background:var(--blue);}
-.lswatch.dk{background:var(--red);}
+.interregBadge{
+  display:flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  background:rgba(92,63,214,.1);
+  transition:background .14s;
+}
+.interregChip.on .interregBadge{background:rgba(92,63,214,.18);}
+.interregBadge svg{width:12px;height:12px;}
+.interregLabel{flex:1;font-size:10.5px;line-height:1.3;}
 
-/* ─── MORE DATA CARD ─── */
-#moreData{
-  position:absolute;bottom:28px;right:20px;
-  width:232px;
+/* Country toggle */
+.countryRow{display:flex;gap:5px;margin-bottom:12px;}
+.cChip{
+  flex:1;border-radius:10px;padding:7px 5px 6px;
+  background:var(--chip-bg);border:1.5px solid transparent;
+  cursor:pointer;font-size:10px;font-weight:700;color:var(--muted);
+  transition:all .17s ease;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.cChip:hover{background:var(--chip-hover);border-color:#c5d4ef;color:var(--navy);}
+.cChip.on{background:#fff;border-color:var(--blue);color:var(--blue);
+  box-shadow:0 2px 10px rgba(26,90,255,.18);}
+.cChip[data-country="Denmark"].on{border-color:var(--red);color:var(--red);
+  box-shadow:0 2px 10px rgba(192,35,45,.18);}
+.cFlag{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;position:relative;}
+
+.typeList{display:flex;flex-direction:column;gap:2px;}
+.tChip{
+  display:flex;align-items:center;gap:7px;
+  padding:5px 8px 5px 10px;border-radius:9px;
+  background:transparent;border:1px solid transparent;
+  cursor:pointer;font-size:10.5px;font-weight:500;color:#4a5f74;
+  transition:all .14s ease;position:relative;
+}
+.tChip::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:2.5px;height:0;border-radius:2px;background:var(--blue);
+  transition:height .15s ease;
+}
+.tChip:hover{background:var(--chip-bg);color:var(--navy);}
+.tChip:hover::before{height:55%;}
+.tChip.on{background:var(--blue-soft);border-color:#c2d5ff;color:var(--blue);font-weight:600;}
+.tChip.on::before{height:65%;}
+.tChipIcon{
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  background:rgba(26,90,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .14s;
+}
+.tChip.on .tChipIcon{background:rgba(26,90,255,.15);}
+.tChipIcon svg{width:12px;height:12px;flex-shrink:0;}
+.tChipLabel{flex:1;font-size:10.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tChip.allT{border:1.5px dashed #ccd8ee;padding-left:8px;}
+.tChip.allT::before{display:none;}
+.tChip.allT.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+.tChip.allT.on .tChipIcon{background:rgba(255,255,255,.15);}
+
+.panelFooter{
+  padding:7px 11px 8px;border-top:1px solid var(--border);
+  background:#f8fafd;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.fCount{font-size:9.5px;font-weight:600;color:var(--muted);font-family:'DM Mono',monospace;}
+.fLegend{display:flex;align-items:center;gap:8px;}
+.fLi{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.03em;}
+.fSwatch{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.fSwatch.de{background:var(--blue);}
+.fSwatch.dk{background:var(--red);}
+.fSwatch.interreg{background:linear-gradient(135deg,#8a6fff,#5c3fd6);}
+.fLi.interreg-li{display:none;}
+#legend.interreg-active .fLi.interreg-li{display:flex;}
+
+#programLogo{
+  position:absolute;
+  top:10px;
+  right:60px;
+  width:600px;
   background:rgba(255,255,255,.97);
   border:1px solid var(--border);
   border-radius:14px;
-  box-shadow:0 6px 28px rgba(15,34,54,.13);
+  padding:10px 18px;
+  box-shadow:var(--shadow);
   z-index:10;
-  overflow:hidden;
-}
-.mdHeader{
-  padding:11px 14px 9px;
-  border-bottom:1px solid #f0f4f8;
-  background:linear-gradient(160deg,#f7faff,#fff);
-}
-.mdHeaderTop{display:flex;align-items:center;gap:7px;}
-.mdHeaderTop svg{flex-shrink:0;}
-.mdHeaderTitle{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.03em;}
-.mdHeaderSub{font-size:10.5px;color:var(--muted);margin-top:2px;padding-left:21px;}
-.mdRow{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;
-  text-decoration:none;
-  border-bottom:1px solid #f0f4f8;
-  transition:background .15s;
-  cursor:pointer;
-}
-.mdRow:last-child{border-bottom:none;}
-.mdRow.de:hover{background:#f4f8ff;}
-.mdRow.dk:hover{background:#fff5f5;}
-.mdFlag{
-  width:28px;height:28px;border-radius:7px;
   display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+#programLogo img{
+  width:100%;height:auto;display:block;
+  object-fit:contain;max-height:200px;
+}
+
+
+
+#moreData{
+  position:absolute;bottom:28px;right:20px;
+  display:flex;flex-direction:column;gap:7px;
+  z-index:10;
+  align-items:flex-end;
+}
+.mmLabel{
+  font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--navy);text-align:right;padding-right:2px;
+  background:rgba(255,255,255,.92);padding:3px 8px;border-radius:6px;
+  border:1px solid var(--border);
+}
+.mmStrip{
+  display:flex;gap:6px;align-items:center;
+  background:rgba(255,255,255,.97);
+  border:1px solid var(--border);
+  border-radius:40px;
+  padding:6px 10px;
+  box-shadow:0 4px 18px rgba(15,34,54,.12);
+}
+.mmBtn{
+  position:relative;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;cursor:pointer;
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s;
+  border:1.5px solid transparent;
   flex-shrink:0;
 }
-.mdFlag.de{background:#dce9ff;}
-.mdFlag.dk{background:#ffdde0;}
-.mdFlagInner{width:18px;height:12px;border-radius:2px;overflow:hidden;}
-.mdFlagDe{display:flex;flex-direction:column;}
-.mdFlagDe span:nth-child(1){flex:1;background:#000;}
-.mdFlagDe span:nth-child(2){flex:1;background:#D00;}
-.mdFlagDe span:nth-child(3){flex:1;background:#FFCE00;}
-.mdFlagDk{background:#C60C30;position:relative;}
-.mdFlagDk::before{content:'';position:absolute;top:0;bottom:0;left:4px;width:3px;background:white;}
-.mdFlagDk::after{content:'';position:absolute;left:0;right:0;top:4px;height:3px;background:white;}
-.mdText{flex:1;min-width:0;}
-.mdLabel{font-size:11.5px;font-weight:700;color:var(--navy);}
-.mdSub{font-size:10px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mdArrow{flex-shrink:0;}
+.mmBtn.de{background:#dce9ff;border-color:#b8d0ff;}
+.mmBtn.dk{background:#ffdde0;border-color:#ffb8bc;}
+.mmBtn:hover{transform:translateY(-3px) scale(1.12);box-shadow:0 6px 16px rgba(15,34,54,.18);}
+.mmFlagDe{
+  width:18px;height:12px;border-radius:2px;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.mmFlagDe span:nth-child(1){flex:1;background:#000;}
+.mmFlagDe span:nth-child(2){flex:1;background:#D00;}
+.mmFlagDe span:nth-child(3){flex:1;background:#FFCE00;}
+.mmFlagDk{
+  width:18px;height:12px;border-radius:2px;overflow:hidden;
+  background:#C60C30;position:relative;
+}
+.mmFlagDk::before{content:'';position:absolute;top:0;bottom:0;left:5px;width:3px;background:#fff;}
+.mmFlagDk::after{content:'';position:absolute;left:0;right:0;top:4px;height:3px;background:#fff;}
+.mmBtn::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 8px);right:50%;transform:translateX(50%);
+  background:rgba(15,34,54,.92);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
+  white-space:nowrap;padding:4px 9px;border-radius:6px;
+  opacity:0;pointer-events:none;
+  transition:opacity .15s,transform .15s;
+  transform:translateX(50%) translateY(4px);
+}
+.mmBtn:hover::after{opacity:1;transform:translateX(50%) translateY(0);}
+.mmDivider{
+  width:1px;height:20px;background:var(--border);flex-shrink:0;
+}
 
-/* ─── POPUP ─── */
 .mapboxgl-popup-content{padding:0!important;border-radius:18px!important;overflow:hidden;box-shadow:0 20px 50px rgba(15,34,54,.22);border:1px solid #e2e8f0;}
 .mapboxgl-popup-close-button{font-size:20px;padding:10px 12px;color:#5f7388;}
 .mapboxgl-popup-close-button:hover{color:#0f2236;background:transparent;}
@@ -155,7 +263,6 @@ body{font-family:'DM Sans',sans-serif;}
 .pTG{flex:1;min-width:0;}
 .pTitle{font-size:15px;font-weight:700;color:#0f2236;line-height:1.3;margin-bottom:5px;}
 .pPills{display:flex;flex-wrap:wrap;gap:4px;}
-/* Pills wrap and allow long text */
 .pPill{
   font-size:10px;font-weight:600;letter-spacing:.04em;
   background:#f0f5ff;color:var(--blue);border:1px solid #ccdaff;
@@ -169,114 +276,658 @@ body{font-family:'DM Sans',sans-serif;}
 .pMetaTxt{font-weight:500;}
 .pHr{border:none;border-top:1px solid #edf1f5;margin:10px 0;}
 .pDesc{font-size:13px;color:#334a60;line-height:1.6;margin-bottom:12px;}
+
 .pGLabel{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px;}
-.pGallery{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
-.pGallery img{width:100%;height:90px;object-fit:cover;border-radius:8px;border:1px solid #edf1f5;}
+.pCarousel{
+  position:relative;width:100%;height:120px;border-radius:10px;
+  overflow:hidden;margin-bottom:14px;background:#f0f4f8;border:1px solid #edf1f5;
+}
+.pCarouselTrack{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.pCarouselSlide{flex:0 0 100%;height:100%;}
+.pCarouselSlide img{width:100%;height:100%;object-fit:cover;display:block;}
+.pCarouselBtn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:2;transition:background .15s, transform .15s;padding:0;
+}
+.pCarouselBtn:hover{background:#fff;transform:translateY(-50%) scale(1.1);}
+.pCarouselBtn.prev{left:7px;}
+.pCarouselBtn.next{right:7px;}
+.pCarouselBtn svg{width:13px;height:13px;flex-shrink:0;}
+.pCarouselDots{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:5px;}
+.pCarouselDot{
+  width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.55);
+  transition:background .2s,transform .2s;cursor:pointer;
+}
+.pCarouselDot.active{background:#fff;transform:scale(1.3);}
 .pNoPhoto{font-size:12px;color:#9aacbe;background:#f8fafc;border:1px dashed #d6e0ea;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-style:italic;}
+
 .pFooter{display:flex;justify-content:flex-end;}
 .pBtn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;padding:9px 16px;border-radius:9px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s,transform .15s;font-family:'DM Sans',sans-serif;}
 .pBtn:hover{background:#1348d6;transform:translateY(-1px);}
 .pBtn.dk{background:var(--red);}
 .pBtn.dk:hover{background:#a01e26;}
+
+/* ── Add Facility Panel ── */
+#addPanel{
+  position:absolute;top:20px;right:20px;width:300px;
+  background:#fff;border-radius:20px;padding:0;
+  box-shadow:0 12px 48px rgba(15,34,54,.18),0 2px 6px rgba(15,34,54,.08);
+  border:1px solid rgba(226,232,240,.8);
+  z-index:20;max-height:calc(100vh - 40px);overflow:hidden;
+  display:flex;flex-direction:column;
+  transform:translateX(340px);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+#addPanel.open{transform:translateX(0);pointer-events:all;}
+
+.apHeader{
+  flex-shrink:0;background:linear-gradient(135deg,#0a1f38 0%,#0f2236 55%,#1a3a5c 100%);
+  position:relative;overflow:hidden;padding:14px 14px 28px;
+}
+.apHeaderStars{position:absolute;inset:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 25% 20%,rgba(255,255,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 70% 18%,rgba(255,255,255,.38) 0%,transparent 100%),
+    radial-gradient(1px 1px at 45% 65%,rgba(255,255,255,.28) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 80% 72%,rgba(255,255,255,.42) 0%,transparent 100%),
+    radial-gradient(1px 1px at 12% 82%,rgba(255,255,255,.32) 0%,transparent 100%);
+}
+.apWave{position:absolute;bottom:0;left:0;right:0;height:18px;}
+.apHeaderInner{position:relative;display:flex;align-items:flex-start;gap:10px;}
+.apIcon{
+  width:34px;height:34px;flex-shrink:0;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+}
+.apIcon svg{width:18px;height:18px;}
+.apTitles{flex:1;min-width:0;padding-top:1px;}
+.apTitle{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;line-height:1.25;margin-bottom:2px;}
+.apSubtitle{font-size:9px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;letter-spacing:.04em;}
+.apClose{
+  width:26px;height:26px;border-radius:8px;border:none;cursor:pointer;
+  background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .15s;padding:0;position:relative;z-index:1;
+}
+.apClose:hover{background:rgba(255,255,255,.22);}
+
+.apBody{overflow-y:auto;padding:14px 13px 14px;flex:1;scrollbar-width:thin;scrollbar-color:#d0d9e8 transparent;}
+.apBody::-webkit-scrollbar{width:3px;}
+.apBody::-webkit-scrollbar-thumb{background:#d0d9e8;border-radius:3px;}
+
+.apSection{margin-bottom:14px;}
+.apSec{font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.apSec::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.apField{margin-bottom:9px;}
+.apLabel{font-size:9.5px;font-weight:700;color:#4a5f74;letter-spacing:.04em;margin-bottom:4px;display:block;}
+.apInput,.apTextarea,.apSelect{
+  width:100%;font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--navy);
+  background:#f8fafd;border:1.5px solid var(--border);border-radius:9px;
+  padding:7px 10px;outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.apInput:focus,.apTextarea:focus,.apSelect:focus{
+  border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,90,255,.1);background:#fff;
+}
+.apTextarea{resize:vertical;min-height:68px;line-height:1.5;}
+.apSelect{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237a8fa8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;}
+
+.apRow{display:flex;gap:7px;}
+.apRow .apField{flex:1;}
+
+/* Types tag input */
+.apTagsWrap{
+  min-height:38px;background:#f8fafd;border:1.5px solid var(--border);border-radius:9px;
+  padding:5px 8px;display:flex;flex-wrap:wrap;gap:4px;cursor:text;
+  transition:border-color .15s,box-shadow .15s;
+}
+.apTagsWrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,90,255,.1);background:#fff;}
+.apTag{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--blue-soft);color:var(--blue);border:1px solid #c2d5ff;
+  border-radius:6px;font-size:10px;font-weight:600;padding:2px 6px;
+}
+.apTag.dk-tag{background:#fff0f1;color:var(--red);border-color:#ffc5c8;}
+.apTagDel{cursor:pointer;opacity:.6;font-size:12px;line-height:1;padding:0 1px;}
+.apTagDel:hover{opacity:1;}
+.apTagInput{border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--navy);min-width:80px;flex:1;padding:2px 2px;}
+
+/* Interreg toggle */
+.apInterregRow{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--chip-bg);border:1.5px solid transparent;border-radius:10px;
+  padding:8px 11px;cursor:pointer;transition:all .15s;
+}
+.apInterregRow:hover{background:var(--chip-hover);border-color:#c5d4ef;}
+.apInterregRow.on{background:linear-gradient(135deg,#e8f0ff,#f0e8ff);border-color:#8a6fff;}
+.apInterregLabel{font-size:10.5px;font-weight:600;color:var(--muted);}
+.apInterregRow.on .apInterregLabel{color:#5c3fd6;}
+.apToggle{width:30px;height:16px;border-radius:8px;background:#d0d9e8;position:relative;transition:background .2s;flex-shrink:0;}
+.apToggle::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.apInterregRow.on .apToggle{background:#8a6fff;}
+.apInterregRow.on .apToggle::after{transform:translateX(14px);}
+
+.apFooter{
+  padding:10px 13px 12px;border-top:1px solid var(--border);
+  background:#f8fafd;flex-shrink:0;display:flex;gap:8px;
+}
+.apBtn{
+  flex:1;padding:9px 0;border-radius:10px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  transition:all .15s;
+}
+.apBtn.save{background:linear-gradient(135deg,#0f2236,#1a3a5c);color:#fff;box-shadow:0 3px 12px rgba(15,34,54,.28);}
+.apBtn.save:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(15,34,54,.35);}
+.apBtn.cancel{background:var(--chip-bg);color:var(--muted);border:1.5px solid var(--border);}
+.apBtn.cancel:hover{background:var(--chip-hover);color:var(--navy);}
+
+.apSuccess{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px 20px;text-align:center;gap:10px;
+}
+.apSuccessIcon{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dce9ff,#b8d0ff);display:flex;align-items:center;justify-content:center;}
+.apSuccessTitle{font-size:13px;font-weight:700;color:var(--navy);}
+.apSuccessMsg{font-size:11px;color:var(--muted);line-height:1.5;}
+.apSuccessBack{margin-top:4px;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif;}
+
 </style>
 </head>
 <body>
 
 <div id="filterPanel">
   <div class="panelHeader">
-    <div class="panelBrand"><div class="panelDot"></div><div class="panelTitle">Baltic Ventures</div></div>
-    <div class="panelSubtitle">Test Field Directory</div>
-  </div>
-  <div class="panelBody">
-    <div class="secLabel">Country</div>
-    <div class="countryRow">
-      <div class="cChip on" data-country="all">All</div>
-      <div class="cChip" data-country="Germany" style="display:flex;align-items:center;justify-content:center;gap:5px;">
-        <span style="display:inline-flex;flex-direction:column;width:16px;height:11px;border-radius:2px;overflow:hidden;flex-shrink:0;">
-          <span style="flex:1;background:#000;"></span>
-          <span style="flex:1;background:#D00;"></span>
-          <span style="flex:1;background:#FFCE00;"></span>
-        </span>Germany
+    <div class="panelHeaderStars"></div>
+    <svg class="panelWave" viewBox="0 0 232 18" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 18 C40 6, 80 0, 116 6 C152 12, 192 18, 232 8 L232 18 Z" fill="#fff"/>
+    </svg>
+    <div class="panelHeaderInner">
+      <div class="panelShipIcon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="11" width="14" height="5" rx="1.5" fill="rgba(255,255,255,.9)"/>
+          <path d="M5 11 C5.5 8 7 7 10 7 C13 7 14.5 8 15 11Z" fill="rgba(255,255,255,.75)"/>
+          <rect x="9" y="4" width="2" height="7" rx="1" fill="rgba(255,255,255,.85)"/>
+          <path d="M11 5 L15 7 L11 9Z" fill="rgba(255,255,255,.9)"/>
+          <ellipse cx="10" cy="16" rx="7" ry="1.5" fill="rgba(255,255,255,.12)"/>
+        </svg>
       </div>
-      <div class="cChip" data-country="Denmark" style="display:flex;align-items:center;justify-content:center;gap:5px;">
-        <span style="position:relative;display:inline-flex;width:16px;height:11px;border-radius:2px;overflow:hidden;background:#C60C30;flex-shrink:0;">
-          <span style="position:absolute;top:4px;left:0;right:0;height:3px;background:white;"></span>
-          <span style="position:absolute;left:4px;top:0;bottom:0;width:3px;background:white;"></span>
-        </span>Denmark
+      <div class="panelTitles">
+        <div class="panelTitle">Baltic Ventures Program</div>
+        <div class="panelSubtitle">Test Field Directory</div>
       </div>
     </div>
-    <hr class="divider">
-    <div class="secLabel">Facility Type</div>
-    <div class="tChip allT on" data-type="all"><span class="dot"></span>All Facilities</div>
-    <div class="tChip" data-type="Ship engine room simulator"><span class="dot"></span>Ship engine room simulator</div>
-    <div class="tChip" data-type="Ship bridge simulator"><span class="dot"></span>Ship bridge simulator</div>
-    <div class="tChip" data-type="Shock and/or vibration test facility"><span class="dot"></span>Shock / vibration test</div>
-    <div class="tChip" data-type="Sea-based maritime test area"><span class="dot"></span>Sea-based maritime test area</div>
-    <div class="tChip" data-type="Safety training center"><span class="dot"></span>Safety training center</div>
-    <div class="tChip" data-type="Land based autonomous systems test area"><span class="dot"></span>Land autonomous test area</div>
-    <div class="tChip" data-type="Research vessel / test ship"><span class="dot"></span>Research vessel</div>
-    <div class="tChip" data-type="Sea based autonomous systems test area"><span class="dot"></span>Sea autonomous test area</div>
-    <div class="tChip" data-type="Multi-industry facility"><span class="dot"></span>Multi-industry facility</div>
-    <div class="tChip" data-type="Fire resistance / fire fighting test facility"><span class="dot"></span>Fire testing</div>
-    <div class="tChip" data-type="EMC test facility"><span class="dot"></span>EMC test facility</div>
-    <div class="tChip" data-type="PLC test facility"><span class="dot"></span>PLC test facility</div>
-    <div class="tChip" data-type="Ambient condition / thermodynamic test facility"><span class="dot"></span>Thermodynamic test</div>
-    <div class="tChip" data-type="Internal combustion engines test facility"><span class="dot"></span>Engine testing</div>
-    <div class="tChip" data-type="Maritime plants and aggregates test facility"><span class="dot"></span>Plants &amp; aggregates</div>
-    <!-- "Other" catches anything not in the KNOWN_TYPES list -->
-    <div class="tChip" data-type="other"><span class="dot"></span>Other</div>
   </div>
+
+  <div class="panelBody">
+
+    <!-- INTERREG Area filter — label only -->
+    <div class="secLabel">Area</div>
+    <div class="interregChip" id="interregChip">
+      <div class="interregBadge">
+        <!-- Map region / boundary icon -->
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.1" stroke-dasharray="2.5 1.5"/>
+          <path d="M1 4.5 Q3 3.5 5 5 Q7 6.5 9 5 L11 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity=".6"/>
+          <circle cx="6" cy="6.5" r="1.2" fill="currentColor" opacity=".5"/>
+        </svg>
+      </div>
+      <span class="interregLabel">Interreg Area</span>
+    </div>
+
+    <div class="secLabel">Country</div>
+    <div class="countryRow">
+      <div class="cChip" data-country="Germany">
+        <div class="cFlag">
+          <div style="display:flex;flex-direction:column;width:100%;height:100%;">
+            <div style="flex:1;background:#000;"></div>
+            <div style="flex:1;background:#D00;"></div>
+            <div style="flex:1;background:#FFCE00;"></div>
+          </div>
+        </div>
+        Germany
+      </div>
+      <div class="cChip" data-country="Denmark">
+        <div class="cFlag" style="background:#C60C30;">
+          <div style="position:absolute;top:0;bottom:0;left:9px;width:4px;background:#fff;"></div>
+          <div style="position:absolute;left:0;right:0;top:7px;height:4px;background:#fff;"></div>
+        </div>
+        Denmark
+      </div>
+    </div>
+
+    <div class="secLabel">Facility Type</div>
+    <div class="typeList">
+
+      <div class="tChip allT on" data-type="all">
+        <div class="tChipIcon">
+          <!-- Grid/all icon -->
+          <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="7" y="1" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="1" y="7" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="7" y="7" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/></svg>
+        </div>
+        <span class="tChipLabel">All Facilities</span>
+      </div>
+
+      <!-- Engine room sim: pistons / engine cylinders -->
+      <div class="tChip" data-type="Ship engine room simulator">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="1.5" y="5" width="9" height="5" rx="1" stroke="currentColor" stroke-width="1.1"/>
+            <rect x="3" y="3" width="2" height="2.5" rx=".5" stroke="currentColor" stroke-width="1"/>
+            <rect x="7" y="3" width="2" height="2.5" rx=".5" stroke="currentColor" stroke-width="1"/>
+            <line x1="4" y1="7" x2="4" y2="8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="8" y1="7" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="1.5" y1="7.5" x2="10.5" y2="7.5" stroke="currentColor" stroke-width=".7" opacity=".4"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Engine room sim.</span>
+      </div>
+
+      <!-- Bridge sim: steering wheel / helm -->
+      <div class="tChip" data-type="Ship bridge simulator">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.1"/>
+            <circle cx="6" cy="6" r="1.3" fill="currentColor" opacity=".5"/>
+            <line x1="6" y1="1.5" x2="6" y2="4.7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="6" y1="7.3" x2="6" y2="10.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="1.5" y1="6" x2="4.7" y2="6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="7.3" y1="6" x2="10.5" y2="6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="2.9" y1="2.9" x2="5" y2="5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="7" y1="7" x2="9.1" y2="9.1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Bridge simulator</span>
+      </div>
+
+      <!-- Shock/vibration: zigzag waveform with impact arrows -->
+      <div class="tChip" data-type="Shock and/or vibration test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M1 6 L2.5 2.5 L4 9.5 L5.5 4 L7 8 L8.5 5 L10 6.5 L11 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Shock / vibration</span>
+      </div>
+
+      <!-- Sea-based test area: anchor in water -->
+      <div class="tChip" data-type="Sea-based maritime test area">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <circle cx="6" cy="3" r="1.2" stroke="currentColor" stroke-width="1.1"/>
+            <line x1="6" y1="4.2" x2="6" y2="9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <line x1="3" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M3 9 Q4.5 10.5 6 9 Q7.5 10.5 9 9" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Sea-based test area</span>
+      </div>
+
+      <!-- Safety training: shield with checkmark -->
+      <div class="tChip" data-type="Safety training center">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 1.5 L10 3.5 L10 7 C10 9.5 6 11 6 11 C6 11 2 9.5 2 7 L2 3.5 Z" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M4 6.2 L5.3 7.5 L8 4.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Safety training</span>
+      </div>
+
+      <!-- Land autonomous: wheeled robot / rover -->
+      <div class="tChip" data-type="Land based autonomous systems test area">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="2" y="4.5" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.1"/>
+            <circle cx="3.8" cy="9.5" r="1.3" stroke="currentColor" stroke-width="1"/>
+            <circle cx="8.2" cy="9.5" r="1.3" stroke="currentColor" stroke-width="1"/>
+            <rect x="4" y="2.5" width="4" height="2.5" rx=".7" stroke="currentColor" stroke-width="1"/>
+            <line x1="5" y1="6" x2="7" y2="6" stroke="currentColor" stroke-width=".9" stroke-linecap="round" opacity=".5"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Land autonomous</span>
+      </div>
+
+      <!-- Research vessel: ship silhouette with flag -->
+      <div class="tChip" data-type="Research vessel / test ship">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M1.5 8.5 L2.5 6.5 L9.5 6.5 L10.5 8.5 Q6 10.5 1.5 8.5Z" stroke="currentColor" stroke-width="1.1" fill="currentColor" opacity=".15"/>
+            <rect x="5.3" y="2" width="1.2" height="4.5" rx=".5" fill="currentColor"/>
+            <path d="M6.5 2.2 L10 3.8 L6.5 5.5Z" fill="currentColor" opacity=".75"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Research vessel</span>
+      </div>
+
+      <!-- Sea autonomous: drone/USV on water surface -->
+      <div class="tChip" data-type="Sea based autonomous systems test area">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="3" y="3.5" width="6" height="3" rx="1" stroke="currentColor" stroke-width="1.1"/>
+            <line x1="6" y1="2" x2="6" y2="3.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="6" cy="1.5" r=".8" fill="currentColor" opacity=".6"/>
+            <path d="M1 8.5 Q3 7 6 8.5 Q9 10 11 8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+            <line x1="3" y1="6.5" x2="3" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+            <line x1="9" y1="6.5" x2="9" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Sea autonomous</span>
+      </div>
+
+      <!-- Multi-industry: interconnected nodes -->
+      <div class="tChip" data-type="Multi-industry facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <circle cx="6" cy="6" r="1.5" fill="currentColor" opacity=".6"/>
+            <circle cx="2" cy="3" r="1.2" stroke="currentColor" stroke-width="1"/>
+            <circle cx="10" cy="3" r="1.2" stroke="currentColor" stroke-width="1"/>
+            <circle cx="2" cy="9" r="1.2" stroke="currentColor" stroke-width="1"/>
+            <circle cx="10" cy="9" r="1.2" stroke="currentColor" stroke-width="1"/>
+            <line x1="3" y1="3.8" x2="5" y2="5.3" stroke="currentColor" stroke-width=".9" opacity=".6"/>
+            <line x1="9" y1="3.8" x2="7" y2="5.3" stroke="currentColor" stroke-width=".9" opacity=".6"/>
+            <line x1="3" y1="8.2" x2="5" y2="6.7" stroke="currentColor" stroke-width=".9" opacity=".6"/>
+            <line x1="9" y1="8.2" x2="7" y2="6.7" stroke="currentColor" stroke-width=".9" opacity=".6"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Multi-industry</span>
+      </div>
+
+      <!-- Fire: flame silhouette -->
+      <div class="tChip" data-type="Fire resistance / fire fighting test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 11 C3.5 11 2.5 9 3.5 7 C4 5.8 5 4.5 4.5 3 C5.5 4.2 5.2 5.5 5.8 6.8 C6.3 5.5 7 4 7.5 2 C7.5 5.5 10 6 10 8 C10 10 8.5 11 6 11Z" stroke="currentColor" stroke-width="1.1" fill="currentColor" opacity=".2"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Fire testing</span>
+      </div>
+
+      <!-- EMC: electromagnetic waves radiating from antenna -->
+      <div class="tChip" data-type="EMC test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <line x1="6" y1="5" x2="6" y2="10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="4" y1="10" x2="8" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <path d="M3.5 6.5 Q2.5 4.5 4 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+            <path d="M8.5 6.5 Q9.5 4.5 8 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+            <path d="M2 8 Q0.5 5 2.5 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity=".5"/>
+            <path d="M10 8 Q11.5 5 9.5 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity=".5"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">EMC test facility</span>
+      </div>
+
+      <!-- PLC: circuit board / chip with connectors -->
+      <div class="tChip" data-type="PLC test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="2.5" y="2.5" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.1"/>
+            <rect x="4" y="4" width="4" height="4" rx=".5" fill="currentColor" opacity=".2" stroke="currentColor" stroke-width=".8"/>
+            <line x1="1" y1="4.5" x2="2.5" y2="4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="1" y1="7.5" x2="2.5" y2="7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="11" y1="4.5" x2="9.5" y2="4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="11" y1="7.5" x2="9.5" y2="7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">PLC test facility</span>
+      </div>
+
+      <!-- Thermodynamic: thermometer with temperature waves -->
+      <div class="tChip" data-type="Ambient condition / thermodynamic test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M6 1.5 L6 7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="6" cy="9.2" r="1.8" stroke="currentColor" stroke-width="1.1"/>
+            <circle cx="6" cy="9.2" r=".9" fill="currentColor" opacity=".5"/>
+            <line x1="7.5" y1="3" x2="9" y2="3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="7.5" y1="5" x2="8.5" y2="5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="7.5" y1="7" x2="9" y2="7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Thermodynamic test</span>
+      </div>
+
+      <!-- Engine testing: piston + crankshaft -->
+      <div class="tChip" data-type="Internal combustion engines test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="4" y="1.5" width="4" height="5" rx=".8" stroke="currentColor" stroke-width="1.1"/>
+            <line x1="6" y1="6.5" x2="6" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M3.5 8.5 Q6 10.5 8.5 8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+            <line x1="1.5" y1="4" x2="4" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="8" y1="4" x2="10.5" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Engine testing</span>
+      </div>
+
+      <!-- Plants & aggregates: industrial plant / piping -->
+      <div class="tChip" data-type="Maritime plants and aggregates test facility">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <rect x="1" y="7.5" width="10" height="3" rx=".8" stroke="currentColor" stroke-width="1.1"/>
+            <rect x="2.5" y="4.5" width="2" height="3" stroke="currentColor" stroke-width="1"/>
+            <rect x="5.5" y="3" width="2" height="4.5" stroke="currentColor" stroke-width="1"/>
+            <rect x="8.5" y="5.5" width="1.5" height="2" stroke="currentColor" stroke-width="1"/>
+            <line x1="3.5" y1="4.5" x2="3.5" y2="3.2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="6.5" y1="3" x2="6.5" y2="1.8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Plants &amp; aggregates</span>
+      </div>
+
+      <!-- Other: question mark -->
+      <div class="tChip" data-type="other">
+        <div class="tChipIcon">
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M4.5 4.5 C4.5 3.1 5.2 2.5 6 2.5 C6.9 2.5 7.5 3.1 7.5 4 C7.5 5 6.5 5.5 6 6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="6" cy="9" r=".9" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="tChipLabel">Other</span>
+      </div>
+
+    </div>
+  </div>
+
   <div class="panelFooter">
     <span class="fCount" id="entryCount">— facilities</span>
-    <span class="fBadge">Live</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="fLegend" id="legend">
+        <div class="fLi"><div class="fSwatch de"></div>DE</div>
+        <div class="fLi"><div class="fSwatch dk"></div>DK</div>
+        <div class="fLi interreg-li"><div class="fSwatch interreg"></div>Interreg</div>
+      </div>
+      <button id="addFacilityBtn" title="Add new facility" style="
+        display:flex;align-items:center;justify-content:center;
+        width:22px;height:22px;border-radius:6px;border:none;cursor:pointer;
+        background:linear-gradient(135deg,#0f2236,#1a3a5c);color:#fff;
+        flex-shrink:0;transition:transform .15s,box-shadow .15s;
+        box-shadow:0 2px 6px rgba(15,34,54,.25);padding:0;
+      ">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><line x1="5.5" y1="1" x2="5.5" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="5.5" x2="10" y2="5.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Facility Panel -->
+<div id="addPanel">
+  <div class="apHeader">
+    <div class="apHeaderStars"></div>
+    <svg class="apWave" viewBox="0 0 300 18" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 18 C50 6, 100 0, 150 6 C200 12, 250 18, 300 8 L300 18 Z" fill="#fff"/>
+    </svg>
+    <div class="apHeaderInner">
+      <div class="apIcon">
+        <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="rgba(255,255,255,.85)" stroke-width="1.3"/><line x1="9" y1="5" x2="9" y2="13" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/><line x1="5" y1="9" x2="13" y2="9" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="apTitles">
+        <div class="apTitle">Add Test Field</div>
+        <div class="apSubtitle">New facility entry</div>
+      </div>
+      <button class="apClose" id="addPanelClose">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><line x1="1" y1="1" x2="10" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="10" y1="1" x2="1" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="apBody" id="apFormBody">
+
+    <div class="apSection">
+      <div class="apSec">Basic Info</div>
+
+      <div class="apField">
+        <label class="apLabel">Facility Name *</label>
+        <input class="apInput" id="ap_name" type="text" placeholder="e.g. Maritimes Zentrum Flensburg">
+      </div>
+
+      <div class="apField">
+        <label class="apLabel">Institution / Organisation *</label>
+        <input class="apInput" id="ap_institution" type="text" placeholder="e.g. Hochschule Flensburg">
+      </div>
+
+      <div class="apRow">
+        <div class="apField">
+          <label class="apLabel">Country *</label>
+          <select class="apSelect" id="ap_country">
+            <option value="Germany">Germany</option>
+            <option value="Denmark">Denmark</option>
+          </select>
+        </div>
+        <div class="apField">
+          <label class="apLabel">Interreg Area</label>
+          <div class="apInterregRow" id="ap_interreg_toggle">
+            <span class="apInterregLabel">DEF0 · DK03</span>
+            <div class="apToggle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="apSection">
+      <div class="apSec">Facility Types</div>
+      <div class="apField">
+        <label class="apLabel">Types (type & press Enter to add)</label>
+        <div class="apTagsWrap" id="ap_tags_wrap">
+          <input class="apTagInput" id="ap_type_input" type="text" placeholder="e.g. Ship bridge simulator">
+        </div>
+        <div style="font-size:9px;color:var(--muted);margin-top:4px;line-height:1.4;">
+          Known types: Ship bridge simulator · Ship engine room simulator · Sea-based maritime test area · Safety training center · Research vessel / test ship · Sea based autonomous systems test area · Land based autonomous systems test area · Multi-industry facility · Shock and/or vibration test facility · EMC test facility · PLC test facility · Ambient condition / thermodynamic test facility · Internal combustion engines test facility · Maritime plants and aggregates test facility · Fire resistance / fire fighting test facility
+        </div>
+      </div>
+    </div>
+
+    <div class="apSection">
+      <div class="apSec">Description</div>
+      <div class="apField">
+        <label class="apLabel">Description</label>
+        <textarea class="apTextarea" id="ap_description" placeholder="Describe the facility, its equipment and capabilities…"></textarea>
+      </div>
+    </div>
+
+    <div class="apSection">
+      <div class="apSec">Location</div>
+      <div class="apRow">
+        <div class="apField">
+          <label class="apLabel">Longitude *</label>
+          <input class="apInput" id="ap_lng" type="number" step="any" placeholder="e.g. 9.447">
+        </div>
+        <div class="apField">
+          <label class="apLabel">Latitude *</label>
+          <input class="apInput" id="ap_lat" type="number" step="any" placeholder="e.g. 54.774">
+        </div>
+      </div>
+    </div>
+
+    <div class="apSection">
+      <div class="apSec">Links & Media</div>
+      <div class="apField">
+        <label class="apLabel">Website URL</label>
+        <input class="apInput" id="ap_website" type="url" placeholder="https://…">
+      </div>
+      <div class="apField">
+        <label class="apLabel">Logo URL</label>
+        <input class="apInput" id="ap_logo" type="url" placeholder="https://… (image link)">
+      </div>
+      <div class="apField">
+        <label class="apLabel">Photo 1 URL</label>
+        <input class="apInput" id="ap_photo1" type="url" placeholder="https://… (image link)">
+      </div>
+      <div class="apField">
+        <label class="apLabel">Photo 2 URL</label>
+        <input class="apInput" id="ap_photo2" type="url" placeholder="https://… (optional)">
+      </div>
+      <div class="apField">
+        <label class="apLabel">Photo 3 URL</label>
+        <input class="apInput" id="ap_photo3" type="url" placeholder="https://… (optional)">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Success state -->
+  <div class="apSuccess" id="apSuccess">
+    <div class="apSuccessIcon">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#1a5aff" stroke-width="1.5"/><path d="M7 11.5L10 14.5L15 8.5" stroke="#1a5aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="apSuccessTitle">Facility Added!</div>
+    <div class="apSuccessMsg" id="apSuccessMsg">The new pin is now visible on the map.</div>
+    <div style="width:100%;margin-top:8px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">Copy & paste into the facilities array:</div>
+      <div style="position:relative;">
+        <textarea id="apCodeSnippet" readonly style="
+          width:100%;height:110px;font-family:'DM Mono',monospace;font-size:9.5px;
+          color:#334a60;background:#f4f7fb;border:1.5px solid var(--border);
+          border-radius:9px;padding:8px 10px;resize:none;outline:none;
+          line-height:1.55;
+        "></textarea>
+        <button id="apCopyBtn" style="
+          position:absolute;top:6px;right:6px;
+          font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;
+          background:var(--navy);color:#fff;border:none;border-radius:5px;
+          padding:3px 8px;cursor:pointer;transition:background .15s;
+        ">Copy</button>
+      </div>
+    </div>
+    <button class="apSuccessBack" id="apSuccessBack">Add another facility</button>
+  </div>
+
+  <div class="apFooter" id="apFooter">
+    <button class="apBtn cancel" id="apCancelBtn">Cancel</button>
+    <button class="apBtn save" id="apSaveBtn">Add to Map ↗</button>
   </div>
 </div>
 
 <div id="map"></div>
 
-<!-- ─── LEGEND ─── -->
-<div id="legend">
-  <div class="li"><div class="lswatch de"></div>Germany</div>
-  <div class="li"><div class="lswatch dk"></div>Denmark</div>
+<!-- Logo: 450px standalone at bottom center -->
+<div id="programLogo">
+  <img
+    src="https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/543e3805-61cd-4448-980f-a956d418f162.png"
+    alt="Baltic Ventures Program"
+    onerror="this.parentElement.style.display='none'"
+  >
 </div>
 
-<!-- ─── MORE DATA CARD ─── -->
+<!-- More Maps: bottom right -->
 <div id="moreData">
-  <div class="mdHeader">
-    <div class="mdHeaderTop">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-        <circle cx="8" cy="8" r="6.5" stroke="#1a5aff" stroke-width="1.4"/>
-        <line x1="8" y1="5.5" x2="8" y2="9" stroke="#1a5aff" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="8" cy="11.2" r=".9" fill="#1a5aff"/>
-      </svg>
-      <span class="mdHeaderTitle">More Maps</span>
-    </div>
-    <div class="mdHeaderSub">More maps for maritime services</div>
+  <div class="mmLabel">More Maps</div>
+  <div class="mmStrip">
+    <a class="mmBtn de" href="https://landkarte.dmz-maritim.de/" target="_blank" rel="noopener noreferrer" data-tip="DMZ Maritim – Germany">
+      <div class="mmFlagDe"><span></span><span></span><span></span></div>
+    </a>
+    <a class="mmBtn de" href="https://meermachen.sh/karte" target="_blank" rel="noopener noreferrer" data-tip="Meermachen – Germany">
+      <div class="mmFlagDe"><span></span><span></span><span></span></div>
+    </a>
+    <div class="mmDivider"></div>
+    <a class="mmBtn dk" href="https://virksomhedsguiden.dk/content/temaer/skab-nye-produkter-og-services/ydelser/danske-testfaciliteter/edeb1156-77e2-4246-bb96-7604804a0b26/#lang=da&filters=%7B%2219893fbb-4574-433f-8a12-e65674f6ccb2%22%3A%5B%226c7ce05f-8f81-4ace-bb31-a137eb2f5547%22%5D%7D&map=true" target="_blank" rel="noopener noreferrer" data-tip="Virksomhedsguiden – Denmark">
+      <div class="mmFlagDk"></div>
+    </a>
   </div>
-  <a class="mdRow de" href="https://landkarte.dmz-maritim.de/" target="_blank" rel="noopener noreferrer">
-    <div class="mdFlag de">
-      <div class="mdFlagInner mdFlagDe"><span></span><span></span><span></span></div>
-    </div>
-    <div class="mdText">
-      <div class="mdLabel">Germany</div>
-      <div class="mdSub">landkarte.dmz-maritim.de</div>
-    </div>
-    <svg class="mdArrow" width="13" height="13" viewBox="0 0 16 16" fill="none">
-      <path d="M6 4l4 4-4 4" stroke="#1a5aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
-  <a class="mdRow dk" href="https://virksomhedsguiden.dk/content/temaer/skab-nye-produkter-og-services/ydelser/danske-testfaciliteter/edeb1156-77e2-4246-bb96-7604804a0b26/#lang=da&filters=%7B%2219893fbb-4574-433f-8a12-e65674f6ccb2%22%3A%5B%226c7ce05f-8f81-4ace-bb31-a137eb2f5547%22%5D%7D&map=true" target="_blank" rel="noopener noreferrer">
-    <div class="mdFlag dk">
-      <div class="mdFlagInner mdFlagDk"></div>
-    </div>
-    <div class="mdText">
-      <div class="mdLabel">Denmark</div>
-      <div class="mdSub">virksomhedsguiden.dk</div>
-    </div>
-    <svg class="mdArrow" width="13" height="13" viewBox="0 0 16 16" fill="none">
-      <path d="M6 4l4 4-4 4" stroke="#c0232d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
 </div>
 
 <script>
@@ -285,382 +936,155 @@ mapboxgl.accessToken='pk.eyJ1IjoiaG9zc2Ftb3N0YWZhYSIsImEiOiJjbW0wbWNvd2owMDZlMm9
 const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-v11',center:[9.6,55],zoom:6.5});
 map.addControl(new mapboxgl.NavigationControl());
 
-/* ─────────────────────────────────────────────────
-   KNOWN TYPES — exactly matching the filter chips above.
-   Any facility type NOT in this list is treated as "Other".
-───────────────────────────────────────────────── */
 const KNOWN_TYPES = new Set([
-  "Ship engine room simulator",
-  "Ship bridge simulator",
-  "Shock and/or vibration test facility",
-  "Sea-based maritime test area",
-  "Safety training center",
-  "Land based autonomous systems test area",
-  "Research vessel / test ship",
-  "Sea based autonomous systems test area",
-  "Multi-industry facility",
-  "Fire resistance / fire fighting test facility",
-  "EMC test facility",
-  "PLC test facility",
+  "Ship engine room simulator","Ship bridge simulator",
+  "Shock and/or vibration test facility","Sea-based maritime test area",
+  "Safety training center","Land based autonomous systems test area",
+  "Research vessel / test ship","Sea based autonomous systems test area",
+  "Multi-industry facility","Fire resistance / fire fighting test facility",
+  "EMC test facility","PLC test facility",
   "Ambient condition / thermodynamic test facility",
   "Internal combustion engines test facility",
   "Maritime plants and aggregates test facility"
 ]);
 
-/* ─────────────────────────────────────────────────
-   FACILITIES DATA
-───────────────────────────────────────────────── */
 const facilities=[
-  {
-    name:"Maritimes Zentrum Hochschule Flensburg",
-    country:"Germany",
-    institution:"Hochschule Flensburg",
-    types:["Ship bridge simulator","Ship engine room simulator","Research vessel / test ship"],
-    description:"Bridge and engine room simulators for maritime research and training within the Baltic Ventures region.",
-    logo:   "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",
-    photo1: "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/csm_Maritime_Centre_Flensburg_University_of_Applied_Sciences_dfe9e15c50.jpg",
-    photo2: "https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/csm_Maschinenhalle_fda3b43dfd.jpg",
-    photo3: "",
-    website:"https://www.maritimes-zentrum.de",
-    coordinates:[9.447375,54.774750]
-  },
-  {
-    name:"North Sea Flume Tank",
-    country:"Denmark",
-    institution:"North Sea Science Park",
-    types:["Multi-industry facility","Maritime plants and aggregates test facility","Land based autonomous systems test area","Tests, Measurements and Demonstrations of equipment for fishing, aquaculture, and underwater technology"],
-    description:"Europe's largest flume tank used for maritime, fisheries, and equipment testing.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",
-    coordinates:[9.979883,57.586626]
-  },
-  {
-    name:"CAPTN Initiative Test Field",
-    country:"Germany",
-    institution:"University of Kiel",
-    types:["Sea-based maritime test area","Sea based autonomous systems test area","Land based autonomous systems test area","Research vessel / test ship"],
-    description:"Autonomous shipping and maritime innovation test field in Kiel.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://captn.sh",
-    coordinates:[10.163939,54.322518]
-  },
-  {
-    name:"Underwater Technology Lab",
-    country:"Denmark",
-    institution:"Aalborg University",
-    types:["Sea based autonomous systems test area","Sea-based maritime test area"],
-    description:"Testing infrastructure for underwater robotics and maritime autonomy.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://www.energy.aau.dk",
-    coordinates:[8.446019,55.491252]
-  },
-  {
-    name:"Ocean and Coastal Engineering Laboratory",
-    country:"Denmark",
-    institution:"Aalborg University",
-    types:["Wave and current basin and flume"],
-    description:"Hydrodynamic testing basin and research infrastructure for maritime engineering.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://www.en.build.aau.dk",
-    coordinates:[9.973106,57.014682]
-  },
-  {
-    name:"Maritime Exploration Hall",
-    country:"Germany",
-    institution:"DFKI Robotics Innovation Center",
-    types:["Land based autonomous systems test area","Pressure Chamber"],
-    description:"Robotic testing hall for maritime autonomy and exploration systems.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://robotik.dfki-bremen.de",
-    coordinates:[8.858109,53.112070]
-  },
-  {
-    name:"Schiffbau-Versuchsanstalt Potsdam GmbH",
-    country:"Germany",
-    institution:"Hydrodynamics in Naval Architecture, model testing",
-    types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],
-    description:"Ship model basin, model testing, towing tank, cavitation tunnel.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://www.sva-potsdam.de/en/",
-    coordinates:[12.983939,52.4487358]
-  },
-  {
-    name:"HS Emden/Leer, FB Seefahrt und Maritime Wissenschaften",
-    country:"Germany",
-    institution:"Maritimes Technikum",
-    types:["Internal combustion engines test facility","Schlepptank, Manöverbecken, Schallraum, WIndkanal"],
-    description:"The Maritime Technology Centre has a laboratory for marine technology with high-performance CFD resources for examination of the flow fields of ships and hydraulic structures at close range..",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://www.hs-emden-leer.de/en/current-students/faculties/maritime-sciences/research-laboratories-projects",
-    coordinates:[7.4569501,53.2324806]
-  },
-  {
-    name:"Port Esbjerg",
-    country:"Denmark",
-    institution:"Transitioning Industrial Cluster - Port Esbjerg",
-    types:["Green Fuels, Onboard Carbon Capture"],
-    description:"",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://portesbjerg.dk/",
-    coordinates:[8.447325,55.464083] 
-  },
-  {
-    name:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",
-    country:"Germany",
-    institution:"Maritime Simulation - Deck/Engine/ Traffic Service",
-    types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],
-    description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. All simulators can be linked and act together.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",
-    coordinates:[12.081934,54.170983] 
-  },
-  {
-    name:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",
-    country:"Germany",
-    institution:"MarGate Helgoland",
-    types:["Sea-based maritime test area","Sea based autonomous systems test area ","Underwater experimental area and test facility"],
-    description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures like breakwaters. It also provides real-time environmental data and supports long-term research through advanced underwater infrastructure.",
-    logo:   "",
-    photo1: "",
-    photo2: "",
-    photo3: "",
-    website:"https://www.awi.de/en/science/special-groups/scientific-diving/margate.html",
-    coordinates:[7.883334,54.180004] 
-  }
+  {name:"Maritimes Zentrum / Kielseng Test Facility",country:"Germany",institution:"Maritimes Zentrum der Hochschule Flensburg",types:[,"Ship engine room simulator","Maritime plants and aggregates test facility"],description:"The Maritimes Zentrum / Kielseng Test Facility provides large bore c research ombustion engines suitable for several alternative fuels. Furthermore the facility privides an AC-DC-AC converter of up to 800 kWel, fuel and oil treatment and analysing equipment, an exhaust gas treatment system (wet scrubber) with ultra filtration wash water cleaning, several exhaust gas analysing systems  an a MTP based automation environment",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/MTU%204000.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/FOMO%20(1)%5B1%5D.jpg",photo3:"",website:"https://www.maritimes-zentrum.de",coordinates:[9.443805813789368,54.803841851131416],inInterreg:true},
+  {name:"North Sea Flume Tank",country:"Denmark",institution:"North Sea Science Park",types:["Multi-industry facility","Maritime plants and aggregates test facility","Land based autonomous systems test area","Tests, Measurements and Demonstrations of equipment for fishing, aquaculture, and underwater technology"],description:"We conduct tests, measurements and demonstrations of equipment for fishing, aquaculture, and underwater technology in Europe largest flume tank. The facility enables controlled current conditions for realistic maritime and aquaculture equipment testing.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",coordinates:[9.979883,57.586626],inInterreg:false},
+  {name:"Testfeld der CAPTN Initiative",country:"Germany",institution:"CAPTN Initiative, Uni Kiel",types:["Sea-based maritime test area","Sea based autonomous systems test area","Land based autonomous systems test area","Research vessel / test ship"],description:"We have a research vessel (MS Wavelab) that we use for researching autonomous sailing on the Kiel Fjord (Innenförde); ship is habored at the MArS in Kiel. The CAPTN Initiative develops and tests autonomous and connected maritime transport systems in a real-world urban waterway environment.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://captn.sh",coordinates:[10.163939,54.322518],inInterreg:true},
+  {name:"Underwater Technology Lab",country:"Denmark",institution:"Aalborg University, AAU Energy, Esbjerg campus",types:["Sea based autonomous systems test area","Sea-based maritime test area"],description:"Test site is partly at university campus (controlled environment) and partly at Port of Esbjerg (dedicated test site for maritime robotics). The lab focuses on underwater vehicles, sensors, and autonomous systems for offshore and subsea applications.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.energy.aau.dk/research/research-groups/underwater-technology",coordinates:[8.446019,55.491252],inInterreg:true},
+  {name:"Ocean and Coastal Engineering Laboratory",country:"Denmark",institution:"Aalborg University, Department of the Built Environment",types:["Wave and current basin and flume"],description:"At the Ocean and Coastal Engineering Laboratory, we have created a modern, flexible laboratory with state-of-the-art equipment. The facility includes a wave basin, current flume, and advanced instrumentation for physical model testing of coastal and offshore structures.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.en.build.aau.dk/lab/ocean-and-coastal-engineering",coordinates:[9.973106,57.014682],inInterreg:false},
+  {name:"Maritime Exploration Hall",country:"Germany",institution:"Deutsches Forschungszentrum für Künstliche Intelligenz GmbH (DFKI), Robotics Innovation Center (RIC)",types:["Land based autonomous systems test area","Pressure Chamber"],description:"The 1,300 m² Maritime Exploration Hall serves to test new robotic technologies on and under water. It provides a unique large-scale indoor environment for developing and validating underwater and surface robotic systems, including a pressure chamber for deep-sea simulation.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/dfki_Logo_vz.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/Mare-IT_Cuttlefish_Demo-67.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/DeepLeng-9958.jpg",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/20220310_Maritime_Halle_ap_bea.jpg",website:"https://robotik.dfki-bremen.de/de/forschung/testanlagen-labore/maritime-infrastruktur",coordinates:[8.858109,53.112070],inInterreg:false},  {name:"Hydrodynamics in Naval Architecture, model testing",country:"Germany",institution:"Schiffbau-Versuchsanstalt Potsdam GmbH",types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],description:"Ship model basin, model testing, towing tank, cavitation tunnel. SVA Potsdam offers comprehensive hydrodynamic testing services including resistance, propulsion, manoeuvring, and seakeeping tests for ships and offshore structures at model and full scale.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.sva-potsdam.de/en/",coordinates:[12.983939,52.4487358],inInterreg:false},
+  {name:"Maritimes Technikum",country:"Germany",institution:"HS Emden/Leer, FB Seefahrt und Maritime Wissenschaften",types:["Internal combustion engines test facility","Schlepptank, Manöverbecken, Schallraum, WIndkanal"],description:"The Maritime Technology Centre has a laboratory for marine technology with high-performance CFD resources. Facilities include a towing tank (Schlepptank), manoeuvring basin (Manöverbecken), anechoic chamber (Schallraum), and wind tunnel (Windkanal) for comprehensive maritime research and testing.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.hs-emden-leer.de/en/current-students/faculties/maritime-sciences/research-laboratories-projects",coordinates:[7.4569501,53.2324806],inInterreg:false},
+  {name:"Transitioning Industrial Cluster - Port Esbjerg",country:"Denmark",institution:"Port Esbjerg",types:["Green Fuels, Onboard Carbon Capture"],description:"Port Esbjerg is a key hub for the energy transition in the North Sea region, supporting development and testing of green fuels and onboard carbon capture technologies. The cluster brings together industry, research, and port infrastructure to accelerate decarbonisation of maritime shipping.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://portesbjerg.dk/",coordinates:[8.447325,55.464083],inInterreg:true},
+  {name:"Maritime Simulation - Deck/Engine/ Traffic Service",country:"Germany",institution:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. It offers full-mission ship bridge simulators, engine room simulators, and a Vessel Traffic Service (VTS) simulator for comprehensive maritime officer training and research.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",coordinates:[12.081934,54.170983],inInterreg:false},
+  {name:"MarGate Helgoland",country:"Germany",institution:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",types:["Sea-based maritime test area","Sea based autonomous systems test area ","Underwater experimental area and test facility"],description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures. MarGate Helgoland provides a unique open-sea test environment in the southern North Sea for autonomous underwater vehicles, sensor systems, and marine technology in real oceanic conditions.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.awi.de/en/science/special-diving/margate.html",coordinates:[7.883334,54.180004],inInterreg:false},
+  {name:"Maritime-Based Test Area of Maritimes Zentrum",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Sea-based maritime test area","Research vessel / test ship","Sea based autonomous systems test area"],description:"The reaserch and ferry vessel AUTOGNOM owned by Flensburg University of Applied Sciences will sail within Flensburg harbour area from 2026 on. Flensburg harbour master has officially defined a test area for AUTOGNOM. Furthermore also a commercial ferry route for summer season has been idetified on which AUTOGNOM is likely to start service from 2027 on after beeing fully apprived as a ferry by German authorities. AUTOGNOM and its use within the test areas in order to test new maritime equipment is offered also to external parties. Allowance to use of the test field with other vessels needs to be clarified with authorities on demand.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Einweihung%20Renate%20Delfs%20Platz%20Juni%202025%20.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/EVQF6003.JPG",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Bei%20FSG%20nach%20Steuerhaus%20aufsetzen.JPG",website:"https://www.maritimes-zentrum.de/",coordinates:[9.430312,54.799406],inInterreg:true},
+  {name:"TechShop - Laboratory for Production and Manufacturing",country:"Germany",institution:"Hochschule Flensburg",types:["Prototyping and Manufacturing facilities"],description:"It serves as a go-to resource for product developers who need guidance on manufacturing processes for pilot series and series production. The lab offers both advisory services — covering a range of manufacturing technologies, processes, and make-or-buy decisions — as well as hands-on access to the machines and tools themselves. Key questions addressed include which manufacturing method is technically most suitable, and how to achieve cost-effective production at an appropriate level of quality. The equipment includes machining centres for drilling, turning, and milling, a sinker EDM machine, and a plastic injection moulding machine, along with high-precision measurement and calibration tools.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://hs-flensburg.de",coordinates:[9.4509556,54.7750453],inInterreg:true},
+  {name:"Bureau Veritas SA Marine & Offshore Hamburg",country:"Germany",institution:"Bureau Veritas SA Marine & Offshore Hamburg",types:["Multi-industry facility","Safety training center"],description:"Bureau Veritas is a classification society established in 1828",logo:"",photo1:"",photo2:"",photo3:"",website:"https://marine-offshore.bureauveritas.com",coordinates:[9.9865286,53.466458],inInterreg:false},
+  {name:"Marina Sensor, water level and water temp. sensors in different marina in Germany + DK",country:"Germany",institution:"GEOMAR Helmholtz-Zentrum für Ozeanforschung Kiel",types:["Marina Sensor, water level and water temp. sensors in different marina in Germany + DK"],description:"Die Entwicklung eines umfassenden Küstenüberwachungsnetzes ist ein entscheidender Schritt hin zu einem nachhaltigen Küstenmanagement. Mit Hilfe eines Netzes von Sensoren und Messstationen lassen sich Echtzeitdaten (NRT) über Wasserqualität, Temperatur und andere Umweltfaktoren sammeln. Diese Daten sind wichtig, um schnell auf Veränderungen reagieren und vorbeugende Maßnahmen ergreifen zu können.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.soop-platform.earth/marinas/",coordinates:[10.180091492915388,54.32754263054331],inInterreg:true},
+  {name:"SANDRA II,VERA,ELLA,NOVA,HaFoLa",country:"Germany",institution:"Entwicklungszentrum für Schiffstechnik und Transportsysteme e.V. (DST) Development Centre for Ship Technology and Transport Systems (DST)",types:["Land based autonomous systems test area","Research vessel / test ship","Ship bridge simulator","Port & logistics research lab"],description:"a) Ship handling simulador \"SANDRA II\" (inland vessels)\nb) Digital test field \"VERA\" (inland vessels, focus on automation)\nc) Research vessels \"ELLA\" & \"NOVA\" (inland vessels, focus on automation and partially on propulsion systems with renewable energy)\nd) Port & logistics research lab \"HaFoLa\"",logo:"",photo1:"",photo2:"",photo3:"",website:"www.dst-org.de",coordinates:[6.7839992590549985,51.42928103937358],inInterreg:false},
+  {name:"Maritimes Trainingscenter auf dem GreenTEC Campus",country:"Germany",institution:"OffTEC Base GmbH & Co. KG",types:["Safety training center","Land based autonomous systems test area","Fire resistance / fire fighting test facility","Multi-industry facility"],description:"Training center for On- and Offshore wind staff, Fire Fighters, Police, Military and other special forces. The center is embedded into a 127 hectares large and secured area located in the very north of Germany.",logo:"",photo1:"",photo2:"",photo3:"",website:"www.offtec.de",coordinates:[8.956069989948128,54.74040723739979],inInterreg:true},
+  {name:"Land-Based Test Area of Maritimes Zentrum",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Ship engine room simulator","Ship bridge simulator","Multi-industry facility","PLC test facility","Internal combustion engines test facility","Maritime plants and aggregates test facility","Shaft measuring device (dynamic torque, thrust and bending measurement)"],description:"Maritimes Zentrum provides nautical and ship operational training simulators PLC test lab and multiple test facilities and engine test benches also for industry partners on demand. Beyond this we are specialists on helping idustry partners to get PLCs ready for the new maritime MTP automation standard, even without touching already approved technology.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"",photo2:"",photo3:"",website:"https://www.maritimes-zentrum.de/",coordinates:[9.4507648,54.7734499],inInterreg:true},
 ];
 
-/* ── HELPERS ── */
-function escHtml(s){
-  return String(s??"")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function safeUrl(url){
-  if(!url) return "";
-  try {
-    const decoded = decodeURIComponent(url);
-    return decoded.replace(/ /g, "%20");
-  } catch(e) {
-    return url;
-  }
-}
-
+function escHtml(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+function safeUrl(url){if(!url)return "";try{return decodeURIComponent(url).replace(/ /g,"%20");}catch(e){return url;}}
 function ini(n){return String(n||"").trim().split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||"").join("")||"BV";}
 
-/* ── POPUP HTML ── */
 function popupHTML(f){
-  const dk  = f.country==="Denmark";
-  const cls = dk ? " dk" : "";
-  const logoSrc = safeUrl(f.logo);
-  const p1      = safeUrl(f.photo1);
-  const p2      = safeUrl(f.photo2);
-  const p3      = safeUrl(f.photo3);
-
-  const logoHTML = logoSrc
-    ? `<img class="pLogo" src="${logoSrc}" alt="${escHtml(f.name)}">`
-    : `<div class="pFallback${cls}">${ini(f.name)}</div>`;
-
-  const pills = (f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(t)}</span>`).join("");
-
-  const photos = [p1, p2, p3].filter(Boolean);
-  const gallery = photos.length
-    ? `<div class="pGLabel">Facility Photos</div>
-       <div class="pGallery">
-         ${photos.map(u=>`<img src="${u}" alt="${escHtml(f.name)}">`).join("")}
-       </div>`
-    : `<div class="pNoPhoto">No photos available yet for this facility.</div>`;
-
-  const btn = f.website
-    ? `<div class="pFooter">
-         <a class="pBtn${cls}" href="${escHtml(f.website)}" target="_blank" rel="noopener noreferrer">
-           Visit Website ↗
-         </a>
-       </div>`
-    : "";
-
-  return `<div class="pCard">
-<div class="pStrip${dk?" dk":" de"}"></div>
-<div class="pTop">
-  <div class="pHeader">
-    <div class="pLogoBox">${logoHTML}</div>
-    <div class="pTG">
-      <div class="pTitle">${escHtml(f.name)}</div>
-      <div class="pPills">${pills}</div>
-    </div>
-  </div>
-</div>
-<div class="pBody">
-  ${f.institution?`<div class="pMeta">
-    <svg viewBox="0 0 16 16" fill="none">
-      <rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M8 2L14 7H2L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-    </svg>
-    <span class="pMetaTxt">${escHtml(f.institution)}</span>
-  </div>`:""}
-  ${f.country?`<div class="pMeta">
-    <svg viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.1"/>
-    </svg>
-    <span class="pMetaTxt">${escHtml(f.country)}</span>
-  </div>`:""}
-  <hr class="pHr">
-  <div class="pDesc">${escHtml(f.description)}</div>
-  ${gallery}
-  ${btn}
-</div>
-</div>`;
-}
-
-/* ── SHIP PIN SVG ── */
-function shipPinSVG(f,idx){
-  const dk  = f.country==="Denmark";
-  const acc = dk?"#c0232d":"#1a5aff";
-  const mid = dk?"#e8404e":"#4d87ff";
-  const uid = "sp"+idx;
-  const sx=23, sy=22;
-  return `<svg width="46" height="52" viewBox="0 0 46 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="bg${uid}" cx="40%" cy="30%" r="70%">
-      <stop offset="0%" stop-color="${mid}"/>
-      <stop offset="100%" stop-color="${acc}"/>
-    </radialGradient>
-    <filter id="sh${uid}" x="-40%" y="-40%" width="180%" height="180%">
-      <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="${acc}" flood-opacity=".35"/>
-      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".12"/>
-    </filter>
-    <clipPath id="cc${uid}"><circle cx="${sx}" cy="${sy}" r="19"/></clipPath>
-  </defs>
-  <line x1="${sx}" y1="${sy+19}" x2="${sx}" y2="49" stroke="${acc}" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="${sx}" cy="50.5" r="2.5" fill="${acc}" opacity=".55"/>
-  <g filter="url(#sh${uid})">
-    <circle cx="${sx}" cy="${sy}" r="19" fill="url(#bg${uid})"/>
-  </g>
-  <circle cx="${sx}" cy="${sy}" r="19" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/>
-  <g clip-path="url(#cc${uid})">
-    <rect x="${sx-19}" y="${sy+8}" width="38" height="12" fill="rgba(255,255,255,.12)"/>
-    <line x1="${sx-19}" y1="${sy+8}" x2="${sx+19}" y2="${sy+8}" stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-dasharray="3 2"/>
-    <polygon points="${sx-13},${sy+8} ${sx+14},${sy+8} ${sx+12},${sy+15} ${sx-11},${sy+15}" fill="rgba(255,255,255,.9)"/>
-    <path d="M${sx+14} ${sy+8} Q${sx+19} ${sy+8} ${sx+18} ${sy+14} L${sx+12} ${sy+15}Z" fill="rgba(255,255,255,.75)"/>
-    <polygon points="${sx-13},${sy+8} ${sx-11},${sy+15} ${sx-15},${sy+15} ${sx-16},${sy+10}" fill="rgba(255,255,255,.7)"/>
-    <rect x="${sx-4}" y="${sy+1}" width="10" height="7" rx="1.5" fill="rgba(255,255,255,.95)"/>
-    <rect x="${sx-2}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/>
-    <rect x="${sx+1.5}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/>
-    <rect x="${sx-8}" y="${sy+2}" width="4" height="6" rx="1" fill="rgba(255,255,255,.85)"/>
-    <rect x="${sx-8}" y="${sy+2}" width="4" height="2" rx="1" fill="${acc}" opacity=".7"/>
-    <line x1="${sx+7}" y1="${sy+1}" x2="${sx+7}" y2="${sy-7}" stroke="rgba(255,255,255,.9)" stroke-width="1.2"/>
-    <polygon points="${sx+7},${sy-7} ${sx+12},${sy-5} ${sx+7},${sy-3}" fill="rgba(255,255,255,.9)"/>
-    <g opacity=".55" transform="translate(${sx-16},${sy+10}) scale(.55)">
-      <circle cx="5" cy="3" r="2.2" fill="none" stroke="white" stroke-width="1.4"/>
-      <line x1="5" y1="5.2" x2="5" y2="12" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-      <path d="M1 12 Q5 14 9 12" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-      <line x1="1" y1="7.5" x2="9" y2="7.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-    </g>
-  </g>
-  <ellipse cx="${sx-7}" cy="${sy-9}" rx="7" ry="4.5" fill="rgba(255,255,255,.22)" clip-path="url(#cc${uid})"/>
-</svg>`;
-}
-
-/* ── MARKERS ── */
-const markers=[];
-let selCountry="all", selType="all";
-
-function spawnMarkers(){
-  facilities.forEach((f,idx)=>{
-    const dk=f.country==="Denmark";
-    const el=document.createElement("div");
-    el.className=`bv-pin ${dk?"dk":"de"}`;
-    el.style.cssText="width:46px;height:52px;cursor:pointer;";
-    el.innerHTML=shipPinSVG(f,idx);
-
-    const popup=new mapboxgl.Popup({
-      maxWidth:"345px",
-      offset:[0,-54],
-      closeButton:true,
-      closeOnClick:true
-    }).setHTML(popupHTML(f));
-
-    const marker=new mapboxgl.Marker({element:el,anchor:"bottom"})
-      .setLngLat(f.coordinates)
-      .setPopup(popup)
-      .addTo(map);
-
-    marker._bv={country:f.country,types:f.types||[]};
-    markers.push(marker);
-  });
-}
-
-function updateCount(){
-  const visible=markers.filter(m=>m.getElement().style.display!=="none").length;
-  document.getElementById("entryCount").innerText=visible+" facilit"+(visible===1?"y":"ies");
-}
-
-/* ── FILTER LOGIC ──
-   selType === "other"  → show facilities that have at least one type NOT in KNOWN_TYPES
-   selType === "all"    → show everything
-   selType === <exact>  → show facilities whose types array includes that exact string
-*/
-function facilityMatchesType(bv, selType){
-  if(selType === "all") return true;
-  if(selType === "other"){
-    // Has at least one type not in the known list
-    return bv.types.some(t => !KNOWN_TYPES.has(t));
+  const dk=f.country==="Denmark";
+  const cls=dk?" dk":"";
+  const logoSrc=safeUrl(f.logo);
+  const photos=[f.photo1,f.photo2,f.photo3].map(safeUrl).filter(Boolean);
+  const logoHTML=logoSrc?`<img class="pLogo" src="${logoSrc}" alt="${escHtml(f.name)}">`:`<div class="pFallback${cls}">${ini(f.name)}</div>`;
+  const pills=(f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(t)}</span>`).join("");
+  let galleryHTML="";
+  if(photos.length===0){galleryHTML=`<div class="pNoPhoto">No photos available yet for this facility.</div>`;}
+  else if(photos.length===1){galleryHTML=`<div class="pGLabel">Facility Photos</div><div class="pCarousel" data-idx="0" data-total="1"><div class="pCarouselTrack"><div class="pCarouselSlide"><img src="${photos[0]}" alt="${escHtml(f.name)}"></div></div></div>`;}
+  else{
+    const slides=photos.map(u=>`<div class="pCarouselSlide"><img src="${u}" alt="${escHtml(f.name)}"></div>`).join("");
+    const dots=photos.map((_,i)=>`<div class="pCarouselDot${i===0?" active":""}" data-dot="${i}"></div>`).join("");
+    galleryHTML=`<div class="pGLabel">Facility Photos</div><div class="pCarousel" data-idx="0" data-total="${photos.length}"><div class="pCarouselTrack">${slides}</div><button class="pCarouselBtn prev" aria-label="Previous photo"><svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#334a60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pCarouselBtn next" aria-label="Next photo"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#334a60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="pCarouselDots">${dots}</div></div>`;
   }
-  return bv.types.includes(selType);
+  const btn=f.website?`<div class="pFooter"><a class="pBtn${cls}" href="${escHtml(f.website)}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a></div>`:"";
+  return `<div class="pCard"><div class="pStrip${dk?" dk":" de"}"></div><div class="pTop"><div class="pHeader"><div class="pLogoBox">${logoHTML}</div><div class="pTG"><div class="pTitle">${escHtml(f.name)}</div><div class="pPills">${pills}</div></div></div></div><div class="pBody">${f.institution?`<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M8 2L14 7H2L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="pMetaTxt">${escHtml(f.institution)}</span></div>`:""}<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.1"/></svg><span class="pMetaTxt">${escHtml(f.country)}</span></div><hr class="pHr"><div class="pDesc">${escHtml(f.description)}</div>${galleryHTML}${btn}</div></div>`;
 }
+
+document.addEventListener("click",function(e){
+  const btn=e.target.closest(".pCarouselBtn");
+  if(!btn)return;
+  const carousel=btn.closest(".pCarousel");
+  if(!carousel)return;
+  e.stopPropagation();
+  let idx=parseInt(carousel.dataset.idx,10);
+  const tot=parseInt(carousel.dataset.total,10);
+  if(btn.classList.contains("prev"))idx=(idx-1+tot)%tot;
+  else idx=(idx+1)%tot;
+  carousel.dataset.idx=idx;
+  carousel.querySelector(".pCarouselTrack").style.transform=`translateX(-${idx*100}%)`;
+  carousel.querySelectorAll(".pCarouselDot").forEach((d,i)=>d.classList.toggle("active",i===idx));
+});
+
+document.addEventListener("click",function(e){
+  const dot=e.target.closest(".pCarouselDot");
+  if(!dot)return;
+  const carousel=dot.closest(".pCarousel");
+  if(!carousel)return;
+  e.stopPropagation();
+  const idx=parseInt(dot.dataset.dot,10);
+  carousel.dataset.idx=idx;
+  carousel.querySelector(".pCarouselTrack").style.transform=`translateX(-${idx*100}%)`;
+  carousel.querySelectorAll(".pCarouselDot").forEach((d,i)=>d.classList.toggle("active",i===idx));
+});
+
+function shipPinSVG(f,idx){
+  const dk=f.country==="Denmark";
+  const acc=dk?"#c0232d":"#1a5aff";
+  const mid=dk?"#e8404e":"#4d87ff";
+  const uid="sp"+idx;
+  const sx=23,sy=22;
+  return `<svg width="46" height="52" viewBox="0 0 46 52" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="bg${uid}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="${mid}"/><stop offset="100%" stop-color="${acc}"/></radialGradient><filter id="sh${uid}" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="${acc}" flood-opacity=".35"/><feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".12"/></filter><clipPath id="cc${uid}"><circle cx="${sx}" cy="${sy}" r="19"/></clipPath></defs><line x1="${sx}" y1="${sy+19}" x2="${sx}" y2="49" stroke="${acc}" stroke-width="2.5" stroke-linecap="round"/><circle cx="${sx}" cy="50.5" r="2.5" fill="${acc}" opacity=".55"/><g filter="url(#sh${uid})"><circle cx="${sx}" cy="${sy}" r="19" fill="url(#bg${uid})"/></g><circle cx="${sx}" cy="${sy}" r="19" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/><g clip-path="url(#cc${uid})"><rect x="${sx-19}" y="${sy+8}" width="38" height="12" fill="rgba(255,255,255,.12)"/><line x1="${sx-19}" y1="${sy+8}" x2="${sx+19}" y2="${sy+8}" stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-dasharray="3 2"/><polygon points="${sx-13},${sy+8} ${sx+14},${sy+8} ${sx+12},${sy+15} ${sx-11},${sy+15}" fill="rgba(255,255,255,.9)"/><path d="M${sx+14} ${sy+8} Q${sx+19} ${sy+8} ${sx+18} ${sy+14} L${sx+12} ${sy+15}Z" fill="rgba(255,255,255,.75)"/><polygon points="${sx-13},${sy+8} ${sx-11},${sy+15} ${sx-15},${sy+15} ${sx-16},${sy+10}" fill="rgba(255,255,255,.7)"/><rect x="${sx-4}" y="${sy+1}" width="10" height="7" rx="1.5" fill="rgba(255,255,255,.95)"/><rect x="${sx-2}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/><rect x="${sx+1.5}" y="${sy+2.5}" width="2.5" height="3" rx=".6" fill="${acc}" opacity=".8"/><rect x="${sx-8}" y="${sy+2}" width="4" height="6" rx="1" fill="rgba(255,255,255,.85)"/><rect x="${sx-8}" y="${sy+2}" width="4" height="2" rx="1" fill="${acc}" opacity=".7"/><line x1="${sx+7}" y1="${sy+1}" x2="${sx+7}" y2="${sy-7}" stroke="rgba(255,255,255,.9)" stroke-width="1.2"/><polygon points="${sx+7},${sy-7} ${sx+12},${sy-5} ${sx+7},${sy-3}" fill="rgba(255,255,255,.9)"/><g opacity=".55" transform="translate(${sx-16},${sy+10}) scale(.55)"><circle cx="5" cy="3" r="2.2" fill="none" stroke="white" stroke-width="1.4"/><line x1="5" y1="5.2" x2="5" y2="12" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M1 12 Q5 14 9 12" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round"/><line x1="1" y1="7.5" x2="9" y2="7.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/></g></g><ellipse cx="${sx-7}" cy="${sy-9}" rx="7" ry="4.5" fill="rgba(255,255,255,.22)" clip-path="url(#cc${uid})"/></svg>`;
+}
+
+function pointInRing(pt, ring) {
+  let inside = false;
+  const [px, py] = pt;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    const intersect = ((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / (yj - yi) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+}
+function pointInPolygon(pt, polygon) {
+  if (!pointInRing(pt, polygon[0])) return false;
+  for (let h = 1; h < polygon.length; h++) {
+    if (pointInRing(pt, polygon[h])) return false;
+  }
+  return true;
+}
+function pointInFeature(pt, feature) {
+  const g = feature.geometry;
+  if (g.type === "Polygon") return pointInPolygon(pt, g.coordinates);
+  if (g.type === "MultiPolygon") return g.coordinates.some(poly => pointInPolygon(pt, poly));
+  return false;
+}
+
+const markers=[];
+let selectedCountries=new Set();
+let selType="all";
+let interregOnly=false;
+let interregFeatures=[];
 
 function applyFilters(){
   markers.forEach(m=>{
     const d=m._bv;
-    const ok=(selCountry==="all"||d.country===selCountry)
-           && facilityMatchesType(d, selType);
-    m.getElement().style.display=ok?"block":"none";
+    const countryOk = selectedCountries.size===0 || selectedCountries.has(d.country);
+    const typeOk = selType==="all" || (selType==="other" ? d.types.some(t=>!KNOWN_TYPES.has(t)) : d.types.includes(selType));
+    const areaOk = !interregOnly || d.inInterreg;
+    m.getElement().style.display=(countryOk&&typeOk&&areaOk)?"block":"none";
   });
-  updateCount();
+  const visible=markers.filter(m=>m.getElement().style.display!=="none").length;
+  document.getElementById("entryCount").innerText=visible+" facilit"+(visible===1?"y":"ies");
 }
 
-/* ── MAP LOAD ── */
 map.on("load",async()=>{
   try{map.setPaintProperty("water","fill-color","#9ecae1");}catch(e){}
 
   const resp=await fetch("https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_01M_2021_4326_LEVL_2.geojson");
   const data=await resp.json();
   const regions=data.features.filter(f=>f.properties.NUTS_ID==="DEF0"||f.properties.NUTS_ID==="DK03");
+  interregFeatures=regions;
+
+  facilities.forEach(f=>{
+    f.inInterreg = regions.some(region=>pointInFeature(f.coordinates, region));
+  });
+
   const merged={type:"Feature",geometry:{type:"MultiPolygon",coordinates:[]}};
   regions.forEach(f=>{
-    if(f.geometry.type==="Polygon") merged.geometry.coordinates.push(f.geometry.coordinates);
-    if(f.geometry.type==="MultiPolygon") merged.geometry.coordinates.push(...f.geometry.coordinates);
+    if(f.geometry.type==="Polygon")merged.geometry.coordinates.push(f.geometry.coordinates);
+    if(f.geometry.type==="MultiPolygon")merged.geometry.coordinates.push(...f.geometry.coordinates);
   });
   const holes=[];
   merged.geometry.coordinates.forEach(p=>holes.push(p[0]));
@@ -673,14 +1097,37 @@ map.on("load",async()=>{
   map.addLayer({id:"region-border",type:"line",source:"region",paint:{"line-color":"#3f7fb5","line-width":2,"line-opacity":0.5,"line-blur":1}});
   map.addLayer({id:"region-glow",type:"line",source:"region",paint:{"line-color":"#7fb0d6","line-width":8,"line-opacity":0.15,"line-blur":6}});
 
-  spawnMarkers();
-  updateCount();
+  facilities.forEach((f,idx)=>{
+    const dk=f.country==="Denmark";
+    const el=document.createElement("div");
+    el.className=`bv-pin ${dk?"dk":"de"}`;
+    el.style.cssText="width:46px;height:52px;cursor:pointer;";
+    el.innerHTML=shipPinSVG(f,idx);
+    const popup=new mapboxgl.Popup({maxWidth:"345px",offset:[0,-54],closeButton:true,closeOnClick:true}).setHTML(popupHTML(f));
+    const marker=new mapboxgl.Marker({element:el,anchor:"bottom"}).setLngLat(f.coordinates).setPopup(popup).addTo(map);
+    marker._bv={country:f.country,types:f.types||[],inInterreg:f.inInterreg};
+    markers.push(marker);
+  });
+
+  applyFilters();
+
+  document.getElementById("interregChip").addEventListener("click",()=>{
+    interregOnly=!interregOnly;
+    document.getElementById("interregChip").classList.toggle("on",interregOnly);
+    document.getElementById("legend").classList.toggle("interreg-active",interregOnly);
+    applyFilters();
+  });
 
   document.querySelectorAll(".cChip").forEach(c=>{
     c.addEventListener("click",()=>{
-      document.querySelectorAll(".cChip").forEach(x=>x.classList.remove("on"));
-      c.classList.add("on");
-      selCountry=c.dataset.country;
+      const country=c.dataset.country;
+      if(selectedCountries.has(country)){
+        selectedCountries.delete(country);
+        c.classList.remove("on");
+      } else {
+        selectedCountries.add(country);
+        c.classList.add("on");
+      }
       applyFilters();
     });
   });
@@ -693,6 +1140,197 @@ map.on("load",async()=>{
       applyFilters();
     });
   });
+});
+
+// ── Add Facility Panel (outside map.on load) ──
+const addPanel=document.getElementById("addPanel");
+const addBtn=document.getElementById("addFacilityBtn");
+const closeBtn=document.getElementById("addPanelClose");
+const cancelBtn=document.getElementById("apCancelBtn");
+const saveBtn=document.getElementById("apSaveBtn");
+const interregToggle=document.getElementById("ap_interreg_toggle");
+const apFormBody=document.getElementById("apFormBody");
+const apSuccess=document.getElementById("apSuccess");
+const apFooter=document.getElementById("apFooter");
+const apSuccessBack=document.getElementById("apSuccessBack");
+
+let apInterreg=false;
+let apTags=[];
+
+function openAddPanel(){
+  addPanel.classList.add("open");
+  addBtn.style.background="linear-gradient(135deg,#1a5aff,#1348d6)";
+}
+function closeAddPanel(){
+  addPanel.classList.remove("open");
+  addBtn.style.background="linear-gradient(135deg,#0f2236,#1a3a5c)";
+}
+function resetAddForm(){
+  ["ap_name","ap_institution","ap_description","ap_lng","ap_lat","ap_website","ap_logo","ap_photo1","ap_photo2","ap_photo3"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value="";
+  });
+  const countryEl=document.getElementById("ap_country");
+  if(countryEl) countryEl.value="Germany";
+  apTags=[];
+  renderApTags();
+  apInterreg=false;
+  interregToggle.classList.remove("on");
+  apFormBody.style.display="block";
+  apFooter.style.display="flex";
+  apSuccess.style.display="none";
+  // reset field borders
+  ["ap_name","ap_institution","ap_lng","ap_lat"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.borderColor="";
+  });
+}
+
+addBtn.addEventListener("click",()=>{
+  if(addPanel.classList.contains("open")){closeAddPanel();}
+  else{resetAddForm();openAddPanel();}
+});
+addBtn.addEventListener("mouseenter",()=>{addBtn.style.transform="translateY(-1px) scale(1.08)";});
+addBtn.addEventListener("mouseleave",()=>{addBtn.style.transform="";});
+closeBtn.addEventListener("click",closeAddPanel);
+cancelBtn.addEventListener("click",closeAddPanel);
+apSuccessBack.addEventListener("click",resetAddForm);
+
+interregToggle.addEventListener("click",()=>{
+  apInterreg=!apInterreg;
+  interregToggle.classList.toggle("on",apInterreg);
+});
+
+function renderApTags(){
+  const wrap=document.getElementById("ap_tags_wrap");
+  const input=document.getElementById("ap_type_input");
+  wrap.querySelectorAll(".apTag").forEach(t=>t.remove());
+  const dk=document.getElementById("ap_country").value==="Denmark";
+  apTags.forEach((tag,i)=>{
+    const span=document.createElement("span");
+    span.className="apTag"+(dk?" dk-tag":"");
+    span.innerHTML=escHtml(tag)+'<span class="apTagDel" data-i="'+i+'">×</span>';
+    wrap.insertBefore(span,input);
+  });
+  wrap.querySelectorAll(".apTagDel").forEach(d=>{
+    d.addEventListener("click",(e)=>{
+      e.stopPropagation();
+      apTags.splice(parseInt(d.dataset.i),1);
+      renderApTags();
+    });
+  });
+}
+
+document.getElementById("ap_country").addEventListener("change",renderApTags);
+document.getElementById("ap_tags_wrap").addEventListener("click",()=>document.getElementById("ap_type_input").focus());
+
+document.getElementById("ap_type_input").addEventListener("keydown",(e)=>{
+  const val=e.target.value.trim();
+  if((e.key==="Enter"||e.key===",")&&val){
+    e.preventDefault();
+    if(!apTags.includes(val))apTags.push(val);
+    e.target.value="";
+    renderApTags();
+  }
+  if(e.key==="Backspace"&&!e.target.value&&apTags.length){
+    apTags.pop();
+    renderApTags();
+  }
+});
+
+function addMarkerFromForm(f){
+  const dk=f.country==="Denmark";
+  const el=document.createElement("div");
+  el.className=`bv-pin ${dk?"dk":"de"}`;
+  el.style.cssText="width:46px;height:52px;cursor:pointer;";
+  el.innerHTML=shipPinSVG(f, markers.length);
+  const popup=new mapboxgl.Popup({maxWidth:"345px",offset:[0,-54],closeButton:true,closeOnClick:true}).setHTML(popupHTML(f));
+  const marker=new mapboxgl.Marker({element:el,anchor:"bottom"}).setLngLat(f.coordinates).setPopup(popup).addTo(map);
+  marker._bv={country:f.country,types:f.types||[],inInterreg:f.inInterreg};
+  markers.push(marker);
+  map.flyTo({center:f.coordinates,zoom:8,duration:1200});
+  applyFilters();
+}
+
+saveBtn.addEventListener("click",()=>{
+  const name=document.getElementById("ap_name").value.trim();
+  const institution=document.getElementById("ap_institution").value.trim();
+  const country=document.getElementById("ap_country").value;
+  const lngVal=document.getElementById("ap_lng").value.trim();
+  const latVal=document.getElementById("ap_lat").value.trim();
+
+  // Validation — highlight required fields
+  let valid=true;
+  if(!name){
+    document.getElementById("ap_name").style.borderColor="#c0232d";
+    document.getElementById("ap_name").focus();
+    valid=false;
+  } else { document.getElementById("ap_name").style.borderColor=""; }
+
+  if(!institution){
+    document.getElementById("ap_institution").style.borderColor="#c0232d";
+    if(valid) document.getElementById("ap_institution").focus();
+    valid=false;
+  } else { document.getElementById("ap_institution").style.borderColor=""; }
+
+  if(!lngVal||!latVal||isNaN(parseFloat(lngVal))||isNaN(parseFloat(latVal))){
+    document.getElementById("ap_lng").style.borderColor="#c0232d";
+    document.getElementById("ap_lat").style.borderColor="#c0232d";
+    if(valid) document.getElementById("ap_lng").focus();
+    valid=false;
+  } else {
+    document.getElementById("ap_lng").style.borderColor="";
+    document.getElementById("ap_lat").style.borderColor="";
+  }
+
+  if(!valid) return;
+
+  // Capture any text still typed in the tag input
+  const rawTag=document.getElementById("ap_type_input").value.trim();
+  if(rawTag&&!apTags.includes(rawTag)) apTags.push(rawTag);
+
+  const f={
+    name, institution, country,
+    types:[...apTags],
+    description:document.getElementById("ap_description").value.trim(),
+    logo:document.getElementById("ap_logo").value.trim(),
+    photo1:document.getElementById("ap_photo1").value.trim(),
+    photo2:document.getElementById("ap_photo2").value.trim(),
+    photo3:document.getElementById("ap_photo3").value.trim(),
+    website:document.getElementById("ap_website").value.trim(),
+    coordinates:[parseFloat(lngVal),parseFloat(latVal)],
+    inInterreg:apInterreg
+  };
+
+  // Add pin to map
+  addMarkerFromForm(f);
+
+  // Build code snippet
+  const snippet=`  {name:${JSON.stringify(f.name)},country:${JSON.stringify(f.country)},institution:${JSON.stringify(f.institution)},types:${JSON.stringify(f.types)},description:${JSON.stringify(f.description)},logo:${JSON.stringify(f.logo)},photo1:${JSON.stringify(f.photo1)},photo2:${JSON.stringify(f.photo2)},photo3:${JSON.stringify(f.photo3)},website:${JSON.stringify(f.website)},coordinates:[${f.coordinates[0]},${f.coordinates[1]}],inInterreg:${f.inInterreg}},`;
+  document.getElementById("apCodeSnippet").value=snippet;
+
+  // Wire copy button (replace to avoid duplicate listeners)
+  const copyBtn=document.getElementById("apCopyBtn");
+  const freshCopy=copyBtn.cloneNode(true);
+  copyBtn.parentNode.replaceChild(freshCopy,copyBtn);
+  freshCopy.addEventListener("click",function(){
+    navigator.clipboard.writeText(snippet).then(()=>{
+      freshCopy.textContent="Copied!";
+      freshCopy.style.background="#1a5aff";
+      setTimeout(()=>{freshCopy.textContent="Copy";freshCopy.style.background="var(--navy)";},2000);
+    }).catch(()=>{
+      document.getElementById("apCodeSnippet").select();
+      document.execCommand("copy");
+      freshCopy.textContent="Copied!";
+      setTimeout(()=>{freshCopy.textContent="Copy";},2000);
+    });
+  });
+
+  // Show success screen
+  apFormBody.style.display="none";
+  apFooter.style.display="none";
+  document.getElementById("apSuccessMsg").textContent=`"${name}" is now live on the map. Paste the line below into the facilities array in the HTML file to make it permanent:`;
+  apSuccess.style.display="flex";
 });
 </script>
 </body>
