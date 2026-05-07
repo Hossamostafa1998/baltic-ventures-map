@@ -169,8 +169,8 @@ body{font-family:'DM Sans',sans-serif;}
 #programLogo{
   position:absolute;
   top:10px;
-  right:60px;
-  width:600px;
+  right:50px;
+  width:420px;
   background:rgba(255,255,255,.97);
   border:1px solid var(--border);
   border-radius:14px;
@@ -468,7 +468,6 @@ body{font-family:'DM Sans',sans-serif;}
     <div class="secLabel">Area</div>
     <div class="interregChip" id="interregChip">
       <div class="interregBadge">
-        <!-- Map region / boundary icon -->
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.1" stroke-dasharray="2.5 1.5"/>
           <path d="M1 4.5 Q3 3.5 5 5 Q7 6.5 9 5 L11 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" opacity=".6"/>
@@ -504,13 +503,11 @@ body{font-family:'DM Sans',sans-serif;}
 
       <div class="tChip allT on" data-type="all">
         <div class="tChipIcon">
-          <!-- Grid/all icon -->
           <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="7" y="1" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="1" y="7" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/><rect x="7" y="7" width="4" height="4" rx=".7" fill="currentColor" opacity=".7"/></svg>
         </div>
         <span class="tChipLabel">All Facilities</span>
       </div>
 
-      <!-- Engine room sim: pistons / engine cylinders -->
       <div class="tChip" data-type="Ship engine room simulator">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -525,7 +522,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Engine room sim.</span>
       </div>
 
-      <!-- Bridge sim: steering wheel / helm -->
       <div class="tChip" data-type="Ship bridge simulator">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -542,7 +538,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Bridge simulator</span>
       </div>
 
-      <!-- Shock/vibration: zigzag waveform with impact arrows -->
       <div class="tChip" data-type="Shock and/or vibration test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -552,7 +547,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Shock / vibration</span>
       </div>
 
-      <!-- Sea-based test area: anchor in water -->
       <div class="tChip" data-type="Sea-based maritime test area">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -565,7 +559,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Sea-based test area</span>
       </div>
 
-      <!-- Safety training: shield with checkmark -->
       <div class="tChip" data-type="Safety training center">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -576,7 +569,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Safety training</span>
       </div>
 
-      <!-- Land autonomous: wheeled robot / rover -->
       <div class="tChip" data-type="Land based autonomous systems test area">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -590,7 +582,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Land autonomous</span>
       </div>
 
-      <!-- Research vessel: ship silhouette with flag -->
       <div class="tChip" data-type="Research vessel / test ship">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -602,7 +593,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Research vessel</span>
       </div>
 
-      <!-- Sea autonomous: drone/USV on water surface -->
       <div class="tChip" data-type="Sea based autonomous systems test area">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -617,7 +607,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Sea autonomous</span>
       </div>
 
-      <!-- Multi-industry: interconnected nodes -->
       <div class="tChip" data-type="Multi-industry facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -635,7 +624,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Multi-industry</span>
       </div>
 
-      <!-- Fire: flame silhouette -->
       <div class="tChip" data-type="Fire resistance / fire fighting test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -645,7 +633,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Fire testing</span>
       </div>
 
-      <!-- EMC: electromagnetic waves radiating from antenna -->
       <div class="tChip" data-type="EMC test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -660,7 +647,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">EMC test facility</span>
       </div>
 
-      <!-- PLC: circuit board / chip with connectors -->
       <div class="tChip" data-type="PLC test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -675,7 +661,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">PLC test facility</span>
       </div>
 
-      <!-- Thermodynamic: thermometer with temperature waves -->
       <div class="tChip" data-type="Ambient condition / thermodynamic test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -690,7 +675,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Thermodynamic test</span>
       </div>
 
-      <!-- Engine testing: piston + crankshaft -->
       <div class="tChip" data-type="Internal combustion engines test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -704,7 +688,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Engine testing</span>
       </div>
 
-      <!-- Plants & aggregates: industrial plant / piping -->
       <div class="tChip" data-type="Maritime plants and aggregates test facility">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -719,7 +702,6 @@ body{font-family:'DM Sans',sans-serif;}
         <span class="tChipLabel">Plants &amp; aggregates</span>
       </div>
 
-      <!-- Other: question mark -->
       <div class="tChip" data-type="other">
         <div class="tChipIcon">
           <svg viewBox="0 0 12 12" fill="none">
@@ -904,7 +886,7 @@ body{font-family:'DM Sans',sans-serif;}
 
 <div id="map"></div>
 
-<!-- Logo: 450px standalone at bottom center -->
+<!-- Logo -->
 <div id="programLogo">
   <img
     src="https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/543e3805-61cd-4448-980f-a956d418f162.png"
@@ -936,36 +918,51 @@ mapboxgl.accessToken='pk.eyJ1IjoiaG9zc2Ftb3N0YWZhYSIsImEiOiJjbW0wbWNvd2owMDZlMm9
 const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-v11',center:[9.6,55],zoom:6.5});
 map.addControl(new mapboxgl.NavigationControl());
 
-const KNOWN_TYPES = new Set([
-  "Ship engine room simulator","Ship bridge simulator",
-  "Shock and/or vibration test facility","Sea-based maritime test area",
-  "Safety training center","Land based autonomous systems test area",
-  "Research vessel / test ship","Sea based autonomous systems test area",
-  "Multi-industry facility","Fire resistance / fire fighting test facility",
-  "EMC test facility","PLC test facility",
-  "Ambient condition / thermodynamic test facility",
-  "Internal combustion engines test facility",
-  "Maritime plants and aggregates test facility"
-]);
+// ── Type label map: raw data key → display label shown in filter panel ──
+const TYPE_LABELS = {
+  "Ship engine room simulator":                       "Engine room sim.",
+  "Ship bridge simulator":                            "Bridge simulator",
+  "Shock and/or vibration test facility":             "Shock / vibration",
+  "Sea-based maritime test area":                     "Sea-based test area",
+  "Safety training center":                           "Safety training",
+  "Land based autonomous systems test area":          "Land autonomous",
+  "Research vessel / test ship":                      "Research vessel",
+  "Sea based autonomous systems test area":           "Sea autonomous",
+  "Multi-industry facility":                          "Multi-industry",
+  "Fire resistance / fire fighting test facility":    "Fire testing",
+  "EMC test facility":                                "EMC test facility",
+  "PLC test facility":                                "PLC test facility",
+  "Ambient condition / thermodynamic test facility":  "Thermodynamic test",
+  "Internal combustion engines test facility":        "Engine testing",
+  "Maritime plants and aggregates test facility":     "Plants & aggregates",
+};
+
+// Returns the display label for a type string; falls back to the raw string
+function typeLabel(t) {
+  return TYPE_LABELS[t] || t;
+}
+
+const KNOWN_TYPES = new Set(Object.keys(TYPE_LABELS));
 
 const facilities=[
-  {name:"Maritimes Zentrum / Kielseng Test Facility",country:"Germany",institution:"Maritimes Zentrum der Hochschule Flensburg",types:[,"Ship engine room simulator","Maritime plants and aggregates test facility"],description:"The Maritimes Zentrum / Kielseng Test Facility provides large bore c research ombustion engines suitable for several alternative fuels. Furthermore the facility privides an AC-DC-AC converter of up to 800 kWel, fuel and oil treatment and analysing equipment, an exhaust gas treatment system (wet scrubber) with ultra filtration wash water cleaning, several exhaust gas analysing systems  an a MTP based automation environment",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/MTU%204000.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/FOMO%20(1)%5B1%5D.jpg",photo3:"",website:"https://www.maritimes-zentrum.de",coordinates:[9.443805813789368,54.803841851131416],inInterreg:true},
+  {name:"Maritimes Zentrum / Kielseng Test Facility",country:"Germany",institution:"Maritimes Zentrum der Hochschule Flensburg",types:["Internal combustion engines test facility","Maritime plants and aggregates test facility","Ambient condition / thermodynamic test facility","Shaft measuring device"],description:"The Maritimes Zentrum / Kielseng Test Facility provides large bore c research ombustion engines suitable for several alternative fuels. Furthermore the facility privides an AC-DC-AC converter of up to 800 kWel, fuel and oil treatment and analysing equipment, an exhaust gas treatment system (wet scrubber) with ultra filtration wash water cleaning, several exhaust gas analysing systems  an a MTP based automation environment",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/MTU%204000.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/FOMO%20(1)%5B1%5D.jpg",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/GML%20von%20oben%201.png?raw=true",website:"https://www.maritimes-zentrum.de/ausstattung-einrichtung/schiffsmaschinen-anlagen/kielseng.html",coordinates:[9.443805813789368,54.803841851131416],inInterreg:true},
   {name:"North Sea Flume Tank",country:"Denmark",institution:"North Sea Science Park",types:["Multi-industry facility","Maritime plants and aggregates test facility","Land based autonomous systems test area","Tests, Measurements and Demonstrations of equipment for fishing, aquaculture, and underwater technology"],description:"We conduct tests, measurements and demonstrations of equipment for fishing, aquaculture, and underwater technology in Europe largest flume tank. The facility enables controlled current conditions for realistic maritime and aquaculture equipment testing.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://en.nordsoenforskerpark.dk/flume-tank-north-sea",coordinates:[9.979883,57.586626],inInterreg:false},
   {name:"Testfeld der CAPTN Initiative",country:"Germany",institution:"CAPTN Initiative, Uni Kiel",types:["Sea-based maritime test area","Sea based autonomous systems test area","Land based autonomous systems test area","Research vessel / test ship"],description:"We have a research vessel (MS Wavelab) that we use for researching autonomous sailing on the Kiel Fjord (Innenförde); ship is habored at the MArS in Kiel. The CAPTN Initiative develops and tests autonomous and connected maritime transport systems in a real-world urban waterway environment.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://captn.sh",coordinates:[10.163939,54.322518],inInterreg:true},
   {name:"Underwater Technology Lab",country:"Denmark",institution:"Aalborg University, AAU Energy, Esbjerg campus",types:["Sea based autonomous systems test area","Sea-based maritime test area"],description:"Test site is partly at university campus (controlled environment) and partly at Port of Esbjerg (dedicated test site for maritime robotics). The lab focuses on underwater vehicles, sensors, and autonomous systems for offshore and subsea applications.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.energy.aau.dk/research/research-groups/underwater-technology",coordinates:[8.446019,55.491252],inInterreg:true},
   {name:"Ocean and Coastal Engineering Laboratory",country:"Denmark",institution:"Aalborg University, Department of the Built Environment",types:["Wave and current basin and flume"],description:"At the Ocean and Coastal Engineering Laboratory, we have created a modern, flexible laboratory with state-of-the-art equipment. The facility includes a wave basin, current flume, and advanced instrumentation for physical model testing of coastal and offshore structures.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.en.build.aau.dk/lab/ocean-and-coastal-engineering",coordinates:[9.973106,57.014682],inInterreg:false},
-  {name:"Maritime Exploration Hall",country:"Germany",institution:"Deutsches Forschungszentrum für Künstliche Intelligenz GmbH (DFKI), Robotics Innovation Center (RIC)",types:["Land based autonomous systems test area","Pressure Chamber"],description:"The 1,300 m² Maritime Exploration Hall serves to test new robotic technologies on and under water. It provides a unique large-scale indoor environment for developing and validating underwater and surface robotic systems, including a pressure chamber for deep-sea simulation.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/dfki_Logo_vz.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/Mare-IT_Cuttlefish_Demo-67.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/DeepLeng-9958.jpg",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/20220310_Maritime_Halle_ap_bea.jpg",website:"https://robotik.dfki-bremen.de/de/forschung/testanlagen-labore/maritime-infrastruktur",coordinates:[8.858109,53.112070],inInterreg:false},  {name:"Hydrodynamics in Naval Architecture, model testing",country:"Germany",institution:"Schiffbau-Versuchsanstalt Potsdam GmbH",types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],description:"Ship model basin, model testing, towing tank, cavitation tunnel. SVA Potsdam offers comprehensive hydrodynamic testing services including resistance, propulsion, manoeuvring, and seakeeping tests for ships and offshore structures at model and full scale.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.sva-potsdam.de/en/",coordinates:[12.983939,52.4487358],inInterreg:false},
+  {name:"Maritime Exploration Hall",country:"Germany",institution:"Deutsches Forschungszentrum für Künstliche Intelligenz GmbH (DFKI), Robotics Innovation Center (RIC)",types:["Land based autonomous systems test area","Pressure Chamber"],description:"The 1,300 m² Maritime Exploration Hall serves to test new robotic technologies on and under water. It provides a unique large-scale indoor environment for developing and validating underwater and surface robotic systems, including a pressure chamber for deep-sea simulation.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/dfki_Logo_vz.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/Mare-IT_Cuttlefish_Demo-67.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/DeepLeng-9958.jpg",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/DFki/20220310_Maritime_Halle_ap_bea.jpg",website:"https://robotik.dfki-bremen.de/de/forschung/testanlagen-labore/maritime-infrastruktur",coordinates:[8.858109,53.112070],inInterreg:false},
+  {name:"Hydrodynamics in Naval Architecture, model testing",country:"Germany",institution:"Schiffbau-Versuchsanstalt Potsdam GmbH",types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],description:"Ship model basin, model testing, towing tank, cavitation tunnel. SVA Potsdam offers comprehensive hydrodynamic testing services including resistance, propulsion, manoeuvring, and seakeeping tests for ships and offshore structures at model and full scale.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.sva-potsdam.de/en/",coordinates:[12.983939,52.4487358],inInterreg:false},
   {name:"Maritimes Technikum",country:"Germany",institution:"HS Emden/Leer, FB Seefahrt und Maritime Wissenschaften",types:["Internal combustion engines test facility","Schlepptank, Manöverbecken, Schallraum, WIndkanal"],description:"The Maritime Technology Centre has a laboratory for marine technology with high-performance CFD resources. Facilities include a towing tank (Schlepptank), manoeuvring basin (Manöverbecken), anechoic chamber (Schallraum), and wind tunnel (Windkanal) for comprehensive maritime research and testing.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.hs-emden-leer.de/en/current-students/faculties/maritime-sciences/research-laboratories-projects",coordinates:[7.4569501,53.2324806],inInterreg:false},
   {name:"Transitioning Industrial Cluster - Port Esbjerg",country:"Denmark",institution:"Port Esbjerg",types:["Green Fuels, Onboard Carbon Capture"],description:"Port Esbjerg is a key hub for the energy transition in the North Sea region, supporting development and testing of green fuels and onboard carbon capture technologies. The cluster brings together industry, research, and port infrastructure to accelerate decarbonisation of maritime shipping.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://portesbjerg.dk/",coordinates:[8.447325,55.464083],inInterreg:true},
   {name:"Maritime Simulation - Deck/Engine/ Traffic Service",country:"Germany",institution:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. It offers full-mission ship bridge simulators, engine room simulators, and a Vessel Traffic Service (VTS) simulator for comprehensive maritime officer training and research.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",coordinates:[12.081934,54.170983],inInterreg:false},
-  {name:"MarGate Helgoland",country:"Germany",institution:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",types:["Sea-based maritime test area","Sea based autonomous systems test area ","Underwater experimental area and test facility"],description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures. MarGate Helgoland provides a unique open-sea test environment in the southern North Sea for autonomous underwater vehicles, sensor systems, and marine technology in real oceanic conditions.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.awi.de/en/science/special-diving/margate.html",coordinates:[7.883334,54.180004],inInterreg:false},
-  {name:"Maritime-Based Test Area of Maritimes Zentrum",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Sea-based maritime test area","Research vessel / test ship","Sea based autonomous systems test area"],description:"The reaserch and ferry vessel AUTOGNOM owned by Flensburg University of Applied Sciences will sail within Flensburg harbour area from 2026 on. Flensburg harbour master has officially defined a test area for AUTOGNOM. Furthermore also a commercial ferry route for summer season has been idetified on which AUTOGNOM is likely to start service from 2027 on after beeing fully apprived as a ferry by German authorities. AUTOGNOM and its use within the test areas in order to test new maritime equipment is offered also to external parties. Allowance to use of the test field with other vessels needs to be clarified with authorities on demand.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Einweihung%20Renate%20Delfs%20Platz%20Juni%202025%20.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/EVQF6003.JPG",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Bei%20FSG%20nach%20Steuerhaus%20aufsetzen.JPG",website:"https://www.maritimes-zentrum.de/",coordinates:[9.430312,54.799406],inInterreg:true},
+  {name:"MarGate Helgoland",country:"Germany",institution:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",types:["Sea-based maritime test area","Sea based autonomous systems test area","Underwater experimental area and test facility"],description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures. MarGate Helgoland provides a unique open-sea test environment in the southern North Sea for autonomous underwater vehicles, sensor systems, and marine technology in real oceanic conditions.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.awi.de/en/science/special-diving/margate.html",coordinates:[7.883334,54.180004],inInterreg:false},
+  {name:"Maritimes Zentrum / Sea-Based Test Area",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Sea-based maritime test area","Research vessel / test ship","Sea based autonomous systems test area"],description:"The reaserch and ferry vessel AUTOGNOM owned by Flensburg University of Applied Sciences will sail within Flensburg harbour area from 2026 on. Flensburg harbour master has officially defined a test area for AUTOGNOM. Furthermore also a commercial ferry route for summer season has been idetified on which AUTOGNOM is likely to start service from 2027 on after beeing fully apprived as a ferry by German authorities. AUTOGNOM and its use within the test areas in order to test new maritime equipment is offered also to external parties. Allowance to use of the test field with other vessels needs to be clarified with authorities on demand.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Einweihung%20Renate%20Delfs%20Platz%20Juni%202025%20.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/EVQF6003.JPG",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Bei%20FSG%20nach%20Steuerhaus%20aufsetzen.JPG",website:"https://www.maritimes-zentrum.de/",coordinates:[9.430312,54.799406],inInterreg:true},
   {name:"TechShop - Laboratory for Production and Manufacturing",country:"Germany",institution:"Hochschule Flensburg",types:["Prototyping and Manufacturing facilities"],description:"It serves as a go-to resource for product developers who need guidance on manufacturing processes for pilot series and series production. The lab offers both advisory services — covering a range of manufacturing technologies, processes, and make-or-buy decisions — as well as hands-on access to the machines and tools themselves. Key questions addressed include which manufacturing method is technically most suitable, and how to achieve cost-effective production at an appropriate level of quality. The equipment includes machining centres for drilling, turning, and milling, a sinker EDM machine, and a plastic injection moulding machine, along with high-precision measurement and calibration tools.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://hs-flensburg.de",coordinates:[9.4509556,54.7750453],inInterreg:true},
   {name:"Bureau Veritas SA Marine & Offshore Hamburg",country:"Germany",institution:"Bureau Veritas SA Marine & Offshore Hamburg",types:["Multi-industry facility","Safety training center"],description:"Bureau Veritas is a classification society established in 1828",logo:"",photo1:"",photo2:"",photo3:"",website:"https://marine-offshore.bureauveritas.com",coordinates:[9.9865286,53.466458],inInterreg:false},
   {name:"Marina Sensor, water level and water temp. sensors in different marina in Germany + DK",country:"Germany",institution:"GEOMAR Helmholtz-Zentrum für Ozeanforschung Kiel",types:["Marina Sensor, water level and water temp. sensors in different marina in Germany + DK"],description:"Die Entwicklung eines umfassenden Küstenüberwachungsnetzes ist ein entscheidender Schritt hin zu einem nachhaltigen Küstenmanagement. Mit Hilfe eines Netzes von Sensoren und Messstationen lassen sich Echtzeitdaten (NRT) über Wasserqualität, Temperatur und andere Umweltfaktoren sammeln. Diese Daten sind wichtig, um schnell auf Veränderungen reagieren und vorbeugende Maßnahmen ergreifen zu können.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.soop-platform.earth/marinas/",coordinates:[10.180091492915388,54.32754263054331],inInterreg:true},
   {name:"SANDRA II,VERA,ELLA,NOVA,HaFoLa",country:"Germany",institution:"Entwicklungszentrum für Schiffstechnik und Transportsysteme e.V. (DST) Development Centre for Ship Technology and Transport Systems (DST)",types:["Land based autonomous systems test area","Research vessel / test ship","Ship bridge simulator","Port & logistics research lab"],description:"a) Ship handling simulador \"SANDRA II\" (inland vessels)\nb) Digital test field \"VERA\" (inland vessels, focus on automation)\nc) Research vessels \"ELLA\" & \"NOVA\" (inland vessels, focus on automation and partially on propulsion systems with renewable energy)\nd) Port & logistics research lab \"HaFoLa\"",logo:"",photo1:"",photo2:"",photo3:"",website:"www.dst-org.de",coordinates:[6.7839992590549985,51.42928103937358],inInterreg:false},
   {name:"Maritimes Trainingscenter auf dem GreenTEC Campus",country:"Germany",institution:"OffTEC Base GmbH & Co. KG",types:["Safety training center","Land based autonomous systems test area","Fire resistance / fire fighting test facility","Multi-industry facility"],description:"Training center for On- and Offshore wind staff, Fire Fighters, Police, Military and other special forces. The center is embedded into a 127 hectares large and secured area located in the very north of Germany.",logo:"",photo1:"",photo2:"",photo3:"",website:"www.offtec.de",coordinates:[8.956069989948128,54.74040723739979],inInterreg:true},
-  {name:"Land-Based Test Area of Maritimes Zentrum",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Ship engine room simulator","Ship bridge simulator","Multi-industry facility","PLC test facility","Internal combustion engines test facility","Maritime plants and aggregates test facility","Shaft measuring device (dynamic torque, thrust and bending measurement)"],description:"Maritimes Zentrum provides nautical and ship operational training simulators PLC test lab and multiple test facilities and engine test benches also for industry partners on demand. Beyond this we are specialists on helping idustry partners to get PLCs ready for the new maritime MTP automation standard, even without touching already approved technology.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"",photo2:"",photo3:"",website:"https://www.maritimes-zentrum.de/",coordinates:[9.4507648,54.7734499],inInterreg:true},
+  {name:"Maritimes Zentrum / Campus Test Facility",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Ship engine room simulator","Ship bridge simulator","Multi-industry facility","PLC test facility","Internal combustion engines test facility","Maritime plants and aggregates test facility","Shaft measuring device (dynamic torque, thrust and bending measurement)"],description:"Maritimes Zentrum provides nautical and ship operational training simulators PLC test lab and multiple test facilities and engine test benches also for industry partners on demand. Beyond this we are specialists on helping idustry partners to get PLCs ready for the new maritime MTP automation standard, even without touching already approved technology.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/Br%C3%BCcke.jpg?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/DSC_0956.jpg?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/SPS_Labor.jpg?raw=true",website:"https://www.maritimes-zentrum.de/",coordinates:[9.4507648,54.7734499],inInterreg:true},
 ];
 
 function escHtml(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
@@ -978,7 +975,8 @@ function popupHTML(f){
   const logoSrc=safeUrl(f.logo);
   const photos=[f.photo1,f.photo2,f.photo3].map(safeUrl).filter(Boolean);
   const logoHTML=logoSrc?`<img class="pLogo" src="${logoSrc}" alt="${escHtml(f.name)}">`:`<div class="pFallback${cls}">${ini(f.name)}</div>`;
-  const pills=(f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(t)}</span>`).join("");
+  // Use typeLabel() so pills match the filter panel labels
+  const pills=(f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(typeLabel(t))}</span>`).join("");
   let galleryHTML="";
   if(photos.length===0){galleryHTML=`<div class="pNoPhoto">No photos available yet for this facility.</div>`;}
   else if(photos.length===1){galleryHTML=`<div class="pGLabel">Facility Photos</div><div class="pCarousel" data-idx="0" data-total="1"><div class="pCarouselTrack"><div class="pCarouselSlide"><img src="${photos[0]}" alt="${escHtml(f.name)}"></div></div></div>`;}
@@ -1142,7 +1140,7 @@ map.on("load",async()=>{
   });
 });
 
-// ── Add Facility Panel (outside map.on load) ──
+// ── Add Facility Panel ──
 const addPanel=document.getElementById("addPanel");
 const addBtn=document.getElementById("addFacilityBtn");
 const closeBtn=document.getElementById("addPanelClose");
@@ -1179,7 +1177,6 @@ function resetAddForm(){
   apFormBody.style.display="block";
   apFooter.style.display="flex";
   apSuccess.style.display="none";
-  // reset field borders
   ["ap_name","ap_institution","ap_lng","ap_lat"].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.borderColor="";
@@ -1259,7 +1256,6 @@ saveBtn.addEventListener("click",()=>{
   const lngVal=document.getElementById("ap_lng").value.trim();
   const latVal=document.getElementById("ap_lat").value.trim();
 
-  // Validation — highlight required fields
   let valid=true;
   if(!name){
     document.getElementById("ap_name").style.borderColor="#c0232d";
@@ -1285,7 +1281,6 @@ saveBtn.addEventListener("click",()=>{
 
   if(!valid) return;
 
-  // Capture any text still typed in the tag input
   const rawTag=document.getElementById("ap_type_input").value.trim();
   if(rawTag&&!apTags.includes(rawTag)) apTags.push(rawTag);
 
@@ -1302,14 +1297,11 @@ saveBtn.addEventListener("click",()=>{
     inInterreg:apInterreg
   };
 
-  // Add pin to map
   addMarkerFromForm(f);
 
-  // Build code snippet
   const snippet=`  {name:${JSON.stringify(f.name)},country:${JSON.stringify(f.country)},institution:${JSON.stringify(f.institution)},types:${JSON.stringify(f.types)},description:${JSON.stringify(f.description)},logo:${JSON.stringify(f.logo)},photo1:${JSON.stringify(f.photo1)},photo2:${JSON.stringify(f.photo2)},photo3:${JSON.stringify(f.photo3)},website:${JSON.stringify(f.website)},coordinates:[${f.coordinates[0]},${f.coordinates[1]}],inInterreg:${f.inInterreg}},`;
   document.getElementById("apCodeSnippet").value=snippet;
 
-  // Wire copy button (replace to avoid duplicate listeners)
   const copyBtn=document.getElementById("apCopyBtn");
   const freshCopy=copyBtn.cloneNode(true);
   copyBtn.parentNode.replaceChild(freshCopy,copyBtn);
@@ -1326,7 +1318,6 @@ saveBtn.addEventListener("click",()=>{
     });
   });
 
-  // Show success screen
   apFormBody.style.display="none";
   apFooter.style.display="none";
   document.getElementById("apSuccessMsg").textContent=`"${name}" is now live on the map. Paste the line below into the facilities array in the HTML file to make it permanent:`;
