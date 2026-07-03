@@ -31,6 +31,16 @@ body{font-family:'DM Sans',sans-serif;}
 .bv-pin.dk:hover{ filter:drop-shadow(0 8px 18px rgba(192,35,45,.6)); }
 .bv-pin svg{ display:block; pointer-events:none; }
 
+.bv-cluster{
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  background:var(--cl,#1a5aff);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;
+  border:2.5px solid #fff;box-shadow:0 3px 12px rgba(15,34,54,.32);
+  transition:transform .16s cubic-bezier(.34,1.56,.64,1);
+}
+.bv-cluster:hover{transform:scale(1.14);}
+
 #filterPanel{
   position:absolute;top:20px;left:20px;width:232px;
   background:#fff;border-radius:20px;
@@ -72,6 +82,43 @@ body{font-family:'DM Sans',sans-serif;}
 .panelBody::-webkit-scrollbar{width:3px;}
 .panelBody::-webkit-scrollbar-thumb{background:#d0d9e8;border-radius:3px;}
 
+.searchBox{position:relative;margin-bottom:12px;}
+.searchBox svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--muted);pointer-events:none;}
+.searchInput{
+  width:100%;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--navy);
+  background:var(--chip-bg);border:1.5px solid transparent;border-radius:10px;
+  padding:8px 26px 8px 28px;outline:none;transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.searchInput::placeholder{color:var(--muted);}
+.searchInput:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,90,255,.1);background:#fff;}
+.searchClear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;border:none;border-radius:50%;cursor:pointer;
+  background:#d0d9e8;color:#fff;font-size:11px;line-height:1;
+  display:none;align-items:center;justify-content:center;padding:0;
+}
+.searchClear:hover{background:var(--muted);}
+.searchBox.has-text .searchClear{display:flex;}
+
+.searchResults{
+  position:absolute;left:0;right:0;top:calc(100% + 4px);
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 8px 24px rgba(15,34,54,.16);
+  max-height:240px;overflow-y:auto;z-index:30;display:none;
+}
+.searchResults.open{display:block;}
+.srItem{
+  display:flex;flex-direction:column;gap:1px;padding:7px 10px;
+  cursor:pointer;border-bottom:1px solid #f0f4f8;
+}
+.srItem:last-child{border-bottom:none;}
+.srItem:hover,.srItem.active{background:var(--chip-bg);}
+.srName{font-size:11px;font-weight:600;color:var(--navy);line-height:1.3;}
+.srName mark{background:#fff3b0;color:inherit;border-radius:2px;padding:0 1px;}
+.srMeta{font-size:9px;color:var(--muted);line-height:1.3;}
+.srMeta mark{background:#fff3b0;color:inherit;border-radius:2px;padding:0 1px;}
+.srEmpty{padding:11px;font-size:10.5px;color:var(--muted);text-align:center;font-style:italic;}
+
 .secLabel{
   font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--muted);margin-bottom:7px;margin-top:1px;
@@ -90,17 +137,17 @@ body{font-family:'DM Sans',sans-serif;}
 }
 .interregChip:hover{background:var(--chip-hover);border-color:#c5d4ef;color:var(--navy);}
 .interregChip.on{
-  background:linear-gradient(135deg,#e8f0ff,#f0e8ff);
-  border-color:#8a6fff;color:#5c3fd6;
-  box-shadow:0 2px 10px rgba(92,63,214,.18);
+  background:linear-gradient(135deg,#e3f4f7,#eef9fb);
+  border-color:#1f7a8c;color:#14525e;
+  box-shadow:0 2px 10px rgba(31,122,140,.18);
 }
 .interregBadge{
   display:flex;align-items:center;justify-content:center;
   width:22px;height:22px;border-radius:6px;flex-shrink:0;
-  background:rgba(92,63,214,.1);
+  background:rgba(31,122,140,.1);
   transition:background .14s;
 }
-.interregChip.on .interregBadge{background:rgba(92,63,214,.18);}
+.interregChip.on .interregBadge{background:rgba(31,122,140,.2);}
 .interregBadge svg{width:12px;height:12px;}
 .interregLabel{flex:1;font-size:10.5px;line-height:1.3;}
 
@@ -162,7 +209,7 @@ body{font-family:'DM Sans',sans-serif;}
 .fSwatch{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
 .fSwatch.de{background:var(--blue);}
 .fSwatch.dk{background:var(--red);}
-.fSwatch.interreg{background:linear-gradient(135deg,#8a6fff,#5c3fd6);}
+.fSwatch.interreg{background:linear-gradient(135deg,#3fa3b5,#1f7a8c);}
 .fLi.interreg-li{display:none;}
 #legend.interreg-active .fLi.interreg-li{display:flex;}
 
@@ -251,7 +298,7 @@ body{font-family:'DM Sans',sans-serif;}
 .mapboxgl-popup-close-button{font-size:20px;padding:10px 12px;color:#5f7388;}
 .mapboxgl-popup-close-button:hover{color:#0f2236;background:transparent;}
 .pCard{width:342px;background:#fff;font-family:'DM Sans',sans-serif;}
-.pStrip{height:5px;}
+.pStrip{height:4px;}
 .pStrip.de{background:var(--blue);}
 .pStrip.dk{background:var(--red);}
 .pTop{padding:16px 16px 12px;background:linear-gradient(160deg,#f5f9ff,#fff);border-bottom:1px solid #edf1f5;}
@@ -261,7 +308,7 @@ body{font-family:'DM Sans',sans-serif;}
 .pFallback{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#dce9ff,#b8d0ff);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;font-family:'DM Mono',monospace;}
 .pFallback.dk{background:linear-gradient(135deg,#ffdde0,#ffb8bc);color:var(--red);}
 .pTG{flex:1;min-width:0;}
-.pTitle{font-size:15px;font-weight:700;color:#0f2236;line-height:1.3;margin-bottom:5px;}
+.pTitle{font-size:15px;font-weight:700;color:#0f2236;line-height:1.32;letter-spacing:-.01em;margin-bottom:6px;}
 .pPills{display:flex;flex-wrap:wrap;gap:4px;}
 .pPill{
   font-size:10px;font-weight:600;letter-spacing:.04em;
@@ -275,7 +322,7 @@ body{font-family:'DM Sans',sans-serif;}
 .pMeta svg{width:14px;height:14px;flex-shrink:0;opacity:.6;}
 .pMetaTxt{font-weight:500;}
 .pHr{border:none;border-top:1px solid #edf1f5;margin:10px 0;}
-.pDesc{font-size:13px;color:#334a60;line-height:1.6;margin-bottom:12px;}
+.pDesc{font-size:13px;color:#3a4f64;line-height:1.65;margin-bottom:13px;}
 
 .pGLabel{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px;}
 .pCarousel{
@@ -315,129 +362,35 @@ body{font-family:'DM Sans',sans-serif;}
 .pBtn.dk{background:var(--red);}
 .pBtn.dk:hover{background:#a01e26;}
 
-/* ── Add Facility Panel ── */
-#addPanel{
-  position:absolute;top:20px;right:20px;width:300px;
-  background:#fff;border-radius:20px;padding:0;
-  box-shadow:0 12px 48px rgba(15,34,54,.18),0 2px 6px rgba(15,34,54,.08);
-  border:1px solid rgba(226,232,240,.8);
-  z-index:20;max-height:calc(100vh - 40px);overflow:hidden;
-  display:flex;flex-direction:column;
-  transform:translateX(340px);
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
-  pointer-events:none;
-}
-#addPanel.open{transform:translateX(0);pointer-events:all;}
 
-.apHeader{
-  flex-shrink:0;background:linear-gradient(135deg,#0a1f38 0%,#0f2236 55%,#1a3a5c 100%);
-  position:relative;overflow:hidden;padding:14px 14px 28px;
-}
-.apHeaderStars{position:absolute;inset:0;
-  background-image:
-    radial-gradient(1.5px 1.5px at 25% 20%,rgba(255,255,255,.5) 0%,transparent 100%),
-    radial-gradient(1px 1px at 70% 18%,rgba(255,255,255,.38) 0%,transparent 100%),
-    radial-gradient(1px 1px at 45% 65%,rgba(255,255,255,.28) 0%,transparent 100%),
-    radial-gradient(1.5px 1.5px at 80% 72%,rgba(255,255,255,.42) 0%,transparent 100%),
-    radial-gradient(1px 1px at 12% 82%,rgba(255,255,255,.32) 0%,transparent 100%);
-}
-.apWave{position:absolute;bottom:0;left:0;right:0;height:18px;}
-.apHeaderInner{position:relative;display:flex;align-items:flex-start;gap:10px;}
-.apIcon{
-  width:34px;height:34px;flex-shrink:0;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-}
-.apIcon svg{width:18px;height:18px;}
-.apTitles{flex:1;min-width:0;padding-top:1px;}
-.apTitle{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;line-height:1.25;margin-bottom:2px;}
-.apSubtitle{font-size:9px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;letter-spacing:.04em;}
-.apClose{
-  width:26px;height:26px;border-radius:8px;border:none;cursor:pointer;
-  background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:background .15s;padding:0;position:relative;z-index:1;
-}
-.apClose:hover{background:rgba(255,255,255,.22);}
+/* empty results state */
+#emptyState{position:absolute;top:50%;left:calc(50% + 116px);transform:translate(-50%,-50%);z-index:8;display:none;}
+#emptyState.show{display:block;}
+.esCard{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 40px rgba(15,34,54,.16);padding:18px 22px;text-align:center;max-width:240px;}
+.esIcon{width:40px;height:40px;margin:0 auto 8px;border-radius:50%;background:var(--chip-bg);display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.esIcon svg{width:20px;height:20px;}
+.esTitle{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.esMsg{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:11px;}
+.esBtn{background:linear-gradient(135deg,#0f2236,#1a3a5c);color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:transform .15s;}
+.esBtn:hover{transform:translateY(-1px);}
 
-.apBody{overflow-y:auto;padding:14px 13px 14px;flex:1;scrollbar-width:thin;scrollbar-color:#d0d9e8 transparent;}
-.apBody::-webkit-scrollbar{width:3px;}
-.apBody::-webkit-scrollbar-thumb{background:#d0d9e8;border-radius:3px;}
+/* pin hover tooltip */
+#pinTip{position:fixed;z-index:60;background:rgba(15,34,54,.94);color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:5px 9px;border-radius:7px;pointer-events:none;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis;transform:translate(-50%,-100%);display:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+#pinTip.show{display:block;}
+#pinTip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:rgba(15,34,54,.94);}
 
-.apSection{margin-bottom:14px;}
-.apSec{font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:5px;}
-.apSec::after{content:'';flex:1;height:1px;background:var(--border);}
-
-.apField{margin-bottom:9px;}
-.apLabel{font-size:9.5px;font-weight:700;color:#4a5f74;letter-spacing:.04em;margin-bottom:4px;display:block;}
-.apInput,.apTextarea,.apSelect{
-  width:100%;font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--navy);
-  background:#f8fafd;border:1.5px solid var(--border);border-radius:9px;
-  padding:7px 10px;outline:none;transition:border-color .15s,box-shadow .15s;
-}
-.apInput:focus,.apTextarea:focus,.apSelect:focus{
-  border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,90,255,.1);background:#fff;
-}
-.apTextarea{resize:vertical;min-height:68px;line-height:1.5;}
-.apSelect{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237a8fa8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;}
-
-.apRow{display:flex;gap:7px;}
-.apRow .apField{flex:1;}
-
-/* Types tag input */
-.apTagsWrap{
-  min-height:38px;background:#f8fafd;border:1.5px solid var(--border);border-radius:9px;
-  padding:5px 8px;display:flex;flex-wrap:wrap;gap:4px;cursor:text;
-  transition:border-color .15s,box-shadow .15s;
-}
-.apTagsWrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,90,255,.1);background:#fff;}
-.apTag{
-  display:inline-flex;align-items:center;gap:4px;
-  background:var(--blue-soft);color:var(--blue);border:1px solid #c2d5ff;
-  border-radius:6px;font-size:10px;font-weight:600;padding:2px 6px;
-}
-.apTag.dk-tag{background:#fff0f1;color:var(--red);border-color:#ffc5c8;}
-.apTagDel{cursor:pointer;opacity:.6;font-size:12px;line-height:1;padding:0 1px;}
-.apTagDel:hover{opacity:1;}
-.apTagInput{border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--navy);min-width:80px;flex:1;padding:2px 2px;}
-
-/* Interreg toggle */
-.apInterregRow{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--chip-bg);border:1.5px solid transparent;border-radius:10px;
-  padding:8px 11px;cursor:pointer;transition:all .15s;
-}
-.apInterregRow:hover{background:var(--chip-hover);border-color:#c5d4ef;}
-.apInterregRow.on{background:linear-gradient(135deg,#e8f0ff,#f0e8ff);border-color:#8a6fff;}
-.apInterregLabel{font-size:10.5px;font-weight:600;color:var(--muted);}
-.apInterregRow.on .apInterregLabel{color:#5c3fd6;}
-.apToggle{width:30px;height:16px;border-radius:8px;background:#d0d9e8;position:relative;transition:background .2s;flex-shrink:0;}
-.apToggle::after{content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
-.apInterregRow.on .apToggle{background:#8a6fff;}
-.apInterregRow.on .apToggle::after{transform:translateX(14px);}
-
-.apFooter{
-  padding:10px 13px 12px;border-top:1px solid var(--border);
-  background:#f8fafd;flex-shrink:0;display:flex;gap:8px;
-}
-.apBtn{
-  flex:1;padding:9px 0;border-radius:10px;border:none;cursor:pointer;
-  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
-  transition:all .15s;
-}
-.apBtn.save{background:linear-gradient(135deg,#0f2236,#1a3a5c);color:#fff;box-shadow:0 3px 12px rgba(15,34,54,.28);}
-.apBtn.save:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(15,34,54,.35);}
-.apBtn.cancel{background:var(--chip-bg);color:var(--muted);border:1.5px solid var(--border);}
-.apBtn.cancel:hover{background:var(--chip-hover);color:var(--navy);}
-
-.apSuccess{
-  display:none;flex-direction:column;align-items:center;justify-content:center;
-  padding:28px 20px;text-align:center;gap:10px;
-}
-.apSuccessIcon{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dce9ff,#b8d0ff);display:flex;align-items:center;justify-content:center;}
-.apSuccessTitle{font-size:13px;font-weight:700;color:var(--navy);}
-.apSuccessMsg{font-size:11px;color:var(--muted);line-height:1.5;}
-.apSuccessBack{margin-top:4px;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif;}
+/* photo lightbox */
+.pCarouselSlide img{cursor:zoom-in;}
+#lightbox{position:fixed;inset:0;z-index:100;background:rgba(8,18,30,.92);display:none;align-items:center;justify-content:center;}
+#lightbox.open{display:flex;}
+.lbImg{max-width:90vw;max-height:88vh;border-radius:10px;box-shadow:0 20px 70px rgba(0,0,0,.55);object-fit:contain;}
+.lbClose{position:absolute;top:18px;right:22px;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.14);color:#fff;font-size:23px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.lbClose:hover{background:rgba(255,255,255,.28);}
+.lbNav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:none;background:rgba(255,255,255,.14);color:#fff;font-size:28px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.lbNav:hover{background:rgba(255,255,255,.28);}
+.lbPrev{left:20px;}
+.lbNext{right:20px;}
+.lbCount{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-family:'DM Mono',monospace;font-size:12px;background:rgba(0,0,0,.4);padding:4px 11px;border-radius:20px;}
 
 </style>
 </head>
@@ -467,6 +420,13 @@ body{font-family:'DM Sans',sans-serif;}
   </div>
 
   <div class="panelBody">
+
+    <div class="searchBox" id="searchBox">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="11" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input class="searchInput" id="searchInput" type="text" placeholder="Search name, type, description…" autocomplete="off">
+      <button class="searchClear" id="searchClear" title="Clear search">×</button>
+      <div class="searchResults" id="searchResults"></div>
+    </div>
 
     <!-- INTERREG Area filter — label only -->
     <div class="secLabel">Area</div>
@@ -721,170 +681,11 @@ body{font-family:'DM Sans',sans-serif;}
 
   <div class="panelFooter">
     <span class="fCount" id="entryCount">— facilities</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="fLegend" id="legend">
-        <div class="fLi"><div class="fSwatch de"></div>DE</div>
-        <div class="fLi"><div class="fSwatch dk"></div>DK</div>
-        <div class="fLi interreg-li"><div class="fSwatch interreg"></div>Interreg</div>
-      </div>
-      <button id="addFacilityBtn" title="Add new facility" style="
-        display:flex;align-items:center;justify-content:center;
-        width:22px;height:22px;border-radius:6px;border:none;cursor:pointer;
-        background:linear-gradient(135deg,#0f2236,#1a3a5c);color:#fff;
-        flex-shrink:0;transition:transform .15s,box-shadow .15s;
-        box-shadow:0 2px 6px rgba(15,34,54,.25);padding:0;
-      ">
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><line x1="5.5" y1="1" x2="5.5" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="5.5" x2="10" y2="5.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
+    <div class="fLegend" id="legend">
+      <div class="fLi"><div class="fSwatch de"></div>DE</div>
+      <div class="fLi"><div class="fSwatch dk"></div>DK</div>
+      <div class="fLi interreg-li"><div class="fSwatch interreg"></div>Interreg</div>
     </div>
-  </div>
-</div>
-
-<!-- Add Facility Panel -->
-<div id="addPanel">
-  <div class="apHeader">
-    <div class="apHeaderStars"></div>
-    <svg class="apWave" viewBox="0 0 300 18" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 18 C50 6, 100 0, 150 6 C200 12, 250 18, 300 8 L300 18 Z" fill="#fff"/>
-    </svg>
-    <div class="apHeaderInner">
-      <div class="apIcon">
-        <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="rgba(255,255,255,.85)" stroke-width="1.3"/><line x1="9" y1="5" x2="9" y2="13" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/><line x1="5" y1="9" x2="13" y2="9" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/></svg>
-      </div>
-      <div class="apTitles">
-        <div class="apTitle">Add Test Field</div>
-        <div class="apSubtitle">New facility entry</div>
-      </div>
-      <button class="apClose" id="addPanelClose">
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><line x1="1" y1="1" x2="10" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="10" y1="1" x2="1" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="apBody" id="apFormBody">
-
-    <div class="apSection">
-      <div class="apSec">Basic Info</div>
-
-      <div class="apField">
-        <label class="apLabel">Facility Name *</label>
-        <input class="apInput" id="ap_name" type="text" placeholder="e.g. Maritimes Zentrum Flensburg">
-      </div>
-
-      <div class="apField">
-        <label class="apLabel">Institution / Organisation *</label>
-        <input class="apInput" id="ap_institution" type="text" placeholder="e.g. Hochschule Flensburg">
-      </div>
-
-      <div class="apRow">
-        <div class="apField">
-          <label class="apLabel">Country *</label>
-          <select class="apSelect" id="ap_country">
-            <option value="Germany">Germany</option>
-            <option value="Denmark">Denmark</option>
-          </select>
-        </div>
-        <div class="apField">
-          <label class="apLabel">Interreg Area</label>
-          <div class="apInterregRow" id="ap_interreg_toggle">
-            <span class="apInterregLabel">DEF0 · DK03</span>
-            <div class="apToggle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="apSection">
-      <div class="apSec">Facility Types</div>
-      <div class="apField">
-        <label class="apLabel">Types (type & press Enter to add)</label>
-        <div class="apTagsWrap" id="ap_tags_wrap">
-          <input class="apTagInput" id="ap_type_input" type="text" placeholder="e.g. Ship bridge simulator">
-        </div>
-        <div style="font-size:9px;color:var(--muted);margin-top:4px;line-height:1.4;">
-          Known types: Ship bridge simulator · Ship engine room simulator · Sea-based maritime test area · Safety training center · Research vessel / test ship · Sea based autonomous systems test area · Land based autonomous systems test area · Multi-industry facility · Shock and/or vibration test facility · EMC test facility · PLC test facility · Ambient condition / thermodynamic test facility · Internal combustion engines test facility · Maritime plants and aggregates test facility · Fire resistance / fire fighting test facility
-        </div>
-      </div>
-    </div>
-
-    <div class="apSection">
-      <div class="apSec">Description</div>
-      <div class="apField">
-        <label class="apLabel">Description</label>
-        <textarea class="apTextarea" id="ap_description" placeholder="Describe the facility, its equipment and capabilities…"></textarea>
-      </div>
-    </div>
-
-    <div class="apSection">
-      <div class="apSec">Location</div>
-      <div class="apRow">
-        <div class="apField">
-          <label class="apLabel">Longitude *</label>
-          <input class="apInput" id="ap_lng" type="number" step="any" placeholder="e.g. 9.447">
-        </div>
-        <div class="apField">
-          <label class="apLabel">Latitude *</label>
-          <input class="apInput" id="ap_lat" type="number" step="any" placeholder="e.g. 54.774">
-        </div>
-      </div>
-    </div>
-
-    <div class="apSection">
-      <div class="apSec">Links & Media</div>
-      <div class="apField">
-        <label class="apLabel">Website URL</label>
-        <input class="apInput" id="ap_website" type="url" placeholder="https://…">
-      </div>
-      <div class="apField">
-        <label class="apLabel">Logo URL</label>
-        <input class="apInput" id="ap_logo" type="url" placeholder="https://… (image link)">
-      </div>
-      <div class="apField">
-        <label class="apLabel">Photo 1 URL</label>
-        <input class="apInput" id="ap_photo1" type="url" placeholder="https://… (image link)">
-      </div>
-      <div class="apField">
-        <label class="apLabel">Photo 2 URL</label>
-        <input class="apInput" id="ap_photo2" type="url" placeholder="https://… (optional)">
-      </div>
-      <div class="apField">
-        <label class="apLabel">Photo 3 URL</label>
-        <input class="apInput" id="ap_photo3" type="url" placeholder="https://… (optional)">
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Success state -->
-  <div class="apSuccess" id="apSuccess">
-    <div class="apSuccessIcon">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#1a5aff" stroke-width="1.5"/><path d="M7 11.5L10 14.5L15 8.5" stroke="#1a5aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="apSuccessTitle">Facility Added!</div>
-    <div class="apSuccessMsg" id="apSuccessMsg">The new pin is now visible on the map.</div>
-    <div style="width:100%;margin-top:8px;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">Copy & paste into the facilities array:</div>
-      <div style="position:relative;">
-        <textarea id="apCodeSnippet" readonly style="
-          width:100%;height:110px;font-family:'DM Mono',monospace;font-size:9.5px;
-          color:#334a60;background:#f4f7fb;border:1.5px solid var(--border);
-          border-radius:9px;padding:8px 10px;resize:none;outline:none;
-          line-height:1.55;
-        "></textarea>
-        <button id="apCopyBtn" style="
-          position:absolute;top:6px;right:6px;
-          font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;
-          background:var(--navy);color:#fff;border:none;border-radius:5px;
-          padding:3px 8px;cursor:pointer;transition:background .15s;
-        ">Copy</button>
-      </div>
-    </div>
-    <button class="apSuccessBack" id="apSuccessBack">Add another facility</button>
-  </div>
-
-  <div class="apFooter" id="apFooter">
-    <button class="apBtn cancel" id="apCancelBtn">Cancel</button>
-    <button class="apBtn save" id="apSaveBtn">Add to Map ↗</button>
   </div>
 </div>
 
@@ -916,33 +717,56 @@ body{font-family:'DM Sans',sans-serif;}
   </div>
 </div>
 
+<!-- Empty results state -->
+<div id="emptyState">
+  <div class="esCard">
+    <div class="esIcon">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><line x1="15.5" y1="15.5" x2="21" y2="21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+    <div class="esTitle">No facilities match</div>
+    <div class="esMsg">Try adjusting or clearing your filters.</div>
+    <button class="esBtn" id="esClear">Clear filters</button>
+  </div>
+</div>
+
+<!-- Pin hover tooltip -->
+<div id="pinTip"></div>
+
+<!-- Photo lightbox -->
+<div id="lightbox">
+  <button class="lbClose" id="lbClose">×</button>
+  <button class="lbNav lbPrev" id="lbPrev">‹</button>
+  <img class="lbImg" id="lbImg" src="" alt="">
+  <button class="lbNav lbNext" id="lbNext">›</button>
+  <div class="lbCount" id="lbCount"></div>
+</div>
+
 <script>
 mapboxgl.accessToken='pk.eyJ1IjoiaG9zc2Ftb3N0YWZhYSIsImEiOiJjbW0wbWNvd2owMDZlMm9zZDFuMTBjY28zIn0.-TMItfSlw1kTs0T_BL6v0g';
 
 const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/light-v11',center:[9.6,55],zoom:6.5});
 map.addControl(new mapboxgl.NavigationControl());
 
-// ── Type label map: raw data key → display label shown in filter panel ──
+// shorter labels for the filter chips so they fit
 const TYPE_LABELS = {
-  "Ship engine room simulator":                       "Engine room sim.",
-  "Ship bridge simulator":                            "Bridge simulator",
-  "Shock and/or vibration test facility":             "Shock / vibration",
-  "Sea-based maritime test area":                     "Sea-based test area",
-  "Safety training center":                           "Safety training",
-  "Land based autonomous systems test area":          "Land autonomous",
-  "Research vessel / test ship":                      "Research vessel",
-  "Sea based autonomous systems test area":           "Sea autonomous",
-  "Multi-industry facility":                          "Multi-industry",
-  "Fire resistance / fire fighting test facility":    "Fire testing",
-  "EMC test facility":                                "EMC test facility",
-  "PLC test facility":                                "PLC test facility",
-  "Ambient condition / thermodynamic test facility":  "Thermodynamic test",
-  "Internal combustion engines test facility":        "Engine testing",
-  "Maritime plants and aggregates test facility":     "Plants & aggregates",
+  "Ship engine room simulator": "Engine room sim.",
+  "Ship bridge simulator": "Bridge simulator",
+  "Shock and/or vibration test facility": "Shock / vibration",
+  "Sea-based maritime test area": "Sea-based test area",
+  "Safety training center": "Safety training",
+  "Land based autonomous systems test area": "Land autonomous",
+  "Research vessel / test ship": "Research vessel",
+  "Sea based autonomous systems test area": "Sea autonomous",
+  "Multi-industry facility": "Multi-industry",
+  "Fire resistance / fire fighting test facility": "Fire testing",
+  "EMC test facility": "EMC test facility",
+  "PLC test facility": "PLC test facility",
+  "Ambient condition / thermodynamic test facility": "Thermodynamic test",
+  "Internal combustion engines test facility": "Engine testing",
+  "Maritime plants and aggregates test facility": "Plants & aggregates"
 };
 
-// Returns the display label for a type string; falls back to the raw string
-function typeLabel(t) {
+function typeLabel(t){
   return TYPE_LABELS[t] || t;
 }
 
@@ -958,20 +782,28 @@ const facilities=[
   {name:"Hydrodynamics in Naval Architecture, model testing",country:"Germany",institution:"Schiffbau-Versuchsanstalt Potsdam GmbH",types:["Land based autonomous systems test area","Multi-industry facility","Ship model basin, cavitation tunnel"],description:"Ship model basin, model testing, towing tank, cavitation tunnel. SVA Potsdam offers comprehensive hydrodynamic testing services including resistance, propulsion, manoeuvring, and seakeeping tests for ships and offshore structures at model and full scale.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.sva-potsdam.de/en/",coordinates:[12.983939,52.4487358],inInterreg:false},
   {name:"Maritimes Technikum",country:"Germany",institution:"HS Emden/Leer, FB Seefahrt und Maritime Wissenschaften",types:["Internal combustion engines test facility","Schlepptank, Manöverbecken, Schallraum, WIndkanal"],description:"The Maritime Technology Centre has a laboratory for marine technology with high-performance CFD resources. Facilities include a towing tank (Schlepptank), manoeuvring basin (Manöverbecken), anechoic chamber (Schallraum), and wind tunnel (Windkanal) for comprehensive maritime research and testing.",logo:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/emden/Allgemeines_Logo_HS_Emden_Leer_CMYK.png?raw=true",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/emden/HS_Leer_180522_150%20(2).JPG?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/emden/NZ9_0931.JPG?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/emden/NZ9_0964.JPG?raw=true",website:"https://www.hs-emden-leer.de/en/current-students/faculties/maritime-sciences/research-laboratories-projects",coordinates:[7.4569501,53.2324806],inInterreg:false},
   {name:"Transitioning Industrial Cluster - Port Esbjerg",country:"Denmark",institution:"Port Esbjerg",types:["Green Fuels, Onboard Carbon Capture"],description:"Port Esbjerg is a key hub for the energy transition in the North Sea region, supporting development and testing of green fuels and onboard carbon capture technologies. The cluster brings together industry, research, and port infrastructure to accelerate decarbonisation of maritime shipping.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://portesbjerg.dk/",coordinates:[8.447325,55.464083],inInterreg:true},
-  {name:"Maritime Simulation - Deck/Engine/ Traffic Service",country:"Germany",institution:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. It offers full-mission ship bridge simulators, engine room simulators, and a Vessel Traffic Service (VTS) simulator for comprehensive maritime officer training and research.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",coordinates:[12.081934,54.170983],inInterreg:false},
-  {name:"MarGate Helgoland",country:"Germany",institution:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",types:["Sea-based maritime test area","Sea based autonomous systems test area","Underwater experimental area and test facility"],description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures. MarGate Helgoland provides a unique open-sea test environment in the southern North Sea for autonomous underwater vehicles, sensor systems, and marine technology in real oceanic conditions.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.awi.de/en/science/special-diving/margate.html",coordinates:[7.883334,54.180004],inInterreg:false},
+  {name:"Maritime Simulation - Deck/Engine/ Traffic Service",country:"Germany",institution:"Maritime Simulation Center Warnemuende - University of Applied Sciences Wismar / Dept. Maritime Studies",types:["Ship engine room simulator","Ship bridge simulator","Vessel Traffic Service"],description:"The MSCW is a training center on 3 Floors with several types of simulators with full mission and part task simulators. It offers full-mission ship bridge simulators, engine room simulators, and a Vessel Traffic Service (VTS) simulator for comprehensive maritime officer training and research.",logo:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Wismar/Mscw03.png?raw=true",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Wismar/csm_Auswahl-1-9071_fbd266464b.jpg?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Wismar/csm_Nautik_Seeverkehr_Banner_01_f2b8070fed.jpg?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Wismar/csm_Simulator_1_eaa06d91bd.jpg?raw=true",website:"https://fiw.hs-wismar.de/en/bereiche/sal/facilities/maritime-simulation-centre-warnemuende-mscw/",coordinates:[12.081934,54.170983],inInterreg:false},
+  {name:"MarGate Helgoland",country:"Germany",institution:"Alfred-Wegener-Institut, Helmholtz-Zentrum für Polar- und Meeresforschung (Stabsstelle Technologietransfer)",types:["Sea-based maritime test area","Sea based autonomous systems test area","Underwater experimental area and test facility"],description:"The site is used for studying marine ecosystems, testing underwater sensors and technologies, and analyzing the environmental impact of artificial structures. MarGate Helgoland provides a unique open-sea test environment in the southern North Sea for autonomous underwater vehicles, sensor systems, and marine technology in real oceanic conditions.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.awi.de/en/",coordinates:[7.883334,54.180004],inInterreg:false},
   {name:"Maritimes Zentrum / Sea-Based Test Area",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Sea-based maritime test area","Research vessel / test ship","Sea based autonomous systems test area"],description:"The reaserch and ferry vessel AUTOGNOM owned by Flensburg University of Applied Sciences will sail within Flensburg harbour area from 2026 on. Flensburg harbour master has officially defined a test area for AUTOGNOM. Furthermore also a commercial ferry route for summer season has been idetified on which AUTOGNOM is likely to start service from 2027 on after beeing fully apprived as a ferry by German authorities. AUTOGNOM and its use within the test areas in order to test new maritime equipment is offered also to external parties. Allowance to use of the test field with other vessels needs to be clarified with authorities on demand.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Einweihung%20Renate%20Delfs%20Platz%20Juni%202025%20.jpg",photo2:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/EVQF6003.JPG",photo3:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/Bei%20FSG%20nach%20Steuerhaus%20aufsetzen.JPG",website:"https://www.maritimes-zentrum.de/",coordinates:[9.430312,54.799406],inInterreg:true},
   {name:"TechShop - Laboratory for Production and Manufacturing",country:"Germany",institution:"Hochschule Flensburg",types:["Prototyping and Manufacturing facilities"],description:"It serves as a go-to resource for product developers who need guidance on manufacturing processes for pilot series and series production. The lab offers both advisory services — covering a range of manufacturing technologies, processes, and make-or-buy decisions — as well as hands-on access to the machines and tools themselves. Key questions addressed include which manufacturing method is technically most suitable, and how to achieve cost-effective production at an appropriate level of quality. The equipment includes machining centres for drilling, turning, and milling, a sinker EDM machine, and a plastic injection moulding machine, along with high-precision measurement and calibration tools.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://hs-flensburg.de",coordinates:[9.4509556,54.7750453],inInterreg:true},
   {name:"Bureau Veritas SA Marine & Offshore Hamburg",country:"Germany",institution:"Bureau Veritas SA Marine & Offshore Hamburg",types:["Multi-industry facility","Safety training center"],description:"Bureau Veritas is a classification society established in 1828",logo:"",photo1:"",photo2:"",photo3:"",website:"https://marine-offshore.bureauveritas.com",coordinates:[9.9865286,53.466458],inInterreg:false},
   {name:"Marina Sensor, water level and water temp. sensors in different marina in Germany + DK",country:"Germany",institution:"GEOMAR Helmholtz-Zentrum für Ozeanforschung Kiel",types:["Marina Sensor, water level and water temp. sensors in different marina in Germany + DK"],description:"Die Entwicklung eines umfassenden Küstenüberwachungsnetzes ist ein entscheidender Schritt hin zu einem nachhaltigen Küstenmanagement. Mit Hilfe eines Netzes von Sensoren und Messstationen lassen sich Echtzeitdaten (NRT) über Wasserqualität, Temperatur und andere Umweltfaktoren sammeln. Diese Daten sind wichtig, um schnell auf Veränderungen reagieren und vorbeugende Maßnahmen ergreifen zu können.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.soop-platform.earth/marinas/",coordinates:[10.180091492915388,54.32754263054331],inInterreg:true},
-  {name:"SANDRA II,VERA,ELLA,NOVA,HaFoLa",country:"Germany",institution:"Entwicklungszentrum für Schiffstechnik und Transportsysteme e.V. (DST) Development Centre for Ship Technology and Transport Systems (DST)",types:["Land based autonomous systems test area","Research vessel / test ship","Ship bridge simulator","Port & logistics research lab"],description:"a) Ship handling simulador \"SANDRA II\" (inland vessels)\nb) Digital test field \"VERA\" (inland vessels, focus on automation)\nc) Research vessels \"ELLA\" & \"NOVA\" (inland vessels, focus on automation and partially on propulsion systems with renewable energy)\nd) Port & logistics research lab \"HaFoLa\"",logo:"",photo1:"",photo2:"",photo3:"",website:"www.dst-org.de",coordinates:[6.7839992590549985,51.42928103937358],inInterreg:false},
-  {name:"Maritimes Trainingscenter auf dem GreenTEC Campus",country:"Germany",institution:"OffTEC Base GmbH & Co. KG",types:["Safety training center","Land based autonomous systems test area","Fire resistance / fire fighting test facility","Multi-industry facility"],description:"Training center for On- and Offshore wind staff, Fire Fighters, Police, Military and other special forces. The center is embedded into a 127 hectares large and secured area located in the very north of Germany.",logo:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC_Logo_und_Claim_CMYK.png?raw=true",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC.jpg?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC%202.jpg?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC%203.jpg?raw=true",website:"www.offtec.de",coordinates:[8.956069989948128,54.74040723739979],inInterreg:true},
+  {name:"SANDRA II,VERA,ELLA,NOVA,HaFoLa",country:"Germany",institution:"Entwicklungszentrum für Schiffstechnik und Transportsysteme e.V. (DST) Development Centre for Ship Technology and Transport Systems (DST)",types:["Land based autonomous systems test area","Research vessel / test ship","Ship bridge simulator","Port & logistics research lab"],description:"a) Ship handling simulador \"SANDRA II\" (inland vessels)\nb) Digital test field \"VERA\" (inland vessels, focus on automation)\nc) Research vessels \"ELLA\" & \"NOVA\" (inland vessels, focus on automation and partially on propulsion systems with renewable energy)\nd) Port & logistics research lab \"HaFoLa\"",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.dst-org.de",coordinates:[6.7839992590549985,51.42928103937358],inInterreg:false},
+  {name:"UAS Denmark Test Center",country:"Denmark",institution:"UAS Denmark Test Center",types:["Land based autonomous systems test area","Multi-industry facility","Flight test center for drones and multi domain activitity"],description:"UAS Denmark Test Center is an unmanned systems technology test and development center in Odense, Denmark, and it is a collaboration between Hans Christian Andersen Airport, Odense Municipality and the University of Southern Denmark.\n\nAt UAS Denmark, we have an ambition of “boosting drone potentials”. We do that by having the best possible conditions for start-ups, companies and public authorities and not least access to testing, knowledge, competencies, and an ecosystem of the highest caliber – right in the middle of a European robotics hotspot in Odense.\n\nAs one of few airports, we offer a large BVLOS (Beyond Visual Line of Sight) airspace over land and sea, available on a 48-hour notice. We work for flexible approval procedures, give feedback and advice on regulatory matters and offer access to local businesses and academic partners when needed. In other words: At UAS Denmark, we contribute to realizing the full potential of drone technology for the benefit of society.",logo:"",photo1:"",photo2:"",photo3:"",website:"https://uasdenmark.dk/",coordinates:[10.329888,55.473528],inInterreg:true},
+  {name:"Maritimes Trainingscenter auf dem GreenTEC Campus",country:"Germany",institution:"OffTEC Base GmbH & Co. KG",types:["Safety training center","Land based autonomous systems test area","Fire resistance / fire fighting test facility","Multi-industry facility"],description:"Training center for On- and Offshore wind staff, Fire Fighters, Police, Military and other special forces. The center is embedded into a 127 hectares large and secured area located in the very north of Germany.",logo:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC_Logo_und_Claim_CMYK.png?raw=true",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC.jpg?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC%202.jpg?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/offtec/OffTEC%20MTC%203.jpg?raw=true",website:"https://www.offtec.de",coordinates:[8.956069989948128,54.74040723739979],inInterreg:true},
+  {name:"Maritime-Based Test Area of Maritimes Zentrum",country:"Germany",institution:"wqeqe",types:["Ship bridge simulator","Sea-based maritime test area","sea scrol"],description:"vxv",logo:"",photo1:"",photo2:"",photo3:"",website:"https://www.maritimes-zentrum.de/",coordinates:[9.4,54.4],inInterreg:true},
   {name:"Maritimes Zentrum / Campus Test Facility",country:"Germany",institution:"Maritimes Zentrum  Hochschule Flensburg / Flensburg University of Applied Sciences",types:["Ship engine room simulator","Ship bridge simulator","Multi-industry facility","PLC test facility","Internal combustion engines test facility","Maritime plants and aggregates test facility","Shaft measuring device (dynamic torque, thrust and bending measurement)"],description:"Maritimes Zentrum provides nautical and ship operational training simulators PLC test lab and multiple test facilities and engine test benches also for industry partners on demand. Beyond this we are specialists on helping idustry partners to get PLCs ready for the new maritime MTP automation standard, even without touching already approved technology.",logo:"https://raw.githubusercontent.com/hossamostafa1998/baltic-ventures-map/main/images/Hochschule%20flnesburg/logo.jpg",photo1:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/Br%C3%BCcke.jpg?raw=true",photo2:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/DSC_0956.jpg?raw=true",photo3:"https://github.com/Hossamostafa1998/baltic-ventures-map/blob/main/images/Hochschule%20flnesburg/SPS_Labor.jpg?raw=true",website:"https://www.maritimes-zentrum.de/",coordinates:[9.4507648,54.7734499],inInterreg:true},
 ];
 
 function escHtml(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
 function safeUrl(url){if(!url)return "";try{return decodeURIComponent(url).replace(/ /g,"%20");}catch(e){return url;}}
 function ini(n){return String(n||"").trim().split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||"").join("")||"BV";}
+function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
+function highlightMatch(text,term){
+  const safe=escHtml(text);
+  if(!term)return safe;
+  return safe.replace(new RegExp("("+escRe(escHtml(term))+")","ig"),"<mark>$1</mark>");
+}
 
 function popupHTML(f){
   const dk=f.country==="Denmark";
@@ -979,7 +811,6 @@ function popupHTML(f){
   const logoSrc=safeUrl(f.logo);
   const photos=[f.photo1,f.photo2,f.photo3].map(safeUrl).filter(Boolean);
   const logoHTML=logoSrc?`<img class="pLogo" src="${logoSrc}" alt="${escHtml(f.name)}">`:`<div class="pFallback${cls}">${ini(f.name)}</div>`;
-  // Use typeLabel() so pills match the filter panel labels
   const pills=(f.types||[]).map(t=>`<span class="pPill${cls}">${escHtml(typeLabel(t))}</span>`).join("");
   let galleryHTML="";
   if(photos.length===0){galleryHTML=`<div class="pNoPhoto">No photos available yet for this facility.</div>`;}
@@ -989,7 +820,7 @@ function popupHTML(f){
     const dots=photos.map((_,i)=>`<div class="pCarouselDot${i===0?" active":""}" data-dot="${i}"></div>`).join("");
     galleryHTML=`<div class="pGLabel">Facility Photos</div><div class="pCarousel" data-idx="0" data-total="${photos.length}"><div class="pCarouselTrack">${slides}</div><button class="pCarouselBtn prev" aria-label="Previous photo"><svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#334a60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="pCarouselBtn next" aria-label="Next photo"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#334a60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="pCarouselDots">${dots}</div></div>`;
   }
-  const btn=f.website?`<div class="pFooter"><a class="pBtn${cls}" href="${escHtml(f.website)}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a></div>`:"";
+  const btn=f.website&&/^https?:/i.test(f.website)?`<div class="pFooter"><a class="pBtn${cls}" href="${escHtml(f.website)}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a></div>`:"";
   return `<div class="pCard"><div class="pStrip${dk?" dk":" de"}"></div><div class="pTop"><div class="pHeader"><div class="pLogoBox">${logoHTML}</div><div class="pTG"><div class="pTitle">${escHtml(f.name)}</div><div class="pPills">${pills}</div></div></div></div><div class="pBody">${f.institution?`<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M8 2L14 7H2L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="pMetaTxt">${escHtml(f.institution)}</span></div>`:""}<div class="pMeta"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.1"/></svg><span class="pMetaTxt">${escHtml(f.country)}</span></div><hr class="pHr"><div class="pDesc">${escHtml(f.description)}</div>${galleryHTML}${btn}</div></div>`;
 }
 
@@ -1058,18 +889,151 @@ let selectedCountries=new Set();
 let selType="all";
 let interregOnly=false;
 let interregFeatures=[];
+let searchTerm="";
+let mergedRegion=null, maskData=null;
+let spiderActive=false, spiderGroup=[];
+
+const clusterMarkers=[];
 
 function applyFilters(){
+  unspiderfy();
   markers.forEach(m=>{
     const d=m._bv;
     const countryOk = selectedCountries.size===0 || selectedCountries.has(d.country);
     const typeOk = selType==="all" || (selType==="other" ? d.types.some(t=>!KNOWN_TYPES.has(t)) : d.types.includes(selType));
     const areaOk = !interregOnly || d.inInterreg;
-    m.getElement().style.display=(countryOk&&typeOk&&areaOk)?"block":"none";
+    let searchOk = true;
+    if(searchTerm){
+      const haystack=(d.name+" "+d.institution+" "+d.types.join(" ")+" "+d.description).toLowerCase();
+      searchOk = haystack.includes(searchTerm);
+    }
+    m._eligible = countryOk&&typeOk&&areaOk&&searchOk;
   });
-  const visible=markers.filter(m=>m.getElement().style.display!=="none").length;
+  renderClusters();
+  const visible=markers.filter(m=>m._eligible).length;
   document.getElementById("entryCount").innerText=visible+" facilit"+(visible===1?"y":"ies");
+  const es=document.getElementById("emptyState");
+  if(es)es.classList.toggle("show",visible===0);
 }
+
+function clearAllFilters(){
+  selectedCountries.clear();
+  document.querySelectorAll(".cChip").forEach(x=>x.classList.remove("on"));
+  selType="all";
+  document.querySelectorAll(".tChip").forEach(x=>x.classList.remove("on"));
+  const a=document.querySelector('.tChip[data-type="all"]');if(a)a.classList.add("on");
+  interregOnly=false;
+  const ic=document.getElementById("interregChip");if(ic)ic.classList.remove("on");
+  document.getElementById("legend").classList.remove("interreg-active");
+  const si=document.getElementById("searchInput");if(si)si.value="";
+  searchTerm="";
+  const sb=document.getElementById("searchBox");if(sb)sb.classList.remove("has-text");
+  const sr=document.getElementById("searchResults");if(sr)sr.classList.remove("open");
+  applyFilters();
+}
+
+// Group eligible markers that overlap on screen into a single numbered bubble.
+// Re-runs on every zoom/pan, so pins separate naturally as you zoom in.
+function renderClusters(){
+  if(spiderActive)return;
+  clusterMarkers.forEach(c=>c.remove());
+  clusterMarkers.length=0;
+  markers.forEach(m=>{m.getElement().style.display="none";});
+
+  const eligible=markers.filter(m=>m._eligible);
+  // a "solo" marker (e.g. picked from search) is always shown on its own
+  eligible.filter(m=>m._solo).forEach(m=>{m.getElement().style.display="block";});
+  const pool=eligible.filter(m=>!m._solo);
+  const pts=pool.map(m=>({m,p:map.project(m.getLngLat())}));
+  const used=new Array(pts.length).fill(false);
+  const R=42; // px radius — pins closer than this get clustered
+
+  for(let i=0;i<pts.length;i++){
+    if(used[i])continue;
+    const group=[pts[i]];used[i]=true;
+    for(let j=i+1;j<pts.length;j++){
+      if(used[j])continue;
+      if(Math.hypot(pts[i].p.x-pts[j].p.x, pts[i].p.y-pts[j].p.y)<=R){
+        group.push(pts[j]);used[j]=true;
+      }
+    }
+
+    if(group.length===1){
+      group[0].m.getElement().style.display="block";
+      continue;
+    }
+
+    let sx=0,sy=0;group.forEach(g=>{sx+=g.p.x;sy+=g.p.y;});
+    const center=map.unproject([sx/group.length,sy/group.length]);
+    const dk=group.filter(g=>g.m._bv.country==="Denmark").length;
+    const de=group.length-dk;
+    const col=(dk&&de)?"#0f2236":(dk?"#c0232d":"#1a5aff");
+
+    const el=document.createElement("div");
+    el.className="bv-cluster";
+    el.style.setProperty("--cl",col);
+    el.textContent=group.length;
+    el.title=group.length+" facilities here — click to expand";
+    const cm=new mapboxgl.Marker({element:el,anchor:"center"}).setLngLat(center);
+    el.addEventListener("click",(e)=>{
+      e.stopPropagation();
+      const b=new mapboxgl.LngLatBounds();
+      group.forEach(g=>b.extend(g.m.getLngLat()));
+      const spread=b.getNorthEast().distanceTo(b.getSouthWest());
+      // if zooming in would separate them, zoom; if they're basically on the same
+      // spot (or we're already zoomed in), fan them out so each is clickable
+      if(spread>40 && map.getZoom()<13.5){
+        map.fitBounds(b,{padding:90,maxZoom:14,duration:700});
+      } else {
+        spiderfy(group,center,cm);
+      }
+    });
+    cm.addTo(map);
+    clusterMarkers.push(cm);
+  }
+}
+
+function unspiderfy(){
+  if(!spiderActive)return;
+  spiderActive=false;
+  spiderGroup.forEach(m=>{
+    if(m._origLngLat){m.setLngLat(m._origLngLat);m._origLngLat=null;}
+    m.setOffset([0,0]);
+    m.getElement().style.zIndex="";
+  });
+  spiderGroup=[];
+}
+
+// fan a group of overlapping pins out into a ring around their shared point
+function spiderfy(group,center,cm){
+  unspiderfy();
+  if(cm){cm.remove();const idx=clusterMarkers.indexOf(cm);if(idx>=0)clusterMarkers.splice(idx,1);}
+  spiderActive=true;
+  spiderGroup=group.map(g=>g.m);
+  const n=group.length;
+  const r=22+7*n;
+  group.forEach((g,i)=>{
+    const m=g.m;
+    m._origLngLat=m.getLngLat();
+    m.setLngLat(center);
+    const ang=(2*Math.PI*i/n)-Math.PI/2;
+    m.setOffset([Math.cos(ang)*r, Math.sin(ang)*r]);
+    m.getElement().style.display="block";
+    m.getElement().style.zIndex="6";
+  });
+}
+
+function addRegionLayers(){
+  if(map.getLayer("water"))map.setPaintProperty("water","fill-color","#9ecae1");
+  if(!mergedRegion||!maskData)return;
+  if(!map.getSource("mask"))map.addSource("mask",{type:"geojson",data:maskData});
+  if(!map.getSource("region"))map.addSource("region",{type:"geojson",data:mergedRegion});
+  if(!map.getLayer("outside-mask"))map.addLayer({id:"outside-mask",type:"fill",source:"mask",paint:{"fill-color":"#000","fill-opacity":0.18}});
+  if(!map.getLayer("region-fill"))map.addLayer({id:"region-fill",type:"fill",source:"region",paint:{"fill-color":"#1f7a8c","fill-opacity":0.16}});
+  if(!map.getLayer("region-border"))map.addLayer({id:"region-border",type:"line",source:"region",paint:{"line-color":"#14525e","line-width":1.8,"line-opacity":0.65,"line-blur":0.5}});
+  if(!map.getLayer("region-glow"))map.addLayer({id:"region-glow",type:"line",source:"region",paint:{"line-color":"#3fa3b5","line-width":7,"line-opacity":0.16,"line-blur":6}});
+}
+
 
 map.on("load",async()=>{
   try{map.setPaintProperty("water","fill-color","#9ecae1");}catch(e){}
@@ -1090,14 +1054,9 @@ map.on("load",async()=>{
   });
   const holes=[];
   merged.geometry.coordinates.forEach(p=>holes.push(p[0]));
-  const mask={type:"FeatureCollection",features:[{type:"Feature",geometry:{type:"Polygon",coordinates:[[[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]],...holes]}}]};
-
-  map.addSource("mask",{type:"geojson",data:mask});
-  map.addSource("region",{type:"geojson",data:merged});
-  map.addLayer({id:"outside-mask",type:"fill",source:"mask",paint:{"fill-color":"#000","fill-opacity":0.18}});
-  map.addLayer({id:"region-fill",type:"fill",source:"region",paint:{"fill-color":"#4f9bd6","fill-opacity":0.15}});
-  map.addLayer({id:"region-border",type:"line",source:"region",paint:{"line-color":"#3f7fb5","line-width":2,"line-opacity":0.5,"line-blur":1}});
-  map.addLayer({id:"region-glow",type:"line",source:"region",paint:{"line-color":"#7fb0d6","line-width":8,"line-opacity":0.15,"line-blur":6}});
+  mergedRegion=merged;
+  maskData={type:"FeatureCollection",features:[{type:"Feature",geometry:{type:"Polygon",coordinates:[[[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]],...holes]}}]};
+  addRegionLayers();
 
   facilities.forEach((f,idx)=>{
     const dk=f.country==="Denmark";
@@ -1105,20 +1064,144 @@ map.on("load",async()=>{
     el.className=`bv-pin ${dk?"dk":"de"}`;
     el.style.cssText="width:46px;height:52px;cursor:pointer;";
     el.innerHTML=shipPinSVG(f,idx);
+    el.dataset.name=f.name||"";
     const popup=new mapboxgl.Popup({maxWidth:"358px",offset:[0,-54],closeButton:true,closeOnClick:true}).setHTML(popupHTML(f));
     const marker=new mapboxgl.Marker({element:el,anchor:"bottom"}).setLngLat(f.coordinates).setPopup(popup).addTo(map);
-    marker._bv={country:f.country,types:f.types||[],inInterreg:f.inInterreg};
+    marker._bv={country:f.country,types:f.types||[],inInterreg:f.inInterreg,name:f.name||"",institution:f.institution||"",description:f.description||""};
     markers.push(marker);
   });
 
+  const initB=new mapboxgl.LngLatBounds();
+  facilities.forEach(f=>initB.extend(f.coordinates));
+  map.fitBounds(initB,{padding:{top:70,bottom:70,left:270,right:70},maxZoom:7.2,duration:0});
+
   applyFilters();
 
-  document.getElementById("interregChip").addEventListener("click",()=>{
+  // re-cluster whenever the view changes so pins regroup/separate by zoom
+  map.on("moveend",renderClusters);
+  map.on("zoomstart",()=>{if(spiderActive)unspiderfy();});
+  map.on("click",()=>{if(spiderActive){unspiderfy();renderClusters();}});
+
+  const searchInput=document.getElementById("searchInput");
+  const searchBox=document.getElementById("searchBox");
+  const searchResults=document.getElementById("searchResults");
+  let srIndices=[];   // marker indices currently shown in the dropdown
+  let srActive=-1;    // highlighted row for keyboard nav
+  let fitTimer=null;
+
+  function visibleMarkers(){
+    return markers.filter(m=>m._eligible);
+  }
+
+  function fitToVisible(){
+    const vis=visibleMarkers();
+    if(!vis.length)return;
+    if(vis.length===1){
+      map.flyTo({center:vis[0].getLngLat(),zoom:9,duration:900});
+      return;
+    }
+    const b=new mapboxgl.LngLatBounds();
+    vis.forEach(m=>b.extend(m.getLngLat()));
+    map.fitBounds(b,{padding:{top:70,bottom:70,left:280,right:80},maxZoom:9,duration:900});
+  }
+  function scheduleFit(){clearTimeout(fitTimer);fitTimer=setTimeout(fitToVisible,400);}
+
+  function jumpToMarker(i){
+    const m=markers[i];
+    if(!m)return;
+    unspiderfy();
+    markers.forEach(x=>x._solo=false);
+    m._solo=true;
+    map.flyTo({center:m.getLngLat(),zoom:11,duration:1000});
+    renderClusters();
+    const p=m.getPopup();
+    if(p&&!p.isOpen())m.togglePopup();
+    closeResults();
+  }
+
+  function closeResults(){searchResults.classList.remove("open");srActive=-1;}
+
+  function renderResults(){
+    if(!searchTerm){closeResults();return;}
+    const vis=visibleMarkers();
+    srIndices=vis.map(m=>markers.indexOf(m));
+    srActive=-1;
+    if(!srIndices.length){
+      searchResults.innerHTML='<div class="srEmpty">No facilities found</div>';
+      searchResults.classList.add("open");
+      return;
+    }
+    searchResults.innerHTML=srIndices.map(i=>{
+      const d=markers[i]._bv;
+      const meta=d.institution||d.types[0]||"";
+      return `<div class="srItem" data-i="${i}"><div class="srName">${highlightMatch(d.name,searchTerm)}</div><div class="srMeta">${highlightMatch(meta,searchTerm)}</div></div>`;
+    }).join("");
+    searchResults.classList.add("open");
+  }
+
+  function setActive(n){
+    const items=searchResults.querySelectorAll(".srItem");
+    if(!items.length)return;
+    srActive=(n+items.length)%items.length;
+    items.forEach((el,k)=>el.classList.toggle("active",k===srActive));
+    items[srActive].scrollIntoView({block:"nearest"});
+  }
+
+  searchInput.addEventListener("input",()=>{
+    searchTerm=searchInput.value.trim().toLowerCase();
+    searchBox.classList.toggle("has-text",searchInput.value.length>0);
+    applyFilters();
+    renderResults();
+    if(searchTerm)scheduleFit();
+  });
+
+  searchInput.addEventListener("keydown",(e)=>{
+    if(e.key==="ArrowDown"){e.preventDefault();setActive(srActive+1);}
+    else if(e.key==="ArrowUp"){e.preventDefault();setActive(srActive-1);}
+    else if(e.key==="Enter"){
+      if(srActive>=0&&srIndices[srActive]!=null)jumpToMarker(srIndices[srActive]);
+      else if(srIndices.length)jumpToMarker(srIndices[0]);
+    }
+    else if(e.key==="Escape"){clearSearch();}
+  });
+
+  searchResults.addEventListener("click",(e)=>{
+    const item=e.target.closest(".srItem");
+    if(item)jumpToMarker(parseInt(item.dataset.i,10));
+  });
+
+  function clearSearch(){
+    searchInput.value="";
+    searchTerm="";
+    searchBox.classList.remove("has-text");
+    closeResults();
+    markers.forEach(x=>x._solo=false);
+    applyFilters();
+    searchInput.focus();
+  }
+  document.getElementById("searchClear").addEventListener("click",clearSearch);
+
+  // close dropdown when clicking elsewhere
+  document.addEventListener("click",(e)=>{
+    if(!searchBox.contains(e.target))closeResults();
+  });
+
+  const interregChipEl=document.getElementById("interregChip");
+  interregChipEl.addEventListener("click",()=>{
     interregOnly=!interregOnly;
-    document.getElementById("interregChip").classList.toggle("on",interregOnly);
+    interregChipEl.classList.toggle("on",interregOnly);
     document.getElementById("legend").classList.toggle("interreg-active",interregOnly);
     applyFilters();
   });
+
+  // highlight the Interreg region on the map while hovering the chip
+  function setRegionHighlight(on){
+    if(map.getLayer("region-fill"))map.setPaintProperty("region-fill","fill-opacity",on?0.34:0.15);
+    if(map.getLayer("region-border"))map.setPaintProperty("region-border","line-opacity",on?0.9:0.5);
+    if(map.getLayer("region-glow"))map.setPaintProperty("region-glow","line-opacity",on?0.4:0.15);
+  }
+  interregChipEl.addEventListener("mouseenter",()=>setRegionHighlight(true));
+  interregChipEl.addEventListener("mouseleave",()=>setRegionHighlight(false));
 
   document.querySelectorAll(".cChip").forEach(c=>{
     c.addEventListener("click",()=>{
@@ -1144,189 +1227,58 @@ map.on("load",async()=>{
   });
 });
 
-// ── Add Facility Panel ──
-const addPanel=document.getElementById("addPanel");
-const addBtn=document.getElementById("addFacilityBtn");
-const closeBtn=document.getElementById("addPanelClose");
-const cancelBtn=document.getElementById("apCancelBtn");
-const saveBtn=document.getElementById("apSaveBtn");
-const interregToggle=document.getElementById("ap_interreg_toggle");
-const apFormBody=document.getElementById("apFormBody");
-const apSuccess=document.getElementById("apSuccess");
-const apFooter=document.getElementById("apFooter");
-const apSuccessBack=document.getElementById("apSuccessBack");
 
-let apInterreg=false;
-let apTags=[];
+document.getElementById("esClear").addEventListener("click",clearAllFilters);
 
-function openAddPanel(){
-  addPanel.classList.add("open");
-  addBtn.style.background="linear-gradient(135deg,#1a5aff,#1348d6)";
-}
-function closeAddPanel(){
-  addPanel.classList.remove("open");
-  addBtn.style.background="linear-gradient(135deg,#0f2236,#1a3a5c)";
-}
-function resetAddForm(){
-  ["ap_name","ap_institution","ap_description","ap_lng","ap_lat","ap_website","ap_logo","ap_photo1","ap_photo2","ap_photo3"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.value="";
-  });
-  const countryEl=document.getElementById("ap_country");
-  if(countryEl) countryEl.value="Germany";
-  apTags=[];
-  renderApTags();
-  apInterreg=false;
-  interregToggle.classList.remove("on");
-  apFormBody.style.display="block";
-  apFooter.style.display="flex";
-  apSuccess.style.display="none";
-  ["ap_name","ap_institution","ap_lng","ap_lat"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.style.borderColor="";
-  });
-}
-
-addBtn.addEventListener("click",()=>{
-  if(addPanel.classList.contains("open")){closeAddPanel();}
-  else{resetAddForm();openAddPanel();}
+// ---- pin hover tooltip ----
+const pinTip=document.getElementById("pinTip");
+document.addEventListener("mouseover",e=>{
+  const pin=e.target.closest(".bv-pin");
+  if(!pin||!pin.dataset.name)return;
+  const r=pin.getBoundingClientRect();
+  pinTip.textContent=pin.dataset.name;
+  pinTip.style.left=(r.left+r.width/2)+"px";
+  pinTip.style.top=(r.top-6)+"px";
+  pinTip.classList.add("show");
 });
-addBtn.addEventListener("mouseenter",()=>{addBtn.style.transform="translateY(-1px) scale(1.08)";});
-addBtn.addEventListener("mouseleave",()=>{addBtn.style.transform="";});
-closeBtn.addEventListener("click",closeAddPanel);
-cancelBtn.addEventListener("click",closeAddPanel);
-apSuccessBack.addEventListener("click",resetAddForm);
-
-interregToggle.addEventListener("click",()=>{
-  apInterreg=!apInterreg;
-  interregToggle.classList.toggle("on",apInterreg);
+document.addEventListener("mouseout",e=>{
+  if(e.target.closest(".bv-pin"))pinTip.classList.remove("show");
 });
 
-function renderApTags(){
-  const wrap=document.getElementById("ap_tags_wrap");
-  const input=document.getElementById("ap_type_input");
-  wrap.querySelectorAll(".apTag").forEach(t=>t.remove());
-  const dk=document.getElementById("ap_country").value==="Denmark";
-  apTags.forEach((tag,i)=>{
-    const span=document.createElement("span");
-    span.className="apTag"+(dk?" dk-tag":"");
-    span.innerHTML=escHtml(tag)+'<span class="apTagDel" data-i="'+i+'">×</span>';
-    wrap.insertBefore(span,input);
-  });
-  wrap.querySelectorAll(".apTagDel").forEach(d=>{
-    d.addEventListener("click",(e)=>{
-      e.stopPropagation();
-      apTags.splice(parseInt(d.dataset.i),1);
-      renderApTags();
-    });
-  });
+// ---- photo lightbox ----
+let lbPhotos=[],lbIdx=0;
+const lightbox=document.getElementById("lightbox");
+function showLb(){
+  document.getElementById("lbImg").src=lbPhotos[lbIdx];
+  const multi=lbPhotos.length>1;
+  document.getElementById("lbPrev").style.display=multi?"flex":"none";
+  document.getElementById("lbNext").style.display=multi?"flex":"none";
+  const c=document.getElementById("lbCount");
+  c.style.display=multi?"block":"none";
+  c.textContent=(lbIdx+1)+" / "+lbPhotos.length;
 }
-
-document.getElementById("ap_country").addEventListener("change",renderApTags);
-document.getElementById("ap_tags_wrap").addEventListener("click",()=>document.getElementById("ap_type_input").focus());
-
-document.getElementById("ap_type_input").addEventListener("keydown",(e)=>{
-  const val=e.target.value.trim();
-  if((e.key==="Enter"||e.key===",")&&val){
-    e.preventDefault();
-    if(!apTags.includes(val))apTags.push(val);
-    e.target.value="";
-    renderApTags();
-  }
-  if(e.key==="Backspace"&&!e.target.value&&apTags.length){
-    apTags.pop();
-    renderApTags();
-  }
+function openLightbox(photos,idx){lbPhotos=photos;lbIdx=idx;showLb();lightbox.classList.add("open");}
+function closeLightbox(){lightbox.classList.remove("open");document.getElementById("lbImg").src="";}
+function lbStep(d){lbIdx=(lbIdx+d+lbPhotos.length)%lbPhotos.length;showLb();}
+document.addEventListener("click",function(e){
+  const img=e.target.closest(".pCarouselSlide img");
+  if(!img)return;
+  e.stopPropagation();
+  const carousel=img.closest(".pCarousel");
+  const imgs=[...carousel.querySelectorAll(".pCarouselSlide img")];
+  openLightbox(imgs.map(i=>i.src),imgs.indexOf(img));
+});
+document.getElementById("lbClose").addEventListener("click",closeLightbox);
+document.getElementById("lbPrev").addEventListener("click",e=>{e.stopPropagation();lbStep(-1);});
+document.getElementById("lbNext").addEventListener("click",e=>{e.stopPropagation();lbStep(1);});
+lightbox.addEventListener("click",e=>{if(e.target===lightbox)closeLightbox();});
+document.addEventListener("keydown",e=>{
+  if(!lightbox.classList.contains("open"))return;
+  if(e.key==="Escape")closeLightbox();
+  else if(e.key==="ArrowLeft"&&lbPhotos.length>1)lbStep(-1);
+  else if(e.key==="ArrowRight"&&lbPhotos.length>1)lbStep(1);
 });
 
-function addMarkerFromForm(f){
-  const dk=f.country==="Denmark";
-  const el=document.createElement("div");
-  el.className=`bv-pin ${dk?"dk":"de"}`;
-  el.style.cssText="width:46px;height:52px;cursor:pointer;";
-  el.innerHTML=shipPinSVG(f, markers.length);
-  const popup=new mapboxgl.Popup({maxWidth:"358px",offset:[0,-54],closeButton:true,closeOnClick:true}).setHTML(popupHTML(f));
-  const marker=new mapboxgl.Marker({element:el,anchor:"bottom"}).setLngLat(f.coordinates).setPopup(popup).addTo(map);
-  marker._bv={country:f.country,types:f.types||[],inInterreg:f.inInterreg};
-  markers.push(marker);
-  map.flyTo({center:f.coordinates,zoom:8,duration:1200});
-  applyFilters();
-}
-
-saveBtn.addEventListener("click",()=>{
-  const name=document.getElementById("ap_name").value.trim();
-  const institution=document.getElementById("ap_institution").value.trim();
-  const country=document.getElementById("ap_country").value;
-  const lngVal=document.getElementById("ap_lng").value.trim();
-  const latVal=document.getElementById("ap_lat").value.trim();
-
-  let valid=true;
-  if(!name){
-    document.getElementById("ap_name").style.borderColor="#c0232d";
-    document.getElementById("ap_name").focus();
-    valid=false;
-  } else { document.getElementById("ap_name").style.borderColor=""; }
-
-  if(!institution){
-    document.getElementById("ap_institution").style.borderColor="#c0232d";
-    if(valid) document.getElementById("ap_institution").focus();
-    valid=false;
-  } else { document.getElementById("ap_institution").style.borderColor=""; }
-
-  if(!lngVal||!latVal||isNaN(parseFloat(lngVal))||isNaN(parseFloat(latVal))){
-    document.getElementById("ap_lng").style.borderColor="#c0232d";
-    document.getElementById("ap_lat").style.borderColor="#c0232d";
-    if(valid) document.getElementById("ap_lng").focus();
-    valid=false;
-  } else {
-    document.getElementById("ap_lng").style.borderColor="";
-    document.getElementById("ap_lat").style.borderColor="";
-  }
-
-  if(!valid) return;
-
-  const rawTag=document.getElementById("ap_type_input").value.trim();
-  if(rawTag&&!apTags.includes(rawTag)) apTags.push(rawTag);
-
-  const f={
-    name, institution, country,
-    types:[...apTags],
-    description:document.getElementById("ap_description").value.trim(),
-    logo:document.getElementById("ap_logo").value.trim(),
-    photo1:document.getElementById("ap_photo1").value.trim(),
-    photo2:document.getElementById("ap_photo2").value.trim(),
-    photo3:document.getElementById("ap_photo3").value.trim(),
-    website:document.getElementById("ap_website").value.trim(),
-    coordinates:[parseFloat(lngVal),parseFloat(latVal)],
-    inInterreg:apInterreg
-  };
-
-  addMarkerFromForm(f);
-
-  const snippet=`  {name:${JSON.stringify(f.name)},country:${JSON.stringify(f.country)},institution:${JSON.stringify(f.institution)},types:${JSON.stringify(f.types)},description:${JSON.stringify(f.description)},logo:${JSON.stringify(f.logo)},photo1:${JSON.stringify(f.photo1)},photo2:${JSON.stringify(f.photo2)},photo3:${JSON.stringify(f.photo3)},website:${JSON.stringify(f.website)},coordinates:[${f.coordinates[0]},${f.coordinates[1]}],inInterreg:${f.inInterreg}},`;
-  document.getElementById("apCodeSnippet").value=snippet;
-
-  const copyBtn=document.getElementById("apCopyBtn");
-  const freshCopy=copyBtn.cloneNode(true);
-  copyBtn.parentNode.replaceChild(freshCopy,copyBtn);
-  freshCopy.addEventListener("click",function(){
-    navigator.clipboard.writeText(snippet).then(()=>{
-      freshCopy.textContent="Copied!";
-      freshCopy.style.background="#1a5aff";
-      setTimeout(()=>{freshCopy.textContent="Copy";freshCopy.style.background="var(--navy)";},2000);
-    }).catch(()=>{
-      document.getElementById("apCodeSnippet").select();
-      document.execCommand("copy");
-      freshCopy.textContent="Copied!";
-      setTimeout(()=>{freshCopy.textContent="Copy";},2000);
-    });
-  });
-
-  apFormBody.style.display="none";
-  apFooter.style.display="none";
-  document.getElementById("apSuccessMsg").textContent=`"${name}" is now live on the map. Paste the line below into the facilities array in the HTML file to make it permanent:`;
-  apSuccess.style.display="flex";
-});
 </script>
 </body>
 </html>
